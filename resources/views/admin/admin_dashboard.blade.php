@@ -15,6 +15,6 @@
             </div>
         @endif
 
-        <a href="">Logout</a>
+        <a href="{{ route('admin.logout') }}">Logout</a>
     </body>
 </html>
