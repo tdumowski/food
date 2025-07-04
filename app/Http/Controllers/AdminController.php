@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -18,6 +19,21 @@ class AdminController extends Controller
 
     public function AdminLoginSubmit(Request $request)
     {
-        return view('admin.admin_dashboard');
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+        $check = $request->all();
+        $data = [
+            'email' => $check['email'],
+            'password' => $check['password'],
+        ];
+
+        if(Auth::guard('admin')->attempt($data)) {
+            return redirect()->route('admin.dashboard')->with('success', 'Login successful');
+        } else {
+            return redirect()->route('admin.login')->with('error', 'Invalid credentials');
+            // return redirect()->back()->with('error', 'Invalid credentials');
+        }
     }
 }
