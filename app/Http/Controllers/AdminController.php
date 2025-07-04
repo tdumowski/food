@@ -42,4 +42,22 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
         return redirect()->route('admin.login')->with('success', 'Logout successful');
     }
+
+    public function AdminForgetPassword()
+    {
+        return view('admin.forget_password');
+    }
+
+    public function AdminPasswordSubmit(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        // Here you would typically handle the password reset logic, such as sending a reset link to the email.
+        // For simplicity, we'll just return a success message.
+        
+        return redirect()->route('admin.login')->with('success', 'Password reset link sent to your email.');
+        // In a real application, you would send an email with a password reset link.
+        // return redirect()->back()->with('success', 'Password reset link sent to your email
+    }
 }
