@@ -25,6 +25,7 @@ Route::middleware('admin')->group(function () {
 });
 
 Route::get('/admin/forget_password', [AdminController::class, 'AdminForgetPassword'])->name('admin.forget_password');
+Route::get('/admin/reset_password/{token}/{email}', [AdminController::class, 'AdminResetPassword']);
 Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
 Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admin.logout');
 
