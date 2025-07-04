@@ -17,6 +17,17 @@ class Admin extends Authenticatable
      *
      * @var list<string>
      */
+
+     protected $guard = 'admin'; //specify the guard for this model
+    // This is useful if you have multiple user types and want to differentiate them.
+    // For example, you might have 'admin', 'user', etc. in your config/auth.php
+    // and you want to use this model with the 'admin' guard.
+    // If you don't need multiple guards, you can remove this line.
+    // If you do not specify a guard, it will use the default 'web' guard
+    // defined in your config/auth.php file.
+    // If you want to use this model with the 'admin' guard, you need to specify it here.
+    // If you want to use this model with the 'web' guard, you can remove this line.
+    
     protected $guarded = []; //all fields are fillable
 
     /**
