@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Websitemail;
+use App\Models\Admin;
 
 class AdminController extends Controller
 {
@@ -53,11 +56,25 @@ class AdminController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Here you would typically handle the password reset logic, such as sending a reset link to the email.
-        // For simplicity, we'll just return a success message.
+        $admin_data = Admin::where('email', $request->email)->first();
+
+        if (!$admin_data) {
+            return redirect()->back()->with('error', 'Email not found');
+        }
         
-        return redirect()->route('admin.login')->with('success', 'Password reset link sent to your email.');
-        // In a real application, you would send an email with a password reset link.
-        // return redirect()->back()->with('success', 'Password reset link sent to your email
+        $token = hash("sha256", time());
+
+        $admin_data->token = $token;
+        $admin_data->update();
+
+        $reset_link = url('/admin/reset_password/' . $token . '/' . $request->email);
+
+        $subject = "Password Reset Request";
+        $message = "Click the link below to reset your password:<br>";
+        $message .= "<a href='" . $reset_link . "'>Click here</a>";
+
+        Mail::to($request->email)->send(new Websitemail($subject, $message));
+
+        return redirect()->back()->with('success', 'Password reset link sent to your email.');
     }
 }
