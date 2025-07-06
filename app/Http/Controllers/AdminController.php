@@ -149,7 +149,10 @@ class AdminController extends Controller
 
         $profileData->save();
 
-        $notification = array("message" => "Profile updated successfully", "alert-type" => "success");
+        $notification = array(
+            "message" => "Profile updated successfully", 
+            "alert-type" => "success"
+        );
 
         return redirect()->back()->with($notification);
     }
@@ -160,6 +163,36 @@ class AdminController extends Controller
         $profileData = Admin::find($id);
 
         return view('admin.admin_change_password', compact('profileData'));
+    }
+
+    public function AdminPasswordUpdate(Request $request)
+    {
+        $profileData = Auth::guard('admin')->user();
+
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+
+        if (!Hash::check($request->old_password, $profileData->password)) {
+            $notification = array(
+                "message" => "Old password is incorrect", 
+                "alert-type" => "error"
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $profileData->password = Hash::make($request->new_password);
+        $profileData->save();
+
+        $notification = array(
+            "message" => "Password updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     private function deleteOldImage(string $oldPhotoPath): void
