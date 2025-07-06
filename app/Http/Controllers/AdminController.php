@@ -149,7 +149,9 @@ class AdminController extends Controller
 
         $profileData->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully');
+        $notification = array("message" => "Profile updated successfully", "alert-type" => "success");
+
+        return redirect()->back()->with($notification);
     }
 
     private function deleteOldImage(string $oldPhotoPath): void
