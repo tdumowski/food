@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+//ADMIN routes
 Route::middleware('admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
@@ -36,3 +38,7 @@ Route::get('/admin/logout', [AdminController::class, 'AdminLogout'])->name('admi
 Route::post('/admin/login_submit', [AdminController::class, 'AdminLoginSubmit'])->name('admin.login_submit');
 Route::post('/admin/password_submit', [AdminController::class, 'AdminPasswordSubmit'])->name('admin.password_submit');
 Route::post('/admin/reset_password_submit', [AdminController::class, 'AdminResetPasswordSubmit'])->name('admin.reset_password_submit');
+
+//CLIENT routes
+Route::get('/client/login', [ClientController::class, 'ClientLogin'])->name('client.login');
+Route::get('/client/register', [ClientController::class, 'ClientRegister'])->name('client.register');

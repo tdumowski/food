@@ -4,7 +4,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Admin Login</title>
+        <title>Client Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
@@ -35,13 +35,13 @@
                                 <div class="d-flex flex-column h-100">
                                     <div class="mb-4 mb-md-5 text-center">
                                         <a href="index.html" class="d-block auth-logo">
-                                            <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Admin Login</span>
+                                            <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Client Login</span>
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto">
                                         <div class="text-center">
                                             <h5 class="mb-0">Welcome Back!</h5>
-                                            <p class="text-muted mt-2">Sign in to continue as Admin.</p>
+                                            <p class="text-muted mt-2">Sign in to continue as Client.</p>
                                         </div>
 
                                         @if($errors->any())
@@ -78,11 +78,11 @@
                                                     <div class="flex-grow-1">
                                                         <label class="form-label">Password</label>
                                                     </div>
-                                                    <div class="flex-shrink-0">
+                                                    {{-- <div class="flex-shrink-0">
                                                         <div class="">
-                                                            <a href="{{ route('admin.forget_password') }}" class="text-muted">Forgot password?</a>
+                                                            <a href="{{ route('client.forget_password') }}" class="text-muted">Forgot password?</a>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 
                                                 <div class="input-group auth-pass-inputgroup">

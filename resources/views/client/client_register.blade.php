@@ -4,7 +4,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Admin Login</title>
+        <title>Client Register</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
         <meta content="Themesbrand" name="author" />
@@ -35,13 +35,13 @@
                                 <div class="d-flex flex-column h-100">
                                     <div class="mb-4 mb-md-5 text-center">
                                         <a href="index.html" class="d-block auth-logo">
-                                            <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Admin Login</span>
+                                            <img src="{{ asset('backend/assets/images/logo-sm.svg') }}" alt="" height="28"> <span class="logo-txt">Client Register</span>
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto">
                                         <div class="text-center">
-                                            <h5 class="mb-0">Welcome Back!</h5>
-                                            <p class="text-muted mt-2">Sign in to continue as Admin.</p>
+                                            <h5 class="mb-0">Welcome!</h5>
+                                            <p class="text-muted mt-2">Register yourself as Client.</p>
                                         </div>
 
                                         @if($errors->any())
@@ -70,6 +70,18 @@
                                             @csrf
 
                                             <div class="mb-3">
+                                                <label class="form-label">Restaurant Name</label>
+                                                <input type="text" name="name" class="form-control" id="name" placeholder="Enter your name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter your phone number" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Address</label>
+                                                <input type="text" name="address" class="form-control" id="address" placeholder="Enter your address" required>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email address" required>
                                             </div>
@@ -77,11 +89,6 @@
                                                 <div class="d-flex align-items-start">
                                                     <div class="flex-grow-1">
                                                         <label class="form-label">Password</label>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <div class="">
-                                                            <a href="{{ route('admin.forget_password') }}" class="text-muted">Forgot password?</a>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 
@@ -91,7 +98,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
-                                                <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In</button>
+                                                <button class="btn btn-primary w-100 waves-effect waves-light" type="submit">Register</button>
                                             </div>
                                         </form>
 
