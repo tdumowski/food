@@ -20,6 +20,27 @@ class ClientController extends Controller
         return view('client.client_register');
     }
 
+    public function ClientLoginSubmit(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $check = $request->all();
+        
+        $data = [
+            'email' => $check['email'],
+            'password' => $check['password'],
+        ];
+
+        if(Auth::guard('client')->attempt($data)) {
+            return redirect()->route('client.dashboard')->with('success', 'Login successful');
+        } else {
+            return redirect()->route('client.login')->with('error', 'Invalid credentials');
+        }
+    }
+
     public function ClientRegisterSubmit(Request $request)
     {
         $request->validate([
@@ -46,5 +67,10 @@ class ClientController extends Controller
         );
 
         return redirect()->route("client.login")->with($notification);
+    }
+
+    public function ClientDashboard()
+    {
+        return view('client.client_dashboard');
     }
 }

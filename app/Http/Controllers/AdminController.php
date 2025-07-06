@@ -27,7 +27,9 @@ class AdminController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
+
         $check = $request->all();
+        
         $data = [
             'email' => $check['email'],
             'password' => $check['password'],
