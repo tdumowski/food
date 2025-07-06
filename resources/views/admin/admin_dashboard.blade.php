@@ -94,11 +94,9 @@
         <script>
             @if(Session::has('message'))
                 var type = "{{ Session::get('alert-type','info') }}";
-
                 toastr.options = {
                     "positionClass": "toast-bottom-right"
                 };
-                
                 switch(type){
                     case 'info':
                     toastr.info(" {{ Session::get('message') }} ");

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
-use App\Mail\Websitemail;
 use App\Models\Client;
 
 class ClientController extends Controller
@@ -19,5 +18,33 @@ class ClientController extends Controller
     public function ClientRegister()
     {
         return view('client.client_register');
+    }
+
+    public function ClientRegisterSubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:clients,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $client = new Client();
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->address = $request->address;
+        $client->password = Hash::make($request->password);
+        $client->role = "client";
+        $client->status = 0;
+        $client->save();
+
+        $notification = array(
+            "message" => "Client registered successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route("client.login")->with($notification);
     }
 }
