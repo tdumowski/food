@@ -154,6 +154,14 @@ class AdminController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function AdminChangePassword()
+    {
+        $id = Auth::guard('admin')->id();
+        $profileData = Admin::find($id);
+
+        return view('admin.admin_change_password', compact('profileData'));
+    }
+
     private function deleteOldImage(string $oldPhotoPath): void
     {
         $fullPath = public_path('upload/admin_images/' . $oldPhotoPath);
@@ -161,5 +169,5 @@ class AdminController extends Controller
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
-    }   
+    }
 }
