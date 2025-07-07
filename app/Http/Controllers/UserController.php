@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -68,4 +69,41 @@ class UserController extends Controller
         Auth::guard('web')->logout();
         return redirect()->route('login')->with('success', 'Logged out successfully');
     }
+
+    public function UserChangePassword()
+    {
+        return view('frontend.dashboard.change_password');
+    }
+
+    public function UserPasswordUpdate(Request $request)
+    {
+        $profileData = Auth::guard('web')->user();
+
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+
+        if (!Hash::check($request->old_password, $profileData->password)) {
+            $notification = array(
+                "message" => "Old password is incorrect", 
+                "alert-type" => "error"
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $profileData = User::find($profileData->id);
+        $profileData->password = Hash::make($request->new_password);
+        $profileData->save();
+
+        $notification = array(
+            "message" => "Password updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
 }
