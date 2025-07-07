@@ -40,6 +40,12 @@ class ClientController extends Controller
             return redirect()->route('client.login')->with('error', 'Invalid credentials');
         }
     }
+    
+    public function ClientLogout()
+    {
+        Auth::guard('client')->logout();
+        return redirect()->route('client.login')->with('success', 'Logout successful');
+    }
 
     public function ClientRegisterSubmit(Request $request)
     {

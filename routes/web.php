@@ -45,6 +45,7 @@ Route::middleware('client')->group(function () {
 });
 
 Route::get('/client/login', [ClientController::class, 'ClientLogin'])->name('client.login');
+Route::get('/client/logout', [ClientController::class, 'ClientLogout'])->name('client.logout');
 Route::get('/client/register', [ClientController::class, 'ClientRegister'])->name('client.register');
 
 Route::post('/client/register.submit', [ClientController::class, 'ClientRegisterSubmit'])->name('client.register.submit');
