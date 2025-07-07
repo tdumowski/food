@@ -79,4 +79,60 @@ class ClientController extends Controller
     {
         return view('client.index');
     }
+
+    public function ClientProfile()
+    {
+        $id = Auth::guard('client')->id();
+        $profileData = Client::find($id);
+
+        return view('client.client_profile', compact('profileData'));
+    }
+
+    public function ClientProfileStore(Request $request)
+    {
+        $id = Auth::guard('client')->id();
+        $profileData = Client::find($id);
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $profileData->name = $request->name;
+        $profileData->email = $request->email;
+        $profileData->phone = $request->phone;
+        $profileData->address = $request->address;
+        $oldPhotoPath = $profileData->photo;
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/client_images'), $filename);
+            $profileData->photo = $filename;
+
+            if($oldPhotoPath && $oldPhotoPath !== $filename) {
+                // Delete old photo if it exists
+                $this->deleteOldImage($oldPhotoPath);
+            }
+        }
+
+        $profileData->save();
+
+        $notification = array(
+            "message" => "Profile updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
+    }
+    
+    private function deleteOldImage(string $oldPhotoPath): void
+    {
+        $fullPath = public_path('upload/client_images/' . $oldPhotoPath);
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
+    }
 }
