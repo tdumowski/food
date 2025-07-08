@@ -50,4 +50,51 @@ class CategoryController extends Controller
         );
         return redirect()->route('all.category')->with($notification);
     }
+
+    public function EditCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        return view('admin.backend.category.edit_category', compact('category'));
+    }
+
+    public function UpdateCategory(Request $request)
+    {
+        $category = Category::findOrFail($request->id);
+        
+        if($category) {
+            if($request->file('image')) {
+                $image = $request->file('image');
+                $manager = new ImageManager(new Driver());
+                $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                $img = $manager->read($image);
+                $save_url = 'upload/category/'.$imageName;
+                $img->resize(300, 300)->save(public_path($save_url));
+                
+                // Delete old image
+                if ($category->image != 'upload/no_image.jpg') {
+                    unlink(public_path($category->image));
+                }
+                
+                $category->image = $save_url;
+            }
+
+            $category->name = $request->name;
+            $category->save();
+            
+            $notification = array(
+                "message" => "Category updated successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Category not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->route('all.category')->with($notification);
+
+        }
+        
+    }
 }
