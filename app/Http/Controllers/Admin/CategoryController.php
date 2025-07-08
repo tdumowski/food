@@ -93,8 +93,31 @@ class CategoryController extends Controller
                 "alert-type" => "error"
             );
             return redirect()->route('all.category')->with($notification);
-
         }
+    }
+
+    public function DeleteCategory($id)
+    {
+        $category = Category::findOrFail($id);
         
+        if ($category) {
+            if ($category->image != 'upload/no_image.jpg') {
+                unlink(public_path($category->image));
+            }
+            $category->delete();
+            
+            $notification = array(
+                "message" => "Category deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Category not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
     }
 }
