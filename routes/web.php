@@ -74,3 +74,10 @@ Route::middleware('admin')->group(function () {
         Route::post('/update/category', 'UpdateCategory')->name('update.category');
     });
 });
+
+//ALL ADMIN CITY routes
+Route::middleware('admin')->group(function () {
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/all/city', 'AllCity')->name('all.city');
+    });
+});

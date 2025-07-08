@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\City;
 
 class CategoryController extends Controller
 {
@@ -18,8 +19,14 @@ class CategoryController extends Controller
 
     public function AllCategory()
     {
-        $category = Category::latest()->get();
-        return view('admin.backend.category.all_category', compact('category'));
+        $categories = Category::latest()->get();
+        return view('admin.backend.category.all_category', compact('categories'));
+    }
+
+    public function AllCity()
+    {
+        $cities = City::latest()->get();
+        return view('admin.backend.city.all_city', compact('cities'));
     }
 
     public function DeleteCategory($id)
