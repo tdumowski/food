@@ -42,7 +42,8 @@
                                     <td>{{ $city->name }}</td>
                                     <td>{{ $city->slug }}</td>
                                     <td>
-                                        <a href="{{ route('edit.category', $city->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myEdit" 
+                                            id="{{ $city->id }}" onclick='cityEdit(this.id)''>Edit</button>
                                         <a href="{{ route('delete.category', $city->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
@@ -65,7 +66,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="myForm" action="{{ route('store.category') }}" method="POST" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('city.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -87,5 +88,51 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div id="myEdit" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Edit city</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="myForm" action="{{ route('city.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+
+                    <input type="hidden" name="editName_id" id="editName_id" value="{{ $city ->id }}">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-label">Name</label>
+                                    <input class="form-control" name="name" type="text" id="editName">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+    function cityEdit(id) {
+        $.ajax({
+            type: "GET",
+            url: "/edit/city/" + id,
+            dataType: 'json',
+            success: function(response) {
+                $('#editName').val(response.name);
+                $('#editName_id').val(response.id);
+                // $('form#myForm').attr('action', '/update/city/' + response.city.id);
+            }
+        });
+    }
+</script>
 
 @endsection

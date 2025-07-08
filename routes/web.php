@@ -79,5 +79,7 @@ Route::middleware('admin')->group(function () {
 Route::middleware('admin')->group(function () {
     Route::controller(CategoryController::class)->group(function () {
         Route::get('/all/city', 'AllCity')->name('all.city');
+        Route::get('/edit/city/{id}', 'EditCity');
+        Route::post('/store/city', 'StoreCity')->name('city.store');
     });
 });

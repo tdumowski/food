@@ -59,6 +59,12 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         return view('admin.backend.category.edit_category', compact('category'));
     }
+
+    public function EditCity($id)
+    {
+        $city = City::findOrFail($id);
+        return response()->json($city);
+    }
     
     public function StoreCategory(Request $request)
     {        
@@ -87,6 +93,21 @@ class CategoryController extends Controller
             "alert-type" => "success"
         );
         return redirect()->route('all.category')->with($notification);
+    }
+    
+    public function StoreCity(Request $request)
+    {        
+            $city = new City();
+            $city->name = $request->name;
+            $city->slug = strtolower(str_replace(' ', '-', $request->name));
+            $city->save();
+        
+        $notification = array(
+            "message" => "City added successfully", 
+            "alert-type" => "success"
+        );
+        // return redirect()->route('all.city')->with($notification);
+        return redirect()->back()->with($notification);
     }
 
     public function UpdateCategory(Request $request)
