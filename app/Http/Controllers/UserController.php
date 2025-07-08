@@ -11,9 +11,60 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    private function deleteOldImage(string $oldPhotoPath): void
+    {
+        $fullPath = public_path('upload/user_images/' . $oldPhotoPath);
+
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
+        }
+    }
+
     public function Index()
     {
         return view('frontend.index');
+    }
+
+    public function UserChangePassword()
+    {
+        return view('frontend.dashboard.change_password');
+    }
+
+    public function UserLogout()
+    {
+        Auth::guard('web')->logout();
+        return redirect()->route('login')->with('success', 'Logged out successfully');
+    }
+
+    public function UserPasswordUpdate(Request $request)
+    {
+        $profileData = Auth::guard('web')->user();
+
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+
+        if (!Hash::check($request->old_password, $profileData->password)) {
+            $notification = array(
+                "message" => "Old password is incorrect", 
+                "alert-type" => "error"
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $profileData = User::find($profileData->id);
+        $profileData->password = Hash::make($request->new_password);
+        $profileData->save();
+
+        $notification = array(
+            "message" => "Password updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function UserProfileStore(Request $request)
@@ -54,56 +105,4 @@ class UserController extends Controller
 
         return redirect()->back()->with($notification);
     }
-
-        private function deleteOldImage(string $oldPhotoPath): void
-    {
-        $fullPath = public_path('upload/user_images/' . $oldPhotoPath);
-
-        if (file_exists($fullPath)) {
-            unlink($fullPath);
-        }
-    }
-
-    public function UserLogout()
-    {
-        Auth::guard('web')->logout();
-        return redirect()->route('login')->with('success', 'Logged out successfully');
-    }
-
-    public function UserChangePassword()
-    {
-        return view('frontend.dashboard.change_password');
-    }
-
-    public function UserPasswordUpdate(Request $request)
-    {
-        $profileData = Auth::guard('web')->user();
-
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
-            'new_password_confirmation' => 'required|same:new_password',
-        ]);
-
-        if (!Hash::check($request->old_password, $profileData->password)) {
-            $notification = array(
-                "message" => "Old password is incorrect", 
-                "alert-type" => "error"
-            );
-
-            return redirect()->back()->with($notification);
-        }
-
-        $profileData = User::find($profileData->id);
-        $profileData->password = Hash::make($request->new_password);
-        $profileData->save();
-
-        $notification = array(
-            "message" => "Password updated successfully", 
-            "alert-type" => "success"
-        );
-
-        return redirect()->back()->with($notification);
-    }
-
 }

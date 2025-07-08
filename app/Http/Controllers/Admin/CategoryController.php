@@ -11,17 +11,48 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class CategoryController extends Controller
 {
+    public function AddCategory()
+    {
+        return view('admin.backend.category.add_category');
+    }
+
     public function AllCategory()
     {
         $category = Category::latest()->get();
         return view('admin.backend.category.all_category', compact('category'));
     }
 
-    public function AddCategory()
+    public function DeleteCategory($id)
     {
-        return view('admin.backend.category.add_category');
+        $category = Category::findOrFail($id);
+        
+        if ($category) {
+            if ($category->image != 'upload/no_image.jpg') {
+                unlink(public_path($category->image));
+            }
+            $category->delete();
+            
+            $notification = array(
+                "message" => "Category deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Category not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
     }
 
+    public function EditCategory($id)
+    {
+        $category = Category::findOrFail($id);
+        return view('admin.backend.category.edit_category', compact('category'));
+    }
+    
     public function StoreCategory(Request $request)
     {        
         if($request->file('image')) {
@@ -51,12 +82,6 @@ class CategoryController extends Controller
         return redirect()->route('all.category')->with($notification);
     }
 
-    public function EditCategory($id)
-    {
-        $category = Category::findOrFail($id);
-        return view('admin.backend.category.edit_category', compact('category'));
-    }
-
     public function UpdateCategory(Request $request)
     {
         $category = Category::findOrFail($request->id);
@@ -83,31 +108,6 @@ class CategoryController extends Controller
             
             $notification = array(
                 "message" => "Category updated successfully", 
-                "alert-type" => "success"
-            );
-            return redirect()->route('all.category')->with($notification);
-        }
-        else {
-            $notification = array(
-                "message" => "Category not found", 
-                "alert-type" => "error"
-            );
-            return redirect()->route('all.category')->with($notification);
-        }
-    }
-
-    public function DeleteCategory($id)
-    {
-        $category = Category::findOrFail($id);
-        
-        if ($category) {
-            if ($category->image != 'upload/no_image.jpg') {
-                unlink(public_path($category->image));
-            }
-            $category->delete();
-            
-            $notification = array(
-                "message" => "Category deleted successfully", 
                 "alert-type" => "success"
             );
             return redirect()->route('all.category')->with($notification);

@@ -18,23 +18,24 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/profile/store', [UserController::class, 'UserProfileStore'])->name('profile.store');
-    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
     Route::get('/change/password', [UserController::class, 'UserChangePassword'])->name('change.password');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/store', [UserController::class, 'UserProfileStore'])->name('profile.store');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
 });
 
 require __DIR__.'/auth.php';
 
+//ADMIN routes
 Route::middleware('admin')->group(function () {
+    Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'AdminProfile'])->name('admin.profile');
-    Route::get('/admin/change/password', [AdminController::class, 'AdminChangePassword'])->name('admin.change.password');
-    Route::post('/admin/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
     Route::post('/admin/password/update', [AdminController::class, 'AdminPasswordUpdate'])->name('admin.password.update');
+    Route::post('/admin/profile/store', [AdminController::class, 'AdminProfileStore'])->name('admin.profile.store');
 });
 
 Route::get('/admin/forget_password', [AdminController::class, 'AdminForgetPassword'])->name('admin.forget_password');
@@ -48,11 +49,11 @@ Route::post('/admin/reset_password_submit', [AdminController::class, 'AdminReset
 
 //CLIENT routes
 Route::middleware('client')->group(function () {
+    Route::get('/client/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
     Route::get('/client/dashboard', [ClientController::class, 'ClientDashboard'])->name('client.dashboard');
     Route::get('/client/profile', [ClientController::class, 'ClientProfile'])->name('client.profile');
-    Route::get('/client/change/password', [ClientController::class, 'ClientChangePassword'])->name('client.change.password');
-    Route::post('/client/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
     Route::post('/client/password/update', [ClientController::class, 'ClientPasswordUpdate'])->name('client.password.update');
+    Route::post('/client/profile/store', [ClientController::class, 'ClientProfileStore'])->name('client.profile.store');
 });
 
 Route::get('/client/login', [ClientController::class, 'ClientLogin'])->name('client.login');
@@ -65,10 +66,10 @@ Route::post('/client/login_submit', [ClientController::class, 'ClientLoginSubmit
 //ALL ADMIN CATEGORY routes
 Route::middleware('admin')->group(function () {
     Route::controller(CategoryController::class)->group(function () {
-        Route::get('/all/category', 'AllCategory')->name('all.category');
         Route::get('/add/category', 'AddCategory')->name('add.category');
-        Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
+        Route::get('/all/category', 'AllCategory')->name('all.category');
         Route::get('/delete/category/{id}', 'DeleteCategory')->name('delete.category');
+        Route::get('/edit/category/{id}', 'EditCategory')->name('edit.category');
         Route::post('/store/category', 'StoreCategory')->name('store.category');
         Route::post('/update/category', 'UpdateCategory')->name('update.category');
     });

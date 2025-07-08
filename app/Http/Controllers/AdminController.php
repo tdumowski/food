@@ -11,14 +11,27 @@ use App\Models\Admin;
 
 class AdminController extends Controller
 {
-    public function AdminLogin()
+    public function AdminChangePassword()
     {
-        return view('admin.login');
+        $id = Auth::guard('admin')->id();
+        $profileData = Admin::find($id);
+
+        return view('admin.admin_change_password', compact('profileData'));
     }
 
     public function AdminDashboard()
     {
         return view('admin.index');
+    }
+
+    public function AdminForgetPassword()
+    {
+        return view('admin.forget_password');
+    }
+
+    public function AdminLogin()
+    {
+        return view('admin.login');
     }
 
     public function AdminLoginSubmit(Request $request)
@@ -49,11 +62,6 @@ class AdminController extends Controller
         return redirect()->route('admin.login')->with('success', 'Logout successful');
     }
 
-    public function AdminForgetPassword()
-    {
-        return view('admin.forget_password');
-    }
-
     public function AdminPasswordSubmit(Request $request) {
         $request->validate([
             'email' => 'required|email',
@@ -80,44 +88,42 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Password reset link sent to your email.');
     }
-
-    public function AdminResetPassword($token, $email)
-    {
-        $admin_data = Admin::where('token', $token)->where('email', $email)->first();
-
-        if (!$admin_data) {
-            return redirect()->route('admin.login')->with('error', 'Invalid token or email');
-        }
-
-        return view('admin.reset_password', compact('token', 'email'));
-    }
-
-    public function AdminResetPasswordSubmit(Request $request)
-    {
-        $request->validate([
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|same:password',
-        ]);
-
-        $admin_data = Admin::where('token', $request->token)->where('email', $request->email)->first();
-
-        if (!$admin_data) {
-            return redirect()->route('admin.login')->with('error', 'Invalid token or email');
-        }
-
-        $admin_data->password = Hash::make($request->password);
-        $admin_data->token = null; // Clear the token after password reset
-        $admin_data->update();
-
-        return redirect()->route('admin.login')->with('success', 'Password reset successful. You can now login.');
-    }
-
     public function AdminProfile()
     {
         $id = Auth::guard('admin')->id();
         $profileData = Admin::find($id);
 
         return view('admin.admin_profile', compact('profileData'));
+    }
+
+    public function AdminPasswordUpdate(Request $request)
+    {
+        $profileData = Auth::guard('admin')->user();
+
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+
+        if (!Hash::check($request->old_password, $profileData->password)) {
+            $notification = array(
+                "message" => "Old password is incorrect", 
+                "alert-type" => "error"
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $profileData->password = Hash::make($request->new_password);
+        $profileData->save();
+
+        $notification = array(
+            "message" => "Password updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->back()->with($notification);
     }
 
     public function AdminProfileStore(Request $request)
@@ -159,42 +165,35 @@ class AdminController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function AdminChangePassword()
+    public function AdminResetPassword($token, $email)
     {
-        $id = Auth::guard('admin')->id();
-        $profileData = Admin::find($id);
+        $admin_data = Admin::where('token', $token)->where('email', $email)->first();
 
-        return view('admin.admin_change_password', compact('profileData'));
-    }
-
-    public function AdminPasswordUpdate(Request $request)
-    {
-        $profileData = Auth::guard('admin')->user();
-
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
-            'new_password_confirmation' => 'required|same:new_password',
-        ]);
-
-        if (!Hash::check($request->old_password, $profileData->password)) {
-            $notification = array(
-                "message" => "Old password is incorrect", 
-                "alert-type" => "error"
-            );
-
-            return redirect()->back()->with($notification);
+        if (!$admin_data) {
+            return redirect()->route('admin.login')->with('error', 'Invalid token or email');
         }
 
-        $profileData->password = Hash::make($request->new_password);
-        $profileData->save();
+        return view('admin.reset_password', compact('token', 'email'));
+    }
 
-        $notification = array(
-            "message" => "Password updated successfully", 
-            "alert-type" => "success"
-        );
+    public function AdminResetPasswordSubmit(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|same:password',
+        ]);
 
-        return redirect()->back()->with($notification);
+        $admin_data = Admin::where('token', $request->token)->where('email', $request->email)->first();
+
+        if (!$admin_data) {
+            return redirect()->route('admin.login')->with('error', 'Invalid token or email');
+        }
+
+        $admin_data->password = Hash::make($request->password);
+        $admin_data->token = null; // Clear the token after password reset
+        $admin_data->update();
+
+        return redirect()->route('admin.login')->with('success', 'Password reset successful. You can now login.');
     }
 
     private function deleteOldImage(string $oldPhotoPath): void

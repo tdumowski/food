@@ -9,14 +9,22 @@ use App\Models\Client;
 
 class ClientController extends Controller
 {
+    public function ClientChangePassword()
+    {
+        $id = Auth::guard('client')->id;
+        $profileData = Client::find($id);
+
+        return view('client.client_change_password', compact('profileData'));
+    }
+
+    public function ClientDashboard()
+    {
+        return view('client.index');
+    }
+
     public function ClientLogin()
     {
         return view('client.client_login');
-    }
-
-    public function ClientRegister()
-    {
-        return view('client.client_register');
     }
 
     public function ClientLoginSubmit(Request $request)
@@ -39,44 +47,41 @@ class ClientController extends Controller
             return redirect()->route('client.login')->with('error', 'Invalid credentials');
         }
     }
-    
+
     public function ClientLogout()
     {
         Auth::guard('client')->logout();
         return redirect()->route('client.login')->with('success', 'Logout successful');
     }
-
-    public function ClientRegisterSubmit(Request $request)
+    
+    public function ClientPasswordUpdate(Request $request)
     {
+        $profileData = Auth::guard('client')->user();
+
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:clients,email',
-            'phone' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'password' => 'required|string|min:6',
+            'old_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',
+            'new_password_confirmation' => 'required|same:new_password',
         ]);
 
-        $client = new Client();
-        $client->name = $request->name;
-        $client->email = $request->email;
-        $client->phone = $request->phone;
-        $client->address = $request->address;
-        $client->password = Hash::make($request->password);
-        $client->role = "client";
-        $client->status = 0;
-        $client->save();
+        if (!Hash::check($request->old_password, $profileData->password)) {
+            $notification = array(
+                "message" => "Old password is incorrect", 
+                "alert-type" => "error"
+            );
+
+            return redirect()->back()->with($notification);
+        }
+
+        $profileData->password = Hash::make($request->new_password);
+        $profileData->save();
 
         $notification = array(
-            "message" => "Client registered successfully", 
+            "message" => "Password updated successfully", 
             "alert-type" => "success"
         );
 
-        return redirect()->route("client.login")->with($notification);
-    }
-
-    public function ClientDashboard()
-    {
-        return view('client.index');
+        return redirect()->back()->with($notification);
     }
 
     public function ClientProfile()
@@ -125,6 +130,39 @@ class ClientController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    public function ClientRegister()
+    {
+        return view('client.client_register');
+    }
+
+    public function ClientRegisterSubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:clients,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $client = new Client();
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+        $client->address = $request->address;
+        $client->password = Hash::make($request->password);
+        $client->role = "client";
+        $client->status = 0;
+        $client->save();
+
+        $notification = array(
+            "message" => "Client registered successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route("client.login")->with($notification);
+    }
     
     private function deleteOldImage(string $oldPhotoPath): void
     {
@@ -133,43 +171,5 @@ class ClientController extends Controller
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
-    }
-    
-    public function ClientChangePassword()
-    {
-        $id = Auth::guard('client')->id;
-        $profileData = Client::find($id);
-
-        return view('client.client_change_password', compact('profileData'));
-    }
-    
-    public function ClientPasswordUpdate(Request $request)
-    {
-        $profileData = Auth::guard('client')->user();
-
-        $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
-            'new_password_confirmation' => 'required|same:new_password',
-        ]);
-
-        if (!Hash::check($request->old_password, $profileData->password)) {
-            $notification = array(
-                "message" => "Old password is incorrect", 
-                "alert-type" => "error"
-            );
-
-            return redirect()->back()->with($notification);
-        }
-
-        $profileData->password = Hash::make($request->new_password);
-        $profileData->save();
-
-        $notification = array(
-            "message" => "Password updated successfully", 
-            "alert-type" => "success"
-        );
-
-        return redirect()->back()->with($notification);
     }
 }
