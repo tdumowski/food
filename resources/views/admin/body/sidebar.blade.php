@@ -29,7 +29,7 @@
                     </ul>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-calendar.html">
+                            <a href="{{ route('add.category') }}">
                                 <span data-key="t-calendar">Add Category</span>
                             </a>
                         </li>
