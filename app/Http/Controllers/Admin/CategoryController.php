@@ -54,6 +54,28 @@ class CategoryController extends Controller
         }
     }
 
+    public function DeleteCity($id)
+    {
+        $city = City::findOrFail($id);
+        
+        if ($city) {
+            $city->delete();
+            
+            $notification = array(
+                "message" => "City deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.city')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "City not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->route('all.city')->with($notification);
+        }
+    }
+
     public function EditCategory($id)
     {
         $category = Category::findOrFail($id);
@@ -147,5 +169,29 @@ class CategoryController extends Controller
             );
             return redirect()->route('all.category')->with($notification);
         }
+    }
+    
+    public function UpdateCity(Request $request)
+    {
+        echo $request->city_id;
+        $city = City::findOrFail($request->city_id);
+
+        if($city) {
+            $city->name = $request->name;
+            $city->slug = strtolower(str_replace(' ', '-', $request->name));
+            $city->save();
+            
+            $notification = array(
+                "message" => "City updated successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->back()->with($notification);
+        }
+
+        $notification = array(
+            "message" => "City not found", 
+            "alert-type" => "error"
+        );
+        return redirect()->back()->with($notification);
     }
 }

@@ -44,7 +44,7 @@
                                     <td>
                                         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myEdit" 
                                             id="{{ $city->id }}" onclick='cityEdit(this.id)''>Edit</button>
-                                        <a href="{{ route('delete.category', $city->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        <a href="{{ route('delete.city', $city->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -97,10 +97,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="myForm" action="{{ route('city.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('city.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <input type="hidden" name="editName_id" id="editName_id" value="{{ $city ->id }}">
+                    <input type="hidden" name="city_id" id="city_id" value="{{ $city ->id }}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div>
@@ -128,7 +128,7 @@
             dataType: 'json',
             success: function(response) {
                 $('#editName').val(response.name);
-                $('#editName_id').val(response.id);
+                $('#city_id').val(response.id);
                 // $('form#myForm').attr('action', '/update/city/' + response.city.id);
             }
         });
