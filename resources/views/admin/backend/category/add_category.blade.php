@@ -27,7 +27,7 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card">
                     <div class="card-body p-4">
-                        <form id="myForm" action="{{ route('admin.profile.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('store.category') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
