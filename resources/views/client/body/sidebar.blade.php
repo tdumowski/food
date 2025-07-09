@@ -18,12 +18,17 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="grid"></i>
-                        <span data-key="t-apps">Apps</span>
+                        <span data-key="t-apps">Menu</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
+                            <a href="{{ route('all.menu') }}">
+                                <span data-key="t-calendar">All menu</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="apps-calendar.html">
-                                <span data-key="t-calendar">Calendar</span>
+                                <span data-key="t-calendar">Add menu</span>
                             </a>
                         </li>
                     </ul>
