@@ -43,15 +43,15 @@ class CategoryController extends Controller
                 "message" => "Category deleted successfully", 
                 "alert-type" => "success"
             );
-            return redirect()->route('all.category')->with($notification);
         }
         else {
             $notification = array(
                 "message" => "Category not found", 
                 "alert-type" => "error"
             );
-            return redirect()->route('all.category')->with($notification);
         }
+
+        return redirect()->route('all.category')->with($notification);
     }
 
     public function DeleteCity($id)

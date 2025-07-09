@@ -25,7 +25,38 @@ class RestaurantController extends Controller
 
         return view('client.backend.menu.all_menu', compact('menus'));
     }
+
+    public function DeleteMenu($id)
+    {
+        $menu = Menu::findOrFail($id);
         
+        if ($menu) {
+            if ($menu->image != 'upload/no_image.jpg') {
+                unlink(public_path($menu->image));
+            }
+            $menu->delete();
+            
+            $notification = array(
+                "message" => "Menu deleted successfully", 
+                "alert-type" => "success"
+            );
+        }
+        else {
+            $notification = array(
+                "message" => "Menu not found", 
+                "alert-type" => "error"
+            );
+        }
+
+        return redirect()->route('all.menu')->with($notification);
+    }
+
+    public function EditMenu($id)
+    {
+        $menu = menu::findOrFail($id);
+        return view('client.backend.menu.edit_menu', compact('menu'));
+    }
+
     public function StoreMenu(Request $request)
     {        
         if($request->file('image')) {
@@ -53,6 +84,45 @@ class RestaurantController extends Controller
             "alert-type" => "success"
         );
         return redirect()->route('all.menu')->with($notification);
+    }
+
+    public function UpdateMenu(Request $request)
+    {
+        $menu = Menu::findOrFail($request->id);
+        
+        if($menu) {
+            if($request->file('image')) {
+                $image = $request->file('image');
+                $manager = new ImageManager(new Driver());
+                $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                $img = $manager->read($image);
+                $save_url = 'upload/menu/'.$imageName;
+                $img->resize(300, 300)->save(public_path($save_url));
+                
+                // Delete old image
+                if ($menu->image != 'upload/no_image.jpg') {
+                    unlink(public_path($menu->image));
+                }
+                
+                $menu->image = $save_url;
+            }
+
+            $menu->name = $request->name;
+            $menu->save();
+            
+            $notification = array(
+                "message" => "Menu updated successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.menu')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Category not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->route('all.category')->with($notification);
+        }
     }
 
 }
