@@ -89,11 +89,12 @@ Route::middleware('admin')->group(function () {
 
 Route::middleware('client')->group(function () {
     Route::controller(RestaurantController::class)->group(function () {
+        Route::get('/add/menu', 'AddMenu')->name('add.menu');
         Route::get('/all/menu', 'AllMenu')->name('all.menu');
+        Route::post('/store/menu', 'StoreMenu')->name('menu.store');
         // Route::get('/add/category', 'AddCategory')->name('add.category');
         // Route::get('/delete/city/{id}', 'DeleteCity')->name('delete.city');
         // Route::get('/edit/city/{id}', 'EditCity');
-        // Route::post('/store/city', 'StoreCity')->name('city.store');
         // Route::post('/update/city', 'UpdateCity')->name('city.update');
     });
 });

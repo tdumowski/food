@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps-calendar.html">
+                            <a href="{{ route('add.menu') }}">
                                 <span data-key="t-calendar">Add menu</span>
                             </a>
                         </li>
