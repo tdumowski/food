@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.menu') }}" class="btn btn-primary waves-effect waves-light">Add product</a>
+                            <a href="{{ route('add.product') }}" class="btn btn-primary waves-effect waves-light">Add product</a>
                         </ol>
                     </div>
 

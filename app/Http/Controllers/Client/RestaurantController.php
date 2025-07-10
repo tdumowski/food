@@ -11,6 +11,7 @@ use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\City;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 
 class RestaurantController extends Controller
@@ -79,6 +80,10 @@ class RestaurantController extends Controller
 
     public function StoreMenu(Request $request)
     {        
+        $menu = new Menu();
+        $menu->name = $request->name;
+        $menu->image = 'upload/no_image.jpg';
+
         if($request->file('image')) {
             $image = $request->file('image');
             $manager = new ImageManager(new Driver());
@@ -87,23 +92,75 @@ class RestaurantController extends Controller
             $save_url = 'upload/menu/'.$imageName;
             $img->resize(300, 300)->save(public_path($save_url));
             
-            $menu = new Menu();
-            $menu->name = $request->name;
             $menu->image = $save_url;
-            $menu->save();
         }
-        else {
-            $menu = new Menu();
-            $menu->name = $request->name;
-            $menu->image = 'upload/no_image.jpg';
-            $menu->save();
+
+        if($menu->save()) {
+            $notification = array(
+                "message" => "Menu added successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.menu')->with($notification);
         }
         
         $notification = array(
-            "message" => "Menu added successfully", 
-            "alert-type" => "success"
+            "message" => "Menu NOT added, please try again", 
+            "alert-type" => "error"
         );
-        return redirect()->route('all.menu')->with($notification);
+        return redirect()->back()->with($notification);
+    }
+
+    public function StoreProduct(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'image' => 'required|image',
+            'category_id' => 'required',
+            'menu_id' => 'required',
+            'city_id' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+        $product = new Product();
+        $product->name = $request->name;
+        $product->slug = strtolower(str_replace(' ', '-', $request->name));
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+        $product->menu_id = $request->menu_id;
+        $product->code = IdGenerator::generate(['table' => 'products', 'field' => 'code', 'length' => 5, 'prefix' => 'PC']);
+        $product->qty = $request->qty;
+        $product->size = $request->size;
+        $product->price = $request->price;
+        $product->discount_price = $request->discount_price;
+        $product->image = 'upload/no_image.jpg';
+        $product->client_id = Auth::guard('client')->id();
+        $product->most_popular = $request->most_popular;
+        $product->best_seller = $request->best_seller;
+        $product->status = 1;
+
+        if($request->file('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/product/'.$imageName;
+            $img->resize(300, 300)->save(public_path($save_url));
+            $product->image = $save_url;
+        }
+
+        if($product->save()) {
+            $notification = array(
+                "message" => "Product added successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+
+        $notification = array(
+            "message" => "Product NOT added, please try again", 
+            "alert-type" => "error"
+        );
+        return redirect()->back()->with($notification);
     }
 
     public function UpdateMenu(Request $request)

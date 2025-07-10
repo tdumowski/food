@@ -25,8 +25,8 @@ return new class extends Migration
             $table->decimal('discount_price', 6, 2)->nullable();
             $table->string('image')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->string('most_popular')->nullable();
-            $table->string('best_seller')->nullable();
+            $table->tinyInteger('most_popular')->nullable();
+            $table->tinyInteger('best_seller')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

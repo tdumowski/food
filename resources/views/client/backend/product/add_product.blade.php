@@ -27,14 +27,14 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="card">
                     <div class="card-body p-4">
-                        <form id="myForm" action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Category</label>
-                                        <select class="form-select">
+                                        <select name="category_id" class="form-select">
                                             <option value="" disabled selected hidden>Please choose...</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -45,7 +45,7 @@
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Menu</label>
-                                        <select class="form-select">
+                                        <select name="menu_id" class="form-select">
                                             <option value="" disabled selected hidden>Please choose...</option>
                                             @foreach($menus as $menu)
                                                 <option value="{{ $menu->id }}">{{ $menu->name }}</option>
@@ -56,7 +56,7 @@
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">City</label>
-                                        <select class="form-select">
+                                        <select name="city_id" class="form-select">
                                             <option value="" disabled selected hidden>Please choose...</option>
                                             @foreach($cities as $city)
                                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -73,25 +73,25 @@
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Price</label>
-                                        <input class="form-control" name="name" type="text" id="example-text-input">
+                                        <input class="form-control" name="price" type="text" id="example-text-input">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Discount price</label>
-                                        <input class="form-control" name="name" type="text" id="example-text-input">
+                                        <input class="form-control" name="discount_price" type="text" id="example-text-input">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Size</label>
-                                        <input class="form-control" name="name" type="text" id="example-text-input">
+                                        <input class="form-control" name="size" type="text" id="example-text-input">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
                                     <div class="form-group mb-3">
                                         <label for="example-text-input" class="form-label">Quantity</label>
-                                        <input class="form-control" name="name" type="text" id="example-text-input">
+                                        <input class="form-control" name="qty" type="text" id="example-text-input">
                                     </div>
                                 </div>
                                 <div class="col-xl-6 col-md-6">
@@ -107,15 +107,15 @@
                                     </div>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="formCheck1">
+                                    <input name="best_seller" class="form-check-input" type="checkbox" id="formCheck1" value="1">
                                     <label class="form-check-label" for="formCheck1">
                                         Best Seller
                                     </label>
                                 </div>
                                 <div class="form-check mt-2">
-                                    <input class="form-check-input" type="checkbox" id="formCheck2">
+                                    <input name="most_popular" class="form-check-input" type="checkbox" id="formCheck2" value="1">
                                     <label class="form-check-label" for="formCheck2">
-                                        Special Offer
+                                        Most Popular
                                     </label>
                                 </div>
                                 <div class="mt-4">
@@ -154,17 +154,41 @@
             rules: {
                 name: {
                     required : true,
-                }, 
+                },
                 image: {
+                    required : true,
+                },
+                category_id: {
+                    required : true,
+                }, 
+                menu_id: {
+                    required : true,
+                }, 
+                city_id: {
+                    required : true,
+                }, 
+                price: {
                     required : true,
                 }, 
             },
             messages :{
                 name: {
-                    required : 'Please enter Category name',
+                    required : 'Please enter product name',
                 }, 
                 image: {
                     required : 'Please select image file',
+                }, 
+                category_id: {
+                    required : 'Please select product category',
+                }, 
+                menu_id: {
+                    required : 'Please select menu',
+                }, 
+                city_id: {
+                    required : 'Please select city',
+                }, 
+                price: {
+                    required : 'Please input product price',
                 }, 
             },
             errorElement : 'span', 
