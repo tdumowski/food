@@ -9,6 +9,8 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use App\Models\Menu;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\City;
 
 
 class RestaurantController extends Controller
@@ -20,7 +22,10 @@ class RestaurantController extends Controller
     
     public function AddProduct()
     {
-        return view('client.backend.product.add_product');
+        $categories = Category::orderBy('name')->get();
+        $cities = City::orderBy('name')->get();
+        $menus = Menu::orderBy('name')->get();
+        return view('client.backend.product.add_product', compact('categories', 'cities', 'menus'));
     }
     
     public function AllMenu()
