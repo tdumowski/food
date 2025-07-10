@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use App\Models\Menu;
+use App\Models\Product;
 
 
 class RestaurantController extends Controller
@@ -17,6 +18,11 @@ class RestaurantController extends Controller
         return view('client.backend.menu.add_menu');
     }
     
+    public function AddProduct()
+    {
+        return view('client.backend.product.add_product');
+    }
+    
     public function AllMenu()
     {
         $id = Auth::guard('client')->id();
@@ -24,6 +30,15 @@ class RestaurantController extends Controller
         $menus = Menu::orderBy('id', 'desc')->get();
 
         return view('client.backend.menu.all_menu', compact('menus'));
+    }
+    
+    public function AllProduct()
+    {
+        $id = Auth::guard('client')->id();
+        // $menus = Menu::where('client_id', $id)->orderBy('id', 'desc')->get();
+        $products = Product::orderBy('id', 'desc')->get();
+
+        return view('client.backend.product.all_product', compact('products'));
     }
 
     public function DeleteMenu($id)
