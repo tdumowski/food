@@ -32,8 +32,8 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Menu</th>
-                                    <th>Price</th>
                                     <th>Quantity</th>
+                                    <th>Price</th>
                                     <th>Discount</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -46,10 +46,21 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td><img src={{ asset($product->image) }} alt="" style="width: 70px; height:40px;"></td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->menu_id }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td>{{ $product->menu->name }}</td>
                                     <td>{{ $product->qty }}</td>
-                                    <td>{{ $product->discount_price }}</td>
+                                    <td>{{ $product->price }}</td>
+                                    <td>
+                                        @if (is_null($product->discount_price))
+                                            <span class="badge bg-danger">No Discount</span>
+                                        @else
+                                            @php
+                                                $discount = $product->price - $product->discount_price;
+                                                $discountPercentage = ($discount / $product->price) * 100;
+                                            @endphp
+                                            <span class="badge bg-success">{{ round($discountPercentage) }}%</span>
+                                        @endif
+                                        
+                                    </td>
                                     <td>
                                         @if ( $product->status == 1)
                                             {{-- <span class="badge bg-success">Active</span> --}}
@@ -59,8 +70,8 @@
                                             {{-- <span class="badge bg-danger">Inactive</span> --}}
                                         @endif</td>
                                     <td>
-                                        <a href="{{ route('edit.menu', $product->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.menu', $product->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        <a href="{{ route('edit.menu', $product->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ route('delete.menu', $product->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
