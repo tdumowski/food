@@ -23,12 +23,31 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
                             <a href="{{ route('all.menu') }}">
-                                <span data-key="t-calendar">All menu</span>
+                                <span data-key="t-calendar">All menus</span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('add.menu') }}">
                                 <span data-key="t-calendar">Add menu</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Product</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.menu') }}">
+                                <span data-key="t-calendar">All products</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('add.menu') }}">
+                                <span data-key="t-calendar">Add product</span>
                             </a>
                         </li>
                     </ul>
