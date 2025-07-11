@@ -55,6 +55,25 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Gallery</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.gallery') }}">
+                                <span data-key="t-calendar">All gallery</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('add.product') }}">
+                                <span data-key="t-calendar">Add gallery</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
                         <span data-key="t-authentication">Authentication</span>
                     </a>

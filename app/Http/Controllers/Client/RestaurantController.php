@@ -11,6 +11,7 @@ use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\Gallery;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 
@@ -29,11 +30,18 @@ class RestaurantController extends Controller
         return view('client.backend.product.add_product', compact('categories', 'cities', 'menus'));
     }
     
+    public function AllGallery()
+    {
+        $galleries = Gallery::orderBy('id')->get();
+
+        return view('client.backend.gallery.all_gallery', compact('galleries'));
+    }
+    
     public function AllMenu()
     {
         $id = Auth::guard('client')->id();
         // $menus = Menu::where('client_id', $id)->orderBy('id', 'desc')->get();
-        $menus = Menu::orderBy('id', 'desc')->get();
+        $menus = Menu::orderBy('name')->get();
 
         return view('client.backend.menu.all_menu', compact('menus'));
     }
@@ -42,7 +50,7 @@ class RestaurantController extends Controller
     {
         $id = Auth::guard('client')->id();
         // $menus = Menu::where('client_id', $id)->orderBy('id', 'desc')->get();
-        $products = Product::orderBy('id', 'desc')->get();
+        $products = Product::orderBy('name')->get();
 
         return view('client.backend.product.all_product', compact('products'));
     }

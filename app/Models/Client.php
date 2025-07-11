@@ -18,7 +18,7 @@ class Client extends Authenticatable
      * @var list<string>
      */
 
-     protected $guard = 'client'; //specify the guard for this model
+    protected $guard = 'client'; //specify the guard for this model
     // This is useful if you have multiple user types and want to differentiate them.
     // For example, you might have 'admin', 'user', etc. in your config/auth.php
     // and you want to use this model with the 'admin' guard.

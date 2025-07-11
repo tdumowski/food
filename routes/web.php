@@ -106,4 +106,14 @@ Route::middleware('client')->group(function () {
         Route::post('/store/product', 'StoreProduct')->name('product.store');
         Route::post('/update/product', 'UpdateProduct')->name('product.update');
     });
+
+    Route::controller(RestaurantController::class)->group(function () {
+        // Route::get('/add/product', 'AddProduct')->name('add.product');
+        Route::get('/all/gallery', 'AllGallery')->name('all.gallery');
+        // Route::get('/changeStatus', 'ChangeStatus');
+        // Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
+        // Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
+        // Route::post('/store/product', 'StoreProduct')->name('product.store');
+        // Route::post('/update/product', 'UpdateProduct')->name('product.update');
+    });
 });
