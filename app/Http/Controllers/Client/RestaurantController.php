@@ -17,6 +17,11 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class RestaurantController extends Controller
 {
+    public function Addgallery()
+    {
+        return view('client.backend.gallery.add_gallery');
+    }
+    
     public function AddMenu()
     {
         return view('client.backend.menu.add_menu');
@@ -170,6 +175,30 @@ class RestaurantController extends Controller
             "alert-type" => "error"
         );
         return redirect()->back()->with($notification);
+    }
+
+    public function StoreGallery(Request $request)
+    {        
+        $images = $request->file('images');
+
+        foreach($images as $key => $image) {
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/gallery/'.$imageName;
+            $img->resize(500, 500)->save(public_path($save_url));
+   
+            $gallery = new Gallery();
+            $gallery->client_id = Auth::guard('client')->id();
+            $gallery->image = $save_url;
+            $gallery->save();
+        }
+        
+        $notification = array(
+            "message" => "Gallery added successfully", 
+            "alert-type" => "success"
+        );
+        return redirect()->route('all.gallery')->with($notification);
     }
 
     public function StoreProduct(Request $request)
