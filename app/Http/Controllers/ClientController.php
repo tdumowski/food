@@ -111,13 +111,28 @@ class ClientController extends Controller
         $profileData->email = $request->email;
         $profileData->phone = $request->phone;
         $profileData->address = $request->address;
-        $oldPhotoPath = $profileData->photo;
+        $profileData->city_id = $request->city_id;
+        $profileData->shop_info = $request->shop_info;
 
         if ($request->hasFile('photo')) {
+            $oldPhotoPath = $profileData->photo;
             $file = $request->file('photo');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/client_images'), $filename);
             $profileData->photo = $filename;
+
+            if($oldPhotoPath && $oldPhotoPath !== $filename) {
+                // Delete old photo if it exists
+                $this->deleteOldImage($oldPhotoPath);
+            }
+        }
+
+        if ($request->hasFile('cover_image')) {
+            $oldPhotoPath = $profileData->cover_image;
+            $file = $request->file('cover_image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('upload/client_images'), $filename);
+            $profileData->cover_image = $filename;
 
             if($oldPhotoPath && $oldPhotoPath !== $filename) {
                 // Delete old photo if it exists

@@ -84,19 +84,22 @@
                                         <select name="city_id" class="form-select">
                                             <option value="" disabled selected hidden>Please choose...</option>
                                             @foreach($cities as $city)
-                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                <option value="{{ $city->id }}"
+                                                    {{ $profileData->city_id == $city->id ? "selected" : "" }}>
+                                                    {{ $city->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Restaurant info</label>
-                                        <textarea name="shop_info" id="basicpill-address-input" class="form-control" rows="2" placeholder="Enter the shop info"></textarea>
+                                        <textarea name="shop_info" id="basicpill-address-input" class="form-control" rows="2" placeholder="Enter the shop info">{{ $profileData->shop_info }}</textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="example-text-input" class="form-label">Cover image</label>
                                         <input class="form-control" name="cover_image" type="file" id="cover_image">
                                     </div>
-                                    <img id="showImage" src="{{ (!empty($profileData->cover_image)) ? url('upload/client_images/' . $profileData->cover_image) : 
+                                    <img id="showCoverImage" src="{{ (!empty($profileData->cover_image)) ? url('upload/client_images/' . $profileData->cover_image) : 
                                             url('upload/no_image.jpg') }}" alt="" class="p-1 bg-primary" width="210" height="100">
                                 </div>
                             </div>
@@ -141,6 +144,14 @@
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        $('#cover_image').change(function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#showCoverImage').attr('src', e.target.result);
             }
             reader.readAsDataURL(e.target.files[0]);
         });

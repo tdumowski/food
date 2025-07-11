@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('clients', function (Blueprint $table) {
             $table->unsignedBigInteger('city_id')->after("address")->nullable();
             $table->text('shop_info')->after("address")->nullable();
-            $table->string('image')->after("address")->nullable();
+            $table->string('cover_image')->after("address")->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
         Schema::table('clients', function (Blueprint $table) {
             $table->dropColumn('city_id');
             $table->dropColumn('shop_info');
-            $table->dropColumn('image');
+            $table->dropColumn('cover_image');
         });
     }
 };
