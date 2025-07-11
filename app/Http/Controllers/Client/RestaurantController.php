@@ -97,6 +97,31 @@ class RestaurantController extends Controller
         return redirect()->route('all.menu')->with($notification);
     }
 
+    public function DeleteGallery($id)
+    {
+        $gallery = Gallery::findOrFail($id);
+        
+        if ($gallery) {
+            if ($gallery->image != 'upload/no_image.jpg') {
+                unlink(public_path($gallery->image));
+            }
+            $gallery->delete();
+            
+            $notification = array(
+                "message" => "Gallery deleted successfully", 
+                "alert-type" => "success"
+            );
+        }
+        else {
+            $notification = array(
+                "message" => "Gallery not found", 
+                "alert-type" => "error"
+            );
+        }
+
+        return redirect()->route('all.gallery')->with($notification);
+    }
+
     public function DeleteProduct($id)
     {
         $product = Product::findOrFail($id);
@@ -129,9 +154,15 @@ class RestaurantController extends Controller
         return redirect()->route('all.product')->with($notification);
     }
 
+    public function EditGallery($id)
+    {
+        $gallery = Gallery::findOrFail($id);
+        return view('client.backend.gallery.edit_gallery', compact('gallery'));
+    }
+
     public function EditMenu($id)
     {
-        $menu = menu::findOrFail($id);
+        $menu = Menu::findOrFail($id);
         return view('client.backend.menu.edit_menu', compact('menu'));
     }
     
@@ -252,6 +283,53 @@ class RestaurantController extends Controller
             "alert-type" => "error"
         );
         return redirect()->back()->with($notification);
+    }
+
+    public function UpdateGallery(Request $request)
+    {
+        $gallery = Gallery::findOrFail($request->id);
+        
+        if($gallery) {
+            if($request->file('image')) {
+                $image = $request->file('image');
+                $manager = new ImageManager(new Driver());
+                $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+                $img = $manager->read($image);
+                $save_url = 'upload/gallery/'.$imageName;
+                $img->resize(500, 500)->save(public_path($save_url));
+                
+                // Delete old image
+                if ($gallery->image != 'upload/no_image.jpg') {
+                    unlink(public_path($gallery->image));
+                }
+                
+                $gallery->image = $save_url;
+
+                $gallery->save();
+                
+                $notification = array(
+                    "message" => "Gallery image updated successfully", 
+                    "alert-type" => "success"
+                );
+                return redirect()->route('all.gallery')->with($notification);
+            }
+            else {
+                $notification = array(
+                    "message" => "Please select image file for update", 
+                    "alert-type" => "warning"
+                );
+                return redirect()->back()->with($notification);
+
+            }
+
+        }
+        else {
+            $notification = array(
+                "message" => "Gallery not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 
     public function UpdateMenu(Request $request)

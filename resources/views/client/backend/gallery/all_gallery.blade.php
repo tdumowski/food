@@ -40,8 +40,8 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td><img src={{ asset($gallery->image) }} alt="" style="width: 70px; height:40px;"></td>
                                     <td>
-                                        <a href="{{ route('edit.menu', $gallery->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.menu', $gallery->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        <a href="{{ route('edit.gallery', $gallery->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        <a href="{{ route('delete.gallery', $gallery->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
