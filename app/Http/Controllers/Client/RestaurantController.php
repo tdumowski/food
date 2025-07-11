@@ -47,6 +47,18 @@ class RestaurantController extends Controller
         return view('client.backend.product.all_product', compact('products'));
     }
 
+    public function ChangeStatus(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        $product->status = $request->status;
+        
+        if ($product->save()) {
+            return response()->json(['success' => 'Status changed successfully']);
+        } else {
+            return response()->json(['error' => 'Failed to change status']);
+        }
+    }
+
     public function DeleteMenu($id)
     {
         $menu = Menu::findOrFail($id);
