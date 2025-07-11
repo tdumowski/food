@@ -101,7 +101,7 @@ Route::middleware('client')->group(function () {
         Route::get('/add/product', 'AddProduct')->name('add.product');
         Route::get('/all/product', 'AllProduct')->name('all.product');
         // Route::get('/delete/menu/{id}', 'DeleteMenu')->name('delete.menu');
-        // Route::get('/edit/menu/{id}', 'EditMenu')->name('edit.menu');
+        Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
         Route::post('/store/product', 'StoreProduct')->name('product.store');
         // Route::post('/update/menu', 'Updatemenu')->name('menu.update');
     });

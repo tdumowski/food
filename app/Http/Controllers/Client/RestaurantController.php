@@ -77,6 +77,16 @@ class RestaurantController extends Controller
         $menu = menu::findOrFail($id);
         return view('client.backend.menu.edit_menu', compact('menu'));
     }
+    
+    public function EditProduct()
+    {
+        $categories = Category::orderBy('name')->get();
+        $cities = City::orderBy('name')->get();
+        $menus = Menu::orderBy('name')->get();
+        $product = Product::findOrFail(request()->id);
+
+        return view('client.backend.product.edit_product', compact('categories', 'cities', 'menus', 'product'));
+    }
 
     public function StoreMenu(Request $request)
     {        

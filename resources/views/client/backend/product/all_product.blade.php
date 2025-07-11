@@ -70,7 +70,7 @@
                                             {{-- <span class="badge bg-danger">Inactive</span> --}}
                                         @endif</td>
                                     <td>
-                                        <a href="{{ route('edit.menu', $product->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ route('edit.product', $product->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="{{ route('delete.menu', $product->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
