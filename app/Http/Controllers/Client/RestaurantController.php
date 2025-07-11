@@ -72,6 +72,38 @@ class RestaurantController extends Controller
         return redirect()->route('all.menu')->with($notification);
     }
 
+    public function DeleteProduct($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        if ($product) {
+            if ($product->image != 'upload/no_image.jpg') {
+                unlink(public_path($product->image));
+            }
+
+            if($product->delete()) {
+                $notification = array(
+                    "message" => "Product deleted successfully", 
+                    "alert-type" => "success"
+                );
+            }
+            else {
+                $notification = array(
+                    "message" => "Product NOT deleted, please try again", 
+                    "alert-type" => "success"
+                );
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Menu not found", 
+                "alert-type" => "error"
+            );
+        }
+
+        return redirect()->route('all.product')->with($notification);
+    }
+
     public function EditMenu($id)
     {
         $menu = menu::findOrFail($id);
@@ -210,6 +242,44 @@ class RestaurantController extends Controller
             );
             return redirect()->route('all.category')->with($notification);
         }
+    }
+
+    public function UpdateProduct(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required',
+            'menu_id' => 'required',
+            'city_id' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+        $product = Product::findOrFail($request->id);
+        $product->name = $request->name;
+        $product->slug = strtolower(str_replace(' ', '-', $request->name));
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+        $product->menu_id = $request->menu_id;
+        $product->qty = $request->qty;
+        $product->size = $request->size;
+        $product->price = $request->price;
+        $product->discount_price = $request->discount_price;
+        $product->most_popular = $request->most_popular;
+        $product->best_seller = $request->best_seller;
+
+        if($product->save()) {
+            $notification = array(
+                "message" => "Product updated successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.product')->with($notification);
+        }
+
+        $notification = array(
+            "message" => "Product NOT updated, please try again", 
+            "alert-type" => "error"
+        );
+        return redirect()->back()->with($notification);
     }
 
 }
