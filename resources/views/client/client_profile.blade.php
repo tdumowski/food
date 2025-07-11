@@ -79,6 +79,25 @@
                                         <label for="example-text-input" class="form-label">Phone</label>
                                         <input class="form-control" name="phone" type="text" value="{{ $profileData->phone }}" id="example-text-input">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="form-label">City</label>
+                                        <select name="city_id" class="form-select">
+                                            <option value="" disabled selected hidden>Please choose...</option>
+                                            @foreach($cities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="form-label">Restaurant info</label>
+                                        <textarea name="shop_info" id="basicpill-address-input" class="form-control" rows="2" placeholder="Enter the shop info"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="example-text-input" class="form-label">Cover image</label>
+                                        <input class="form-control" name="cover_image" type="file" id="cover_image">
+                                    </div>
+                                    <img id="showImage" src="{{ (!empty($profileData->cover_image)) ? url('upload/client_images/' . $profileData->cover_image) : 
+                                            url('upload/no_image.jpg') }}" alt="" class="p-1 bg-primary" width="210" height="100">
                                 </div>
                             </div>
 
