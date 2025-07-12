@@ -17,7 +17,7 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class RestaurantController extends Controller
 {
-    public function Addgallery()
+    public function AddGallery()
     {
         return view('client.backend.gallery.add_gallery');
     }

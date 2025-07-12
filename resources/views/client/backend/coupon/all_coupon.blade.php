@@ -8,11 +8,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">All Menus</h4>
+                    <h4 class="mb-sm-0 font-size-18">All Coupons</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.menu') }}" class="btn btn-primary waves-effect waves-light">All menu</a>
+                            <a href="{{ route('add.menu') }}" class="btn btn-primary waves-effect waves-light">All Coupons</a>
                         </ol>
                     </div>
 
@@ -30,17 +30,23 @@
                                 <tr>
                                     <th>S/N</th>
                                     <th>Name</th>
-                                    <th>Image</th>
+                                    <th>Description</th>
+                                    <th>Discount</th>
+                                    <th>Validity</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach($menus as $key => $menu)
+                                @foreach($coupons as $key => $coupon)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $menu->name }}</td>
-                                    <td><img src={{ asset($menu->image) }} alt="" style="width: 70px; height:40px;"></td>
+                                    <td>{{ $coupon->name }}</td>
+                                    <td>{{ $coupon->description }}</td>
+                                    <td>{{ $coupon->discount }}</td>
+                                    <td>{{ $coupon->validity }}</td>
+                                    <td>{{ $coupon->status }}</td>
                                     <td>
                                         <a href="{{ route('edit.menu', $menu->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
                                         <a href="{{ route('delete.menu', $menu->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>

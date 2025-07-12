@@ -74,6 +74,25 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">Coupon</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('all.coupon') }}">
+                                <span data-key="t-calendar">All coupon</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('add.product') }}">
+                                <span data-key="t-calendar">Add coupon</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="users"></i>
                         <span data-key="t-authentication">Authentication</span>
                     </a>
