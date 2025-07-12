@@ -120,9 +120,9 @@ Route::middleware('client')->group(function () {
     Route::controller(CouponController::class)->group(function () {
         Route::get('/add/coupon', 'AddCoupon')->name('add.coupon');
         Route::get('/all/coupon', 'AllCoupon')->name('all.coupon');
-        // Route::get('/delete/gallery/{id}', 'DeleteGallery')->name('delete.gallery');
-        // Route::get('/edit/gallery/{id}', 'EditGallery')->name('edit.gallery');
+        Route::get('/delete/coupon/{id}', 'DeleteCoupon')->name('delete.coupon');
+        Route::get('/edit/coupon/{id}', 'EditCoupon')->name('edit.coupon');
         Route::post('/store/coupon', 'StoreCoupon')->name('coupon.store');
-        // Route::post('/update/gallery', 'UpdateGallery')->name('gallery.update');
+        Route::post('/update/coupon', 'UpdateCoupon')->name('coupon.update');
     });
 });

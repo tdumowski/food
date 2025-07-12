@@ -84,7 +84,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('add.product') }}">
+                            <a href="{{ route('add.coupon') }}">
                                 <span data-key="t-calendar">Add coupon</span>
                             </a>
                         </li>
