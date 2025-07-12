@@ -17,7 +17,8 @@ class CouponController extends Controller
     
     public function AllCoupon()
     {
-        $coupons = Coupon::orderBy('name')->get();
+        $client_id = Auth::guard('client')->id();
+        $coupons = Coupon::where('client_id', $client_id)->orderBy('name')->get();
         return view('client.backend.coupon.all_coupon', compact('coupons'));
     }
 

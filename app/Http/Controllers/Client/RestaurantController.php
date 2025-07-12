@@ -29,33 +29,34 @@ class RestaurantController extends Controller
     
     public function AddProduct()
     {
+        $client_id = Auth::guard('client')->id();
         $categories = Category::orderBy('name')->get();
         $cities = City::orderBy('name')->get();
-        $menus = Menu::orderBy('name')->get();
+        $menus = Menu::where('client_id', $client_id)->orderBy('name')->get();
         return view('client.backend.product.add_product', compact('categories', 'cities', 'menus'));
     }
     
     public function AllGallery()
     {
-        $galleries = Gallery::orderBy('id')->get();
+        $client_id = Auth::guard('client')->id();
+        $galleries = Gallery::where('client_id', $client_id)->orderBy('id')->get();
 
         return view('client.backend.gallery.all_gallery', compact('galleries'));
     }
     
     public function AllMenu()
     {
-        $id = Auth::guard('client')->id();
-        // $menus = Menu::where('client_id', $id)->orderBy('id', 'desc')->get();
-        $menus = Menu::orderBy('name')->get();
+        $client_id = Auth::guard('client')->id();
+        $menus = Menu::where('client_id', $client_id)->orderBy('name')->get();
 
         return view('client.backend.menu.all_menu', compact('menus'));
     }
     
     public function AllProduct()
     {
-        $id = Auth::guard('client')->id();
-        // $menus = Menu::where('client_id', $id)->orderBy('id', 'desc')->get();
-        $products = Product::orderBy('name')->get();
+        $client_id = Auth::guard('client')->id(); // <--- get the client ID
+        $menus_id = Menu::where('client_id', $client_id)->pluck('id'); // <--- returns an array of menu IDs for the client
+        $products = Product::whereIn('menu_id', $menus_id)->orderBy('name')->get(); // <--- array of menu IDs used to filter products
 
         return view('client.backend.product.all_product', compact('products'));
     }
@@ -166,14 +167,39 @@ class RestaurantController extends Controller
         return view('client.backend.menu.edit_menu', compact('menu'));
     }
     
-    public function EditProduct()
+    public function EditProduct($id)
     {
+        $client_id = Auth::guard('client')->id();
         $categories = Category::orderBy('name')->get();
         $cities = City::orderBy('name')->get();
-        $menus = Menu::orderBy('name')->get();
-        $product = Product::findOrFail(request()->id);
+        $menus = Menu::where('client_id', $client_id)->orderBy('name')->get();
+        $product = Product::findOrFail($id);
 
         return view('client.backend.product.edit_product', compact('categories', 'cities', 'menus', 'product'));
+    }
+
+    public function StoreGallery(Request $request)
+    {        
+        $images = $request->file('images');
+
+        foreach($images as $key => $image) {
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/gallery/'.$imageName;
+            $img->resize(500, 500)->save(public_path($save_url));
+   
+            $gallery = new Gallery();
+            $gallery->client_id = Auth::guard('client')->id();
+            $gallery->image = $save_url;
+            $gallery->save();
+        }
+        
+        $notification = array(
+            "message" => "Gallery added successfully", 
+            "alert-type" => "success"
+        );
+        return redirect()->route('all.gallery')->with($notification);
     }
 
     public function StoreMenu(Request $request)
@@ -181,6 +207,7 @@ class RestaurantController extends Controller
         $menu = new Menu();
         $menu->name = $request->name;
         $menu->image = 'upload/no_image.jpg';
+        $menu->client_id = Auth::guard('client')->id();
 
         if($request->file('image')) {
             $image = $request->file('image');
@@ -206,30 +233,6 @@ class RestaurantController extends Controller
             "alert-type" => "error"
         );
         return redirect()->back()->with($notification);
-    }
-
-    public function StoreGallery(Request $request)
-    {        
-        $images = $request->file('images');
-
-        foreach($images as $key => $image) {
-            $manager = new ImageManager(new Driver());
-            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-            $img = $manager->read($image);
-            $save_url = 'upload/gallery/'.$imageName;
-            $img->resize(500, 500)->save(public_path($save_url));
-   
-            $gallery = new Gallery();
-            $gallery->client_id = Auth::guard('client')->id();
-            $gallery->image = $save_url;
-            $gallery->save();
-        }
-        
-        $notification = array(
-            "message" => "Gallery added successfully", 
-            "alert-type" => "success"
-        );
-        return redirect()->route('all.gallery')->with($notification);
     }
 
     public function StoreProduct(Request $request)
