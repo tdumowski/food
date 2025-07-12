@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Client\CouponController;
+use App\Http\Controllers\Admin\ManageController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -85,6 +86,14 @@ Route::middleware('admin')->group(function () {
         Route::get('/edit/city/{id}', 'EditCity');
         Route::post('/store/city', 'StoreCity')->name('city.store');
         Route::post('/update/city', 'UpdateCity')->name('city.update');
+    });
+
+    Route::controller(ManageController::class)->group(function () {
+        Route::get('/admin/all/product', 'AdminAllProduct')->name('admin.all.product');
+        // Route::get('/delete/city/{id}', 'DeleteCity')->name('delete.city');
+        // Route::get('/edit/city/{id}', 'EditCity');
+        // Route::post('/store/city', 'StoreCity')->name('city.store');
+        // Route::post('/update/city', 'UpdateCity')->name('city.update');
     });
 });
 
