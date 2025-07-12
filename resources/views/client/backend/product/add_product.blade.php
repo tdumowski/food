@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-xl-4 col-md-6">
                                     <div class="form-group mb-3">
-                                        <label for="example-text-input" class="form-label">Product name</label>
+                                        <label for="example-text-input" class="form-label">Name</label>
                                         <input class="form-control" name="name" type="text" id="example-text-input">
                                     </div>
                                 </div>

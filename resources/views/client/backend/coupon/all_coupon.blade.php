@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.menu') }}" class="btn btn-primary waves-effect waves-light">All Coupons</a>
+                            <a href="{{ route('add.coupon') }}" class="btn btn-primary waves-effect waves-light">Add Coupon</a>
                         </ol>
                     </div>
 
@@ -43,13 +43,19 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $coupon->name }}</td>
-                                    <td>{{ $coupon->description }}</td>
+                                    <td>{{ Str::limit($coupon->description, 25) }}</td>
                                     <td>{{ $coupon->discount }}</td>
-                                    <td>{{ $coupon->validity }}</td>
-                                    <td>{{ $coupon->status }}</td>
+                                    <td>{{ Carbon\carbon::parse($coupon->validity)->format('Y-m-d (D)') }}</td>
                                     <td>
-                                        <a href="{{ route('edit.menu', $menu->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.menu', $menu->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        @if($coupon->validity >= Carbon\Carbon::now()->format('Y-m-d'))
+                                            <span class="badge rounded-pill bg-success">Active</span>
+                                        @else
+                                            <span class="badge rounded-pill bg-danger">Expired</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('edit.menu', $coupon->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        <a href="{{ route('delete.menu', $coupon->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('discount')->nullable();
-            $table->string('validity')->nullable();
+            $table->date('validity')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
