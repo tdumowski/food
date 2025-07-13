@@ -1,8 +1,21 @@
 @extends('client.client_dashboard')
 @section('client')
 
+@php
+    $id = Auth::guard('client')->id();
+    $client = App\Models\Client::findOrFail($id);
+    $status = $client->status;
+@endphp
+
 <div class="page-content">
     <div class="container-fluid">
+
+        @if($status)
+            <h4>Restaurant Account is <span class="text-success">Active</span></h4>
+        @else
+            <h4>Restaurant Account is <span class="text-danger">Inactive</span></h4>
+            <p class="text-danger">Please contact the admin to activate your account.</p>
+        @endif
 
         <!-- start page title -->
         <div class="row">
