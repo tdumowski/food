@@ -108,7 +108,7 @@ Route::middleware('admin')->group(function () {
     });
 });
 
-Route::middleware('client')->group(function () {
+Route::middleware(['client', 'status'])->group(function () {
     Route::controller(RestaurantController::class)->group(function () {
         Route::get('/add/menu', 'AddMenu')->name('add.menu');
         Route::get('/all/menu', 'AllMenu')->name('all.menu');
