@@ -44,7 +44,7 @@
                                     <td>{{ $banner->url }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myEdit" 
-                                            id="{{ $banner->id }}" onclick='cityEdit(this.id)''>Edit</button>
+                                            id="{{ $banner->id }}" onclick='bannerEdit(this.id)''>Edit</button>
                                         <a href="{{ route('delete.city', $banner->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
@@ -103,7 +103,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-{{-- <div id="myEdit" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+<div id="myEdit" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,13 +114,27 @@
                 <form id="myForm" action="{{ route('city.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    <input type="hidden" name="city_id" id="city_id" value="{{ $banner ->id }}">
+                    <input type="hidden" name="banner_id" id="banner_id" value="{{ $banner->id }}">
                     <div class="row">
                         <div class="col-lg-12">
                             <div>
                                 <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-label">Name</label>
-                                    <input class="form-control" name="name" type="text" id="editName">
+                                    <label for="example-text-input" class="form-label">Url</label>
+                                    <input class="form-control" name="url" id="url" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-label">Image</label>
+                                    <input class="form-control" name="image" type="file" id="image">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <img id="showBannerImage" src="{{ url('upload/no_image.jpg') }}" 
+                                        alt="" class="rounded-circle p-1 bg-primary" width="110" height="110">
                                 </div>
                             </div>
                         </div>
@@ -132,7 +146,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal --> --}}
+</div><!-- /.modal -->
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -147,14 +161,16 @@
 </script>
 
 <script>
-    function cityEdit(id) {
+    function bannerEdit(id) {
         $.ajax({
             type: "GET",
-            url: "/edit/city/" + id,
+            url: "/edit/banner/" + id,
             dataType: 'json',
             success: function(response) {
-                $('#editName').val(response.name);
-                $('#city_id').val(response.id);
+                // console.log(response)
+                $('#url').val(response.url);
+                $('#showBannerImage').attr('src', response.image);
+                $('#banner_id').val(response.id);
                 // $('form#myForm').attr('action', '/update/city/' + response.city.id);
             }
         });

@@ -211,6 +211,17 @@ class ManageController extends Controller
         }
     }
 
+    public function EditBanner($id)
+    {
+        $banner = Banner::findOrFail($id);
+
+        if($banner) {
+            $banner->image = asset($banner->image);
+        }
+
+        return response()->json($banner);
+    }
+
     public function PendingRestaurant()
     {
         $restaurants = Client::where('status', 0)->orderBy('name')->get();
