@@ -64,7 +64,7 @@
                     </ul>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="{{ route('add.category') }}">
+                            <a href="{{ route('admin.add.product') }}">
                                 <span data-key="t-calendar">Add Product</span>
                             </a>
                         </li>

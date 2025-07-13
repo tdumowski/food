@@ -89,12 +89,11 @@ Route::middleware('admin')->group(function () {
     });
 
     Route::controller(ManageController::class)->group(function () {
-        // Route::get('/add/product', 'AddProduct')->name('add.product');
+        Route::get('/admin/add/product', 'AdminAddProduct')->name('admin.add.product');
         Route::get('/admin/all/product', 'AdminAllProduct')->name('admin.all.product');
-        // Route::get('/changeStatus', 'ChangeStatus');
         // Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
         // Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
-        // Route::post('/store/product', 'StoreProduct')->name('product.store');
+        Route::post('/admin/store/product', 'AdminStoreProduct')->name('admin.product.store');
         // Route::post('/update/product', 'UpdateProduct')->name('product.update');
     });
 });
@@ -112,7 +111,6 @@ Route::middleware('client')->group(function () {
     Route::controller(RestaurantController::class)->group(function () {
         Route::get('/add/product', 'AddProduct')->name('add.product');
         Route::get('/all/product', 'AllProduct')->name('all.product');
-        Route::get('/changeStatus', 'ChangeStatus');
         Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
         Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
         Route::post('/store/product', 'StoreProduct')->name('product.store');
@@ -136,4 +134,9 @@ Route::middleware('client')->group(function () {
         Route::post('/store/coupon', 'StoreCoupon')->name('coupon.store');
         Route::post('/update/coupon', 'UpdateCoupon')->name('coupon.update');
     });
+});
+
+//routes available for all users
+Route::controller(RestaurantController::class)->group(function () {
+    Route::get('/changeStatus', 'ChangeStatus');
 });
