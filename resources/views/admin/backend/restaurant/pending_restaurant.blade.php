@@ -11,11 +11,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">All Products</h4>
-
+                    <h4 class="mb-sm-0 font-size-18">Pending Restaurants</h4>
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('admin.add.product') }}" class="btn btn-primary waves-effect waves-light">Add product</a>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Pending Restaurants</li>
                         </ol>
                     </div>
 
@@ -28,54 +28,36 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="datatable" class="table table-bordered dt-responsive  nowrap w-100">
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
                             <thead>
                                 <tr>
                                     <th>S/N</th>
                                     <th>Image</th>
                                     <th>Name</th>
-                                    <th>Restaurant</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Discount</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach($products as $key => $product)
+                                @foreach($restaurants as $key => $restaurant)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td><img src={{ asset($product->image) }} alt="" style="width: 70px; height:40px;"></td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->client->name }}</td>
-                                    <td>{{ $product->qty }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td><img src="{{ (!empty($restaurant->photo)) ? url('upload/client_images/' . $restaurant->photo) : url('upload/no_user.png') }}" 
+                                        alt="" style="width: 50px; height:50px;"></td>
+                                    <td>{{ $restaurant->name }}</td>
+                                    <td>{{ $restaurant->email }}</td>
+                                    <td>{{ $restaurant->phone }}</td>
                                     <td>
-                                        @if (is_null($product->discount_price))
-                                            <span class="badge bg-danger">No Discount</span>
-                                        @else
-                                            @php
-                                                $discount = $product->price - $product->discount_price;
-                                                $discountPercentage = ($discount / $product->price) * 100;
-                                            @endphp
-                                            <span class="badge bg-success">{{ round($discountPercentage) }}%</span>
-                                        @endif
-                                        
-                                    </td>
-                                    <td>
-                                        @if ( $product->status == 1)
-                                            {{-- <span class="badge bg-success">Active</span> --}}
+                                        @if ( $restaurant->status == 1)
                                             <span class="text-success"><b>Active</b></span>
                                         @else
                                             <span class="text-danger"><b>Inactive</b></span>
-                                            {{-- <span class="badge bg-danger">Inactive</span> --}}
                                         @endif</td>
                                     <td>
-                                        <a href="{{ route('admin.edit.product', $product->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="{{ route('admin.delete.product', $product->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>
-                                        <input type="checkbox" data-id="{{ $product->id }}" class="toggle-class" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $product->status ? 'checked' : '' }}>
+                                        <input type="checkbox" data-id="{{ $restaurant->id }}" class="toggle-class" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $restaurant->status ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -89,6 +89,16 @@
 </div>
 
 <script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#datatable').DataTable({
+        // ... inne opcje
+            drawCallback: function() {
+                $('input[type="checkbox"][data-toggle="toggle"]').bootstrapToggle();
+            }
+        });
+    });
+
   $(function() {
     $('.toggle-class').change(function() {
         var status = $(this).prop('checked') == true ? 1 : 0; 

@@ -186,4 +186,10 @@ class ManageController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function PendingRestaurant()
+    {
+        $restaurants = Client::where('status', 0)->orderBy('name')->get();
+        return view('admin.backend.restaurant.pending_restaurant', compact('restaurants'));
+    }
+
 }
