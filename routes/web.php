@@ -92,7 +92,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/add/product', 'AdminAddProduct')->name('admin.add.product');
         Route::get('/admin/all/product', 'AdminAllProduct')->name('admin.all.product');
         // Route::get('/delete/product/{id}', 'DeleteProduct')->name('delete.product');
-        // Route::get('/edit/product/{id}', 'EditProduct')->name('edit.product');
+        Route::get('/admin/edit/product/{id}', 'AdminEditProduct')->name('admin.edit.product');
         Route::post('/admin/store/product', 'AdminStoreProduct')->name('admin.product.store');
         // Route::post('/update/product', 'UpdateProduct')->name('product.update');
     });
