@@ -107,6 +107,8 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/banner', 'AllBanner')->name('all.banner');
         Route::get('/edit/banner/{id}', 'EditBanner');
         Route::post('/banner/store', 'StoreBanner')->name('banner.store');
+        Route::post('/banner/update', 'UpdateBanner')->name('banner.update');
+        Route::get('/delete/banner/{id}', 'DeleteBanner')->name('delete.banner');
     });
 });
 

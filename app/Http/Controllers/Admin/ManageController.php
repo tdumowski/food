@@ -211,6 +211,38 @@ class ManageController extends Controller
         }
     }
 
+    public function DeleteBanner($id)
+    {
+        $banner = Banner::findOrFail($id);
+        
+        if ($banner) {
+            if ($banner->image != 'upload/no_image.jpg') {
+                unlink(public_path($banner->image));
+            }
+
+            if($banner->delete()) {
+                $notification = array(
+                    "message" => "Banner deleted successfully", 
+                    "alert-type" => "success"
+                );
+            }
+            else {
+                $notification = array(
+                    "message" => "Banner NOT deleted, please try again", 
+                    "alert-type" => "error"
+                );
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Banner not found", 
+                "alert-type" => "error"
+            );
+        }
+
+        return redirect()->route('all.banner')->with($notification);
+    }
+
     public function EditBanner($id)
     {
         $banner = Banner::findOrFail($id);
@@ -253,5 +285,39 @@ class ManageController extends Controller
         }
 
         return redirect()->back()->with('error', 'Failed to add banner');
+    }
+
+    public function UpdateBanner(Request $request)
+    {
+        $request->validate([
+            'banner_id' => 'required|exists:banners,id',
+            'image' => 'nullable|image',
+            'url' => 'required|string',
+        ]);
+
+        $banner = Banner::findOrFail($request->banner_id);
+        $banner->url = $request->url;
+
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/banner/'.$imageName;
+            $img->resize(400, 400)->save(public_path($save_url));
+
+            // Delete old image
+            if ($banner->image != 'upload/no_image.jpg') {
+                unlink(public_path($banner->image));
+            }
+
+            $banner->image = $save_url;
+        }
+
+        if ($banner->save()) {
+            return redirect()->route('all.banner')->with('success', 'Banner updated successfully');
+        }
+
+        return redirect()->back()->with('error', 'Failed to update banner');
     }
 }

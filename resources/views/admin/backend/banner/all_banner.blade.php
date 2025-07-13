@@ -45,7 +45,7 @@
                                     <td>
                                         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myEdit" 
                                             id="{{ $banner->id }}" onclick='bannerEdit(this.id)''>Edit</button>
-                                        <a href="{{ route('delete.city', $banner->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        <a href="{{ route('delete.banner', $banner->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -111,7 +111,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="myForm" action="{{ route('city.update') }}" method="POST" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('banner.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <input type="hidden" name="banner_id" id="banner_id" value="{{ $banner->id }}">
@@ -130,7 +130,7 @@
                             <div>
                                 <div class="form-group mb-3">
                                     <label for="example-text-input" class="form-label">Image</label>
-                                    <input class="form-control" name="image" type="file" id="image">
+                                    <input class="form-control" name="image" type="file" id="bannerImage">
                                 </div>
                                 <div class="form-group mb-3">
                                     <img id="showBannerImage" src="{{ url('upload/no_image.jpg') }}" 
@@ -154,6 +154,13 @@
             var reader = new FileReader();
             reader.onload = function(e) {
                 $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+        $('#bannerImage').change(function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#showBannerImage').attr('src', e.target.result);
             }
             reader.readAsDataURL(e.target.files[0]);
         });
