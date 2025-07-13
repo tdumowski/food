@@ -217,4 +217,30 @@ class ManageController extends Controller
         return view('admin.backend.restaurant.pending_restaurant', compact('restaurants'));
     }
 
+    public function StoreBanner(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image',
+            'url' => 'required|string',
+        ]);
+
+        $banner = new Banner();
+        $banner->url = $request->url;
+
+        if ($request->file('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/banner/'.$imageName;
+            $img->resize(400, 400)->save(public_path($save_url));
+            $banner->image = $save_url;
+        }
+
+        if ($banner->save()) {
+            return redirect()->route('all.banner')->with('success', 'Banner added successfully');
+        }
+
+        return redirect()->back()->with('error', 'Failed to add banner');
+    }
 }

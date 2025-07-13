@@ -1,5 +1,6 @@
 @extends('admin.admin_dashboard')
 @section('admin')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <div class="page-content">
     <div class="container-fluid">
@@ -43,8 +44,8 @@
                                     <td>{{ $banner->url }}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myEdit" 
-                                            id="{{ $city->id }}" onclick='cityEdit(this.id)''>Edit</button>
-                                        <a href="{{ route('delete.city', $city->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                            id="{{ $banner->id }}" onclick='cityEdit(this.id)''>Edit</button>
+                                        <a href="{{ route('delete.city', $banner->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -62,19 +63,33 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Add city</h5>
+                <h5 class="modal-title" id="myModalLabel">Add Banner</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="myForm" action="{{ route('city.store') }}" method="POST" enctype="multipart/form-data">
+                <form id="myForm" action="{{ route('banner.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div>
                                 <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-label">Name</label>
-                                    <input class="form-control" name="name" type="text">
+                                    <label for="example-text-input" class="form-label">Url</label>
+                                    <input class="form-control" name="url" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-label">Image</label>
+                                    <input class="form-control" name="image" type="file" id="image">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <img id="showImage" src="{{ url('upload/no_image.jpg') }}" 
+                                        alt="" class="rounded-circle p-1 bg-primary" width="110" height="110">
                                 </div>
                             </div>
                         </div>
@@ -88,8 +103,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<div id="myEdit" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
+{{-- <div id="myEdit" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-scroll="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -118,7 +132,19 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal --> --}}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#image').change(function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    });
+</script>
 
 <script>
     function cityEdit(id) {
