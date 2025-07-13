@@ -85,8 +85,8 @@
                     </ul>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="{{ route('admin.add.product') }}">
-                                <span data-key="t-calendar">Approve Restaurantst</span>
+                            <a href="{{ route('approved.restaurant') }}">
+                                <span data-key="t-calendar">Approved Restaurantst</span>
                             </a>
                         </li>
                     </ul>

@@ -98,8 +98,9 @@ Route::middleware('admin')->group(function () {
     });
 
     Route::controller(ManageController::class)->group(function () {
+        Route::get('/approved/restaurant', 'ApprovedRestaurant')->name('approved.restaurant');
+        Route::get('/clientChangeStatus', 'ClientChangeStatus');
         Route::get('/pending/restaurant', 'PendingRestaurant')->name('pending.restaurant');
-        // Route::get('/admin/all/product', 'AdminAllProduct')->name('admin.all.product');
         // Route::get('/admin/delete/product/{id}', 'AdminDeleteProduct')->name('admin.delete.product');
         // Route::get('/admin/edit/product/{id}', 'AdminEditProduct')->name('admin.edit.product');
         // Route::post('/admin/store/product', 'AdminStoreProduct')->name('admin.product.store');
