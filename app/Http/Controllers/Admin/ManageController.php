@@ -22,7 +22,6 @@ class ManageController extends Controller
     {
         $categories = Category::orderBy('name')->get();
         $cities = City::orderBy('name')->get();
-        $clients = Client::orderBy('name')->get();
         $menus = Menu::orderBy('name')->get();
         return view('admin.backend.product.add_product', compact('categories', 'cities', 'menus', 'clients'));
     }
@@ -32,6 +31,38 @@ class ManageController extends Controller
         $products = Product::orderBy('name')->get(); // <--- array of menu IDs used to filter products
 
         return view('admin.backend.product.all_product', compact('products'));
+    }
+
+    public function AdminDeleteProduct($id)
+    {
+        $product = Product::findOrFail($id);
+        
+        if ($product) {
+            if ($product->image != 'upload/no_image.jpg') {
+                unlink(public_path($product->image));
+            }
+
+            if($product->delete()) {
+                $notification = array(
+                    "message" => "Product deleted successfully", 
+                    "alert-type" => "success"
+                );
+            }
+            else {
+                $notification = array(
+                    "message" => "Product NOT deleted, please try again", 
+                    "alert-type" => "success"
+                );
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Menu not found", 
+                "alert-type" => "error"
+            );
+        }
+
+        return redirect()->route('admin.all.product')->with($notification);
     }
     
     public function AdminEditProduct($id)
@@ -94,6 +125,62 @@ class ManageController extends Controller
 
         $notification = array(
             "message" => "Product NOT added, please try again", 
+            "alert-type" => "error"
+        );
+        return redirect()->back()->with($notification);
+    }
+
+    public function AdminUpdateProduct(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category_id' => 'required',
+            'menu_id' => 'required',
+            'city_id' => 'required',
+            'client_id' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+        $product = Product::findOrFail($request->id);
+        $product->name = $request->name;
+        $product->slug = strtolower(str_replace(' ', '-', $request->name));
+        $product->client_id = $request->client_id;
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+        $product->menu_id = $request->menu_id;
+        $product->qty = $request->qty;
+        $product->size = $request->size;
+        $product->price = $request->price;
+        $product->discount_price = $request->discount_price;
+        $product->most_popular = $request->most_popular;
+        $product->best_seller = $request->best_seller;
+
+        if($request->file('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/product/'.$imageName;
+            $img->resize(300, 300)->save(public_path($save_url));
+
+            // Delete old image
+            if ($product->image != 'upload/no_image.jpg') {
+                unlink(public_path($product->image));
+            }
+
+            $product->image = $save_url;
+        }
+
+        if($product->save()) {
+            $notification = array(
+                "message" => "Product updated successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('admin.all.product')->with($notification);
+        }
+
+        $notification = array(
+            "message" => "Product NOT updated, please try again", 
             "alert-type" => "error"
         );
         return redirect()->back()->with($notification);

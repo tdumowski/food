@@ -397,6 +397,22 @@ class RestaurantController extends Controller
         $product->most_popular = $request->most_popular;
         $product->best_seller = $request->best_seller;
 
+        if($request->file('image')) {
+            $image = $request->file('image');
+            $manager = new ImageManager(new Driver());
+            $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $img = $manager->read($image);
+            $save_url = 'upload/product/'.$imageName;
+            $img->resize(300, 300)->save(public_path($save_url));
+
+            // Delete old image
+            if ($product->image != 'upload/no_image.jpg') {
+                unlink(public_path($product->image));
+            }
+
+            $product->image = $save_url;
+        }
+
         if($product->save()) {
             $notification = array(
                 "message" => "Product updated successfully", 

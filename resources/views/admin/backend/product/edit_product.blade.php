@@ -27,7 +27,7 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="card">
                     <div class="card-body p-4">
-                        <form id="myForm" action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('admin.product.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <input type="hidden" name="id" value="{{ $product->id }}">
