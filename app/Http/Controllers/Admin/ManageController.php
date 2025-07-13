@@ -17,7 +17,6 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class ManageController extends Controller
 {
-        
     public function AdminAllProduct()
     {
         $products = Product::orderBy('name')->get(); // <--- array of menu IDs used to filter products

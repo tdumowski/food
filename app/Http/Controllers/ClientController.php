@@ -98,13 +98,14 @@ class ClientController extends Controller
 
     public function ClientProfileStore(Request $request)
     {
-        $id = Auth::guard('client')->id();
-        $profileData = Client::find($id);
+        $client_id = Auth::guard('client')->id();
+        $profileData = Client::find($client_id);
 
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cover_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $profileData->name = $request->name;
@@ -117,7 +118,7 @@ class ClientController extends Controller
         if ($request->hasFile('photo')) {
             $oldPhotoPath = $profileData->photo;
             $file = $request->file('photo');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filename = $client_id . "-p-" . time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/client_images'), $filename);
             $profileData->photo = $filename;
 
@@ -130,7 +131,7 @@ class ClientController extends Controller
         if ($request->hasFile('cover_image')) {
             $oldPhotoPath = $profileData->cover_image;
             $file = $request->file('cover_image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filename = $client_id . "-c-" . time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/client_images'), $filename);
             $profileData->cover_image = $filename;
 
