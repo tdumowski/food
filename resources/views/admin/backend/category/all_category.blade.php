@@ -40,7 +40,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td><img src={{ asset($category->image) }} alt="" style="width: 70px; height:40px;"></td>
+                                    <td><img src={{ asset($category->image) }} alt="" style="width: 50px; height:50px;"></td>
                                     <td>
                                         <a href="{{ route('edit.category', $category->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
                                         <a href="{{ route('delete.category', $category->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>

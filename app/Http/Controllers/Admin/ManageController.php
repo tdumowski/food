@@ -7,12 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-use App\Models\Menu;
-use App\Models\Product;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Client;
 use App\Models\Gallery;
+use App\Models\Menu;
+use App\Models\Product;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 
@@ -184,6 +185,12 @@ class ManageController extends Controller
             "alert-type" => "error"
         );
         return redirect()->back()->with($notification);
+    }
+
+    public function AllBanner()
+    {
+        $banners = Banner::orderBy('id', 'desc')->get();
+        return view('admin.backend.banner.all_banner', compact('banners'));
     }
 
     public function ApprovedRestaurant()
