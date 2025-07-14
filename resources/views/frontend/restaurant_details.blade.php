@@ -175,10 +175,8 @@
                                                         <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>${{ $product->discount_price }}</strong> 
                                                             {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
                                                         </p>
-                                                        {{-- <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small> </a> <span class="float-right">  --}}
                                                     @endif
 
-                                                    {{-- <p class="text-gray mb-0">{{ $product->price }} - 12" (30 cm)</p> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -189,34 +187,19 @@
                             </div>
                         @endforeach
 
-
-
                     </div>
+
                     <div class="tab-pane fade" id="pills-gallery" role="tabpanel" aria-labelledby="pills-gallery-tab">
                         <div id="gallery" class="bg-white rounded shadow-sm p-4 mb-4">
                             <div class="restaurant-slider-main position-relative homepage-great-deals-carousel">
                                 <div class="owl-carousel owl-theme homepage-ad">
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/1.png">
-                                </div>
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/2.png">
-                                </div>
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/3.png">
-                                </div>
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/1.png">
-                                </div>
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/2.png">
-                                </div>
-                                <div class="item">
-                                    <img class="img-fluid" src="img/gallery/3.png">
-                                </div>
-                                </div>
-                                <div class="position-absolute restaurant-slider-pics bg-dark text-white">2 of 14 Photos</div>
-                                <div class="position-absolute restaurant-slider-view-all"><button type="button" class="btn btn-light bg-white">See all Photos</button></div>
+
+                                    @foreach($galleries as $index => $gallery)
+                                        <div class="item">
+                                            <img class="img-fluid" src="{{ asset($gallery->image) }}">
+                                            <div class="position-absolute restaurant-slider-pics bg-dark text-white">{{ $index + 1 }} of {{ $galleries->count() }} Photos</div>
+                                        </div>
+                                    @endforeach
                             </div>
                         </div>
                     </div>

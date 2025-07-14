@@ -187,7 +187,7 @@ class RestaurantController extends Controller
             $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             $img = $manager->read($image);
             $save_url = 'upload/gallery/'.$imageName;
-            $img->resize(500, 500)->save(public_path($save_url));
+            $img->resize(800, 800)->save(public_path($save_url));
    
             $gallery = new Gallery();
             $gallery->client_id = Auth::guard('client')->id();
@@ -299,7 +299,7 @@ class RestaurantController extends Controller
                 $imageName = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
                 $img = $manager->read($image);
                 $save_url = 'upload/gallery/'.$imageName;
-                $img->resize(500, 500)->save(public_path($save_url));
+                $img->resize(800, 800)->save(public_path($save_url));
                 
                 // Delete old image
                 if ($gallery->image != 'upload/no_image.jpg') {
