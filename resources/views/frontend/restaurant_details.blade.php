@@ -1,19 +1,38 @@
  @include('frontend.dashboard.header')
 
+@php
+    $menus = \App\Models\Menu::where('client_id', $client->id)
+        ->orderBy('name')
+        ->get();
+    $menuNames = $menus->pluck('name')->implode(' • ');
+
+    $coupon = \App\Models\Coupon::where('client_id', $client->id)
+        ->where('status', 1)
+        ->first();
+
+    $mostPopularProducts = \App\Models\Product::where('client_id', $client->id)
+        ->where('status', 1)
+        ->where('most_popular', 1)
+        ->orderBy('name')
+        ->limit(5)
+        ->get();
+@endphp
+
+
     <section class="restaurant-detailed-banner">
         <div class="text-center">
-        <img class="img-fluid cover" src="{{ asset('frontend/img/mall-dedicated-banner.png') }}">
+        <img class="img-fluid cover" src="{{ asset('upload/client_images/' . $client->cover_image ) }}">
         </div>
         <div class="restaurant-detailed-header">
         <div class="container">
             <div class="row d-flex align-items-end">
                 <div class="col-md-8">
                     <div class="restaurant-detailed-header-left">
-                    <img class="img-fluid mr-3 float-left" alt="osahan" src="img/1.jpg">
-                    <h2 class="text-white">Spice Hut Indian Restaurant</h2>
-                    <p class="text-white mb-1"><i class="icofont-location-pin"></i> 2036 2ND AVE, NEW YORK, NY 10029 <span class="badge badge-success">OPEN</span>
+                    <img class="img-fluid mr-3 float-left" alt="osahan" src="{{ asset('upload/client_images/' . $client->photo ) }}">
+                    <h2 class="text-white">{{ $client->name }}</h2>
+                    <p class="text-white mb-1"><i class="icofont-location-pin"></i> {{ $client->address }} <span class="badge badge-success">OPEN</span>
                     </p>
-                    <p class="text-white mb-0"><i class="icofont-food-cart"></i> North Indian, Chinese, Fast Food, South Indian
+                    <p class="text-white mb-0"><i class="icofont-food-cart"></i> {{ $menuNames }}
                     </p>
                     </div>
                 </div>
@@ -69,15 +88,29 @@
                         <div id="#menu" class="bg-white rounded shadow-sm p-4 mb-4 explore-outlets">
                             <h6 class="mb-3">Most Popular  <span class="badge badge-success"><i class="icofont-tags"></i> 15% Off All Items </span></h6>
                             <div class="owl-carousel owl-theme owl-carousel-five offers-interested-carousel mb-3">
-                                <div class="item">
-                                    <div class="mall-category-item">
-                                        <a href="#">
-                                            <img class="img-fluid" src="img/list/1.png">
-                                            <h6>Burgers</h6>
-                                            <small>5 ITEMS</small>
-                                        </a>
+                                
+                                @foreach ($mostPopularProducts as $product)
+                                    <div class="item">
+                                        <div class="mall-category-item" style="height: 200px;">
+                                            <a href="#">
+                                                <img class="img-fluid" src="{{ asset($product->image ) }}">
+                                                <h6>{{ $product->name }}</h6>
+
+                                                @if(is_null($product->discount_price))
+                                                    {{-- <span class="badge badge-success">{{ $product->discount }}% OFF</span> --}}
+                                                    {{-- {{ $product->price }} --}}
+                                                    <small>${{ $product->price }}</small>
+                                                @else
+                                                    <del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small>
+                                                    {{-- <span class="badge badge-success">{{ $product->discount }}% OFF</span> --}}
+                                                    {{-- <small>${{ $product->discount_price }}</small> --}}
+                                                @endif
+                                                <span class="float-right"><a class="btn btn-outline-secondary btn-sm" href="#">ADD</a></span>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
+                                @endforeach
+                                
                             </div>
                         </div>
                         <div class="row">
