@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Admin\ManageController;
+use App\Http\Controllers\Frontend\HomeController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -153,4 +154,8 @@ Route::middleware(['client', 'status'])->group(function () {
 //routes available for all users
 Route::controller(RestaurantController::class)->group(function () {
     Route::get('/changeStatus', 'ChangeStatus');
+});
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('restaurant.details');
 });
