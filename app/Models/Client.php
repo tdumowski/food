@@ -52,4 +52,9 @@ class Client extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'id');
+    }
 }

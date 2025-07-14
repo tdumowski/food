@@ -200,6 +200,8 @@
                                             <div class="position-absolute restaurant-slider-pics bg-dark text-white">{{ $index + 1 }} of {{ $galleries->count() }} Photos</div>
                                         </div>
                                     @endforeach
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -210,14 +212,15 @@
                                 <div class="gmap_canvas"><iframe width="300" height="170" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=9&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div>
                                 </div>
                             </div>
-                            <h5 class="mb-4">Restaurant Info</h5>
-                            <p class="mb-3">Jagjit Nagar, Near Railway Crossing, 
-                                <br> Near Model Town, Ludhiana, PUNJAB
+                            <h5 class="mb-4">{{ $client->name }}</h5>
+                            <p class="mb-3">{{ $client->address }}, 
+                                <br> {{ $client->city->name }}
                             </p>
-                            <p class="mb-2 text-black"><i class="icofont-phone-circle text-primary mr-2"></i> +91 01234-56789, +91 01234-56789</p>
-                            <p class="mb-2 text-black"><i class="icofont-email text-primary mr-2"></i> iamosahan@gmail.com, osahaneat@gmail.com</p>
+                            <p class="mb-2 text-black"><i class="icofont-phone-circle text-primary mr-2"></i> {{ $client->phone }}</p>
+                            <p class="mb-2 text-black"><i class="icofont-email text-primary mr-2"></i> {{ $client->email }}</p>
                             <p class="mb-2 text-black"><i class="icofont-clock-time text-primary mr-2"></i> Today  11am – 5pm, 6pm – 11pm
                                 <span class="badge badge-success"> OPEN NOW </span>
+                            <p class="mb-2 text-black"><i class="icofont-info-square text-primary mr-2"></i> {{ $client->shop_info }}
                             </p>
                             <hr class="clearfix">
                             <p class="text-black mb-0">You can also check the 3D view by using our menue map clicking here &nbsp;&nbsp;&nbsp; <a class="text-info font-weight-bold" href="#">Venue Map</a></p>
