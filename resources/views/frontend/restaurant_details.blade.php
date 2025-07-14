@@ -16,6 +16,13 @@
         ->orderBy('name')
         ->limit(5)
         ->get();
+
+    $bestsellerProducts = \App\Models\Product::where('client_id', $client->id)
+        ->where('status', 1)
+        ->where('best_seller', 1)
+        ->orderBy('name')
+        ->limit(5)
+        ->get();
 @endphp
 
 
@@ -93,19 +100,16 @@
                                     <div class="item">
                                         <div class="mall-category-item" style="height: 200px;">
                                             <a href="#">
-                                                <img class="img-fluid" src="{{ asset($product->image ) }}">
+                                                <img class="img-fluid" src="{{ asset($product->image) }}">
                                                 <h6>{{ $product->name }}</h6>
 
                                                 @if(is_null($product->discount_price))
-                                                    {{-- <span class="badge badge-success">{{ $product->discount }}% OFF</span> --}}
-                                                    {{-- {{ $product->price }} --}}
                                                     <small>${{ $product->price }}</small>
                                                 @else
                                                     <del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small>
-                                                    {{-- <span class="badge badge-success">{{ $product->discount }}% OFF</span> --}}
-                                                    {{-- <small>${{ $product->discount_price }}</small> --}}
                                                 @endif
-                                                <span class="float-right"><a class="btn btn-outline-secondary btn-sm" href="#">ADD</a></span>
+                                                
+                                                <a class="btn btn-outline-secondary btn-sm float-right mr-2" href="#">ADD</a>
                                             </a>
                                         </div>
                                     </div>
@@ -115,28 +119,41 @@
                         </div>
                         <div class="row">
                             <h5 class="mb-4 mt-3 col-md-12">Best Sellers</h5>
-                            <div class="col-md-4 col-sm-6 mb-4">
-                                <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                    <div class="list-card-image">
-                                        <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span></div>
-                                        <div class="favourite-heart text-danger position-absolute"><a href="#"><i class="icofont-heart"></i></a></div>
-                                        <div class="member-plan position-absolute"><span class="badge badge-dark">Promoted</span></div>
-                                        <a href="#">
-                                        <img src="img/list/7.png" class="img-fluid item-img">
-                                        </a>
-                                    </div>
-                                    <div class="p-3 position-relative">
-                                        <div class="list-card-body">
-                                            <h6 class="mb-1"><a href="#" class="text-black">Bite Me Sandwiches</a></h6>
-                                            <p class="text-gray mb-2">North Indian • Indian</p>
-                                            <p class="text-gray time mb-0"><a class="btn btn-link btn-sm text-black" href="#">$550 <span class="badge badge-success">NEW</span></a>  <span class="float-right"> 
-                                                <a class="btn btn-outline-secondary btn-sm" href="#">ADD</a>
-                                                </span>
-                                            </p>
+
+                            @foreach ($bestsellerProducts as $product)
+                                <div class="col-md-4 col-sm-6 mb-4">
+                                    <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                        <div class="list-card-image">
+                                            <div class="star position-absolute"><span class="badge badge-success"><i class="icofont-star"></i> 3.1 (300+)</span></div>
+                                            <div class="favourite-heart text-danger position-absolute"><a href="#"><i class="icofont-heart"></i></a></div>
+                                            <div class="member-plan position-absolute"><span class="badge badge-dark">Promoted</span></div>
+                                            <a href="#">
+                                            <img src="{{ asset($product->image) }}" class="img-fluid item-img">
+                                            </a>
+                                        </div>
+                                        <div class="p-3 position-relative">
+                                            <div class="list-card-body">
+                                                <h6 class="mb-1"><a href="#" class="text-black">{{ $product->name }}</a></h6>
+                                                <p class="text-gray mb-2">{{ $product->menu->name }}</p>
+
+                                                <p class="text-gray time mb-0">
+                                                    
+                                                    @if(is_null($product->discount_price))
+                                                        <a class="btn btn-link btn-sm text-black" href="#">${{ $product->price }} </a> <span class="float-right"> 
+                                                        {{-- <small>${{ $product->price }}</small> --}}
+                                                    @else
+                                                        <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small> </a> <span class="float-right"> 
+                                                    @endif
+                                                    
+                                                    <a class="btn btn-outline-secondary btn-sm" href="#">ADD</a>
+                                                    </span>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
+
                         </div>
                         <div class="row">
                             <h5 class="mb-4 mt-3 col-md-12">Quick Bites <small class="h6 text-black-50">3 ITEMS</small></h5>
