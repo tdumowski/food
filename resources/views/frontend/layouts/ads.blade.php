@@ -16,14 +16,8 @@
                         </a>
                     </div>
                 </div>
-                
             @endforeach
 
-            <div class="col-md-3 col-6">
-                <div class="products-box">
-                    <a href="listing.html"><img alt="" src="{{ asset('frontend/img/pro1.jpg') }}" class="img-fluid rounded"></a>
-                </div>
-            </div>
         </div>
     </div>
 </section>
