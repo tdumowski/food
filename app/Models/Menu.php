@@ -12,7 +12,7 @@ class Menu extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'menu_id', 'id');
+        return $this->hasMany(Product::class);
     }
 
     public function client()
@@ -28,10 +28,5 @@ class Menu extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
-    }
-
-    public function menu()
-    {
-        return $this->belongsTo(Menu::class, 'menu_id', 'id');
     }
 }

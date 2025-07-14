@@ -1,9 +1,6 @@
  @include('frontend.dashboard.header')
 
 @php
-    $menus = \App\Models\Menu::where('client_id', $client->id)
-        ->orderBy('name')
-        ->get();
     $menuNames = $menus->pluck('name')->implode(' • ');
 
     $coupon = \App\Models\Coupon::where('client_id', $client->id)
@@ -155,70 +152,45 @@
                             @endforeach
 
                         </div>
-                        <div class="row">
-                            <h5 class="mb-4 mt-3 col-md-12">Quick Bites <small class="h6 text-black-50">3 ITEMS</small></h5>
-                            <div class="col-md-12">
-                                <div class="bg-white rounded border shadow-sm mb-4">
-                                    <div class="gold-members p-3 border-bottom">
-                                        <a class="btn btn-outline-secondary btn-sm  float-right" href="#">ADD</a>
-                                        <div class="media">
-                                            <div class="mr-3"><i class="icofont-ui-press text-danger food-item"></i></div>
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Chicken Tikka Sub</h6>
-                                                <p class="text-gray mb-0">$314 - 12" (30 cm)</p>
+
+                        @foreach($menus as $menu)
+                            <div class="row">
+                                <h5 class="mb-4 mt-3 col-md-12">{{ $menu->name }} <small class="h6 text-black-50">{{ $menu->products->count() }} ITEMS</small></h5>
+                                <div class="col-md-12">
+                                    <div class="bg-white rounded border shadow-sm mb-4">
+
+                                    @foreach($menu->products as $product)
+                                        <div class="menu-list p-3 border-bottom">
+                                            <a class="btn btn-outline-secondary btn-sm  float-right" href="#">ADD</a>
+                                            <div class="media">
+                                                <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h6 class="mb-1">{{ $product->name }}</h6>
+
+                                                    @if(is_null($product->discount_price))
+                                                        <p class="text-gray mb-0"><strong>${{ $product->price }}</strong> 
+                                                            {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
+                                                        </p>
+                                                    @else
+                                                        <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>${{ $product->discount_price }}</strong> 
+                                                            {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
+                                                        </p>
+                                                        {{-- <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small> </a> <span class="float-right">  --}}
+                                                    @endif
+
+                                                    {{-- <p class="text-gray mb-0">{{ $product->price }} - 12" (30 cm)</p> --}}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
+
+                                </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <h5 class="mb-4 mt-3 col-md-12">Starters <small class="h6 text-black-50">3 ITEMS</small></h5>
-                            <div class="col-md-12">
-                                <div class="bg-white rounded border shadow-sm mb-4">
-                                <div class="menu-list p-3 border-bottom">
-                                    <a class="btn btn-outline-secondary btn-sm  float-right" href="#">ADD</a>
-                                    <div class="media">
-                                        <img class="mr-3 rounded-pill" src="{{ asset('frontend/img/5.jpg') }}" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mb-1">Veg Spring Roll</h6>
-                                            <p class="text-gray mb-0">$314 - 12" (30 cm)</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="menu-list p-3 border-bottom">
-                                    <span class="count-number float-right">
-                                    <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                                    <input class="count-number-input" type="text" value="1" readonly="">
-                                    <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                                    </span>
-                                    <div class="media">
-                                        <img class="mr-3 rounded-pill" src="img/2.jpg" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mb-1">Stuffed Mushroom <span class="badge badge-danger">BESTSELLER</span></h6>
-                                            <p class="text-gray mb-0">$600</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="menu-list p-3">
-                                    <span class="count-number float-right">
-                                    <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                                    <input class="count-number-input" type="text" value="1" readonly="">
-                                    <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                                    </span>
-                                    <div class="media">
-                                        <img class="mr-3 rounded-pill" src="img/3.jpg" alt="Generic placeholder image">
-                                        <div class="media-body">
-                                            <h6 class="mb-1">Honey Chilli Potato
-                                            <span class="badge badge-success">Pure Veg</span>
-                                            </h6>
-                                            <p class="text-gray mb-0">$600</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+
+
+
                     </div>
                     <div class="tab-pane fade" id="pills-gallery" role="tabpanel" aria-labelledby="pills-gallery-tab">
                         <div id="gallery" class="bg-white rounded shadow-sm p-4 mb-4">
