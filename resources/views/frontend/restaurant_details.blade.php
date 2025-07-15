@@ -1,4 +1,5 @@
- @include('frontend.dashboard.header')
+@extends('frontend.dashboard.dashboard')
+@section('dashboard')
 
 @php
     $menuNames = $menus->pluck('name')->implode(' • ');
@@ -534,4 +535,4 @@
         </div>
     </section>
 
- @include('frontend.dashboard.footer')
+ @endsection

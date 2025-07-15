@@ -1,4 +1,6 @@
-@include('frontend.dashboard.header')
+@extends('frontend.dashboard.dashboard')
+@section('dashboard')
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
@@ -10,11 +12,6 @@
 
             <div class="col-md-9">
                 <div class="osahan-account-page-right rounded shadow-sm bg-white p-4 h-100">
-
-
-
-
-
                     <div class="tab-pane">
                         <h4 class="font-weight-bold mt-0 mb-4">Favourites</h4>
                         <div class="row">
@@ -51,70 +48,12 @@
                                     </div>
                                 </div>
                             @endforeach
-
-
-
-
-                            {{-- <div class="col-md-12 text-center load-more">
-                                <button class="btn btn-primary" type="button" disabled>
-                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                Loading...
-                                </button>   
-                            </div> --}}
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-<script>
-    @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type','info') }}"
-            toastr.options = {
-            "positionClass": "toast-bottom-right"
-        };
-
-        switch(type){
-        case 'info':
-        toastr.info(" {{ Session::get('message') }} ");
-        break;
-
-        case 'success':
-        toastr.success(" {{ Session::get('message') }} ");
-        break;
-
-        case 'warning':
-        toastr.warning(" {{ Session::get('message') }} ");
-        break;
-
-        case 'error':
-        toastr.error(" {{ Session::get('message') }} ");
-        break; 
-        }
-    @endif 
-</script>
-@include('frontend.dashboard.footer')
+@endsection
