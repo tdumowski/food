@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/store', [UserController::class, 'UserProfileStore'])->name('profile.store');
     Route::post('/user/password/update', [UserController::class, 'UserPasswordUpdate'])->name('user.password.update');
+
+    Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
 });
 
 require __DIR__.'/auth.php';

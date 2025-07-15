@@ -33,7 +33,13 @@ class HomeController extends Controller
         
         if($wishlist->save()) {
             return response()->json(['success' => "Restaurant added to wishlist"]);
+            
         }
+    }
+
+    public function AllWishlist() {
+        $wishlist = Wishlist::where('user_id', Auth::id())->get();
+        return view('frontend.dashboard.all_wishlist', compact('wishlist'));
     }
 
     public function RestaurantDetails($id)
