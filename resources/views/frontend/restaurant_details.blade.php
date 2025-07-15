@@ -436,7 +436,7 @@
                     @endphp
 
                     @if (session('cart'))
-                        @foreach (session('cart') as $id => $details)
+                        @foreach (session('cart') as $product_id => $details)
                             @php
                                 $productTotal = $details['price'] * $details['quantity'];
                                 $orderTotal += $productTotal;
@@ -445,9 +445,10 @@
                             <div class="gold-members p-2 border-bottom">
                                 <p class="text-gray mb-0 float-right ml-2">${{ $productTotal }}</p>
                                 <span class="count-number float-right">
-                                <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                                <input class="count-number-input" type="text" value="1" readonly="">
-                                <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
+                                <button class="btn btn-outline-secondary btn-sm left dec" data-product_id="{{ $product_id }}"> <i class="icofont-minus"></i> </button>
+                                <input class="count-number-input" type="text" value="{{ $details['quantity'] }}" readonly="">
+                                <button class="btn btn-outline-secondary btn-sm right inc" data-product_id="{{ $product_id }}"> <i class="icofont-plus"></i> </button>
+                                <button class="btn btn-outline-danger btn-sm right remove" data-product_id="{{ $product_id }}"> <i class="icofont-trash"></i> </button>
                                 </span>
                                 <div class="media">
                                     <div class="mr-2"><img src="{{ asset($details['image']) }}" alt="" width="25px"></div>
@@ -479,4 +480,36 @@
     </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('.inc').on('click', function() {
+            var product_id = $(this).data('product_id');
+            var input = $(this).closest('span').find('input');
+            var newQuantity = parseInt(input.val()) + 1;
+            updateQuantity(product_id, newQuantity);
+        })
+
+        $('.dec').on('click', function() {
+            var product_id = $(this).data('product_id');
+            var input = $(this).closest('span').find('input');
+            var newQuantity = parseInt(input.val()) - 1;
+
+            if(newQuantity >= 1) {
+                updateQuantity(product_id, newQuantity);
+            }
+        })
+
+        $('.remove').on('click', function() {
+            var product_id = $(this).data('product_id');
+            var input = $(this).closest('span').find('input');
+            var newQuantity = parseInt(input.val()) - 1;
+
+            if(newQuantity >= 1) {
+                updateQuantity(product_id, newQuantity);
+            }
+        })
+    })
+</script>
+
  @endsection
