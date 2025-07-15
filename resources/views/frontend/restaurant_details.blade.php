@@ -485,6 +485,19 @@
 
 <script>
     $(document).ready(function() {
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
         $('.inc').on('click', function() {
             var product_id = $(this).data('product_id');
             var input = $(this).closest('span').find('input');
@@ -517,7 +530,12 @@
                     quantity: newQuantity
                 },
                 success: function(response) {
-                    location.reload();
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Quantity updated'
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
             });
         }
@@ -531,7 +549,12 @@
                     product_id: product_id,
                 },
                 success: function(response) {
-                    location.reload();
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Produce removed from your cart'
+                    }).then(() => {
+                        location.reload();
+                    });
                 }
             });
         }
