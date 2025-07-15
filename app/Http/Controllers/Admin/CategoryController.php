@@ -128,7 +128,7 @@ class CategoryController extends Controller
             "message" => "City added successfully", 
             "alert-type" => "success"
         );
-        // return redirect()->route('all.city')->with($notification);
+
         return redirect()->back()->with($notification);
     }
 
