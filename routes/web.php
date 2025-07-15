@@ -158,4 +158,5 @@ Route::controller(RestaurantController::class)->group(function () {
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/restaurant/details/{id}', 'RestaurantDetails')->name('restaurant.details');
+    Route::post('/add-wish-list/{client_id}', 'AddWishlist');
 });
