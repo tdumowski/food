@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Gallery;
 use App\Models\Menu;
+use App\Models\Wishlist;
 use Carbon\Carbon;
 
 class HomeController extends Controller
