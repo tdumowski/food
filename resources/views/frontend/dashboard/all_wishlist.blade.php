@@ -43,7 +43,7 @@
                                             <p class="text-gray mb-3">{{ $menuNames }}</p>
 
                                             <div style="float:right; margin-bottom:5px">
-                                                <a href="" class="badge badge-danger"><i class="icofont-ui-delete"></i></a>
+                                                <a href="{{ route('remove.wishlist', $wishlist->id) }}" class="badge badge-danger"><i class="icofont-ui-delete"></i></a>
                                             </div>
 
                                         </div>

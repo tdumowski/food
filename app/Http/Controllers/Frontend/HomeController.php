@@ -42,9 +42,25 @@ class HomeController extends Controller
         return view('frontend.dashboard.all_wishlist', compact('wishlists'));
     }
 
-    public function RestaurantDetails($id)
+    public function RemoveWishlist($id) {
+        if(Wishlist::find($id)->delete()) {
+            $notification = array(
+                "message" => "Restaurant removed from favorities successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->back()->with($notification);
+        }
+                
+        $notification = array(
+            "message" => "Restaurant NOT removed from favorities, please try again", 
+            "alert-type" => "error"
+        );
+        return redirect()->back()->with($notification);
+    }
+
+    public function RestaurantDetails($client_id)
     {
-        $client = Client::findOrFail($id);
+        $client = Client::findOrFail($client_id);
         $menus = Menu::where('client_id', $client->id)->get()->filter(function($menu) {
             return $menu->products->isNotEmpty();
         });
