@@ -38,8 +38,8 @@ class HomeController extends Controller
     }
 
     public function AllWishlist() {
-        $wishlist = Wishlist::where('user_id', Auth::id())->get();
-        return view('frontend.dashboard.all_wishlist', compact('wishlist'));
+        $wishlists = Wishlist::where('user_id', Auth::id())->get();
+        return view('frontend.dashboard.all_wishlist', compact('wishlists'));
     }
 
     public function RestaurantDetails($id)
