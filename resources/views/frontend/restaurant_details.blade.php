@@ -1,6 +1,8 @@
 @extends('frontend.dashboard.dashboard')
 @section('dashboard')
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 @php
     $menuNames = $menus->pluck('name')->implode(' • ');
 
@@ -502,13 +504,37 @@
 
         $('.remove').on('click', function() {
             var product_id = $(this).data('product_id');
-            var input = $(this).closest('span').find('input');
-            var newQuantity = parseInt(input.val()) - 1;
-
-            if(newQuantity >= 1) {
-                updateQuantity(product_id, newQuantity);
-            }
+            removeFromCart(product_id);
         })
+
+        function updateQuantity(product_id, newQuantity) {
+            $.ajax({
+                url: '{{ route("cart.updateQuantity") }}',
+                method: 'post',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: product_id,
+                    quantity: newQuantity
+                },
+                success: function(response) {
+                    location.reload();
+                }
+            });
+        }
+
+        function removeFromCart(product_id) {
+            $.ajax({
+                url: '{{ route("cart.remove") }}',
+                method: 'post',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: product_id,
+                },
+                success: function(response) {
+                    location.reload();
+                }
+            });
+        }
     })
 </script>
 
