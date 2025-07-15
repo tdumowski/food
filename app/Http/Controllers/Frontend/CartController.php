@@ -54,18 +54,18 @@ class CartController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    // public function UpdateCartQuantity(Request $request) {
-    //     $cart = session()->get('cart', []);
+    public function RemoveFromCart(Request $request) {
+        $cart = session()->get('cart', []);
 
-    //     if(isset($cart[$request->product_id])) {
-    //         $cart[$request->product_id]['quantity'] = $request->quantity;
-    //         session()->put('cart', $cart);
-    //     }
+        if(isset($cart[$request->product_id])) {
+            unset($cart[$request->product_id]);
+            session()->put('cart', $cart);
+        }
 
-    //     $notification = array(
-    //         "message" => "Cart updated", 
-    //         "alert-type" => "success"
-    //     );
-    //     return redirect()->back()->with($notification);
-    // }
+        $notification = array(
+            "message" => "Product removed from your cart", 
+            "alert-type" => "success"
+        );
+        return redirect()->back()->with($notification);
+    }
 }
