@@ -8,7 +8,7 @@
         ->where('status', 1)
         ->first();
 
-    $mostPopularProducts = \App\Models\Product::where('client_id', $client->id)
+    $popularProducts = \App\Models\Product::where('client_id', $client->id)
         ->where('status', 1)
         ->where('most_popular', 1)
         ->orderBy('name')
@@ -94,7 +94,7 @@
                             <h6 class="mb-3">Most Popular  <span class="badge badge-success"><i class="icofont-tags"></i> 15% Off All Items </span></h6>
                             <div class="owl-carousel owl-theme owl-carousel-five offers-interested-carousel mb-3">
                                 
-                                @foreach ($mostPopularProducts as $product)
+                                @foreach ($popularProducts as $product)
                                     <div class="item">
                                         <div class="mall-category-item" style="height: 200px;">
                                             <a href="#">
@@ -107,7 +107,7 @@
                                                     <del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small>
                                                 @endif
                                                 
-                                                <a class="btn btn-outline-secondary btn-sm float-right mr-2" href="#">ADD</a>
+                                                <a class="btn btn-outline-secondary btn-sm float-right mr-2" href="{{ route('add_to_cart', $product->id) }}">ADD</a>
                                             </a>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@
                                                         <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small> </a> <span class="float-right"> 
                                                     @endif
                                                     
-                                                    <a class="btn btn-outline-secondary btn-sm" href="#">ADD</a>
+                                                    <a class="btn btn-outline-secondary btn-sm" href="{{ route('add_to_cart', $product->id) }}">ADD</a>
                                                     </span>
                                                 </p>
                                             </div>
@@ -160,30 +160,30 @@
                                 <div class="col-md-12">
                                     <div class="bg-white rounded border shadow-sm mb-4">
 
-                                    @foreach($menu->products as $product)
-                                        <div class="menu-list p-3 border-bottom">
-                                            <a class="btn btn-outline-secondary btn-sm  float-right" href="#">ADD</a>
-                                            <div class="media">
-                                                <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="Generic placeholder image">
-                                                <div class="media-body">
-                                                    <h6 class="mb-1">{{ $product->name }}</h6>
+                                        @foreach($menu->products as $product)
+                                            <div class="menu-list p-3 border-bottom">
+                                                <a class="btn btn-outline-secondary btn-sm  float-right" href="{{ route('add_to_cart', $product->id) }}">ADD</a>
+                                                <div class="media">
+                                                    <img class="mr-3 rounded-pill" src="{{ asset($product->image) }}" alt="Generic placeholder image">
+                                                    <div class="media-body">
+                                                        <h6 class="mb-1">{{ $product->name }}</h6>
 
-                                                    @if(is_null($product->discount_price))
-                                                        <p class="text-gray mb-0"><strong>${{ $product->price }}</strong> 
-                                                            {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
-                                                        </p>
-                                                    @else
-                                                        <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>${{ $product->discount_price }}</strong> 
-                                                            {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
-                                                        </p>
-                                                    @endif
+                                                        @if(is_null($product->discount_price))
+                                                            <p class="text-gray mb-0"><strong>${{ $product->price }}</strong> 
+                                                                {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
+                                                            </p>
+                                                        @else
+                                                            <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>${{ $product->discount_price }}</strong> 
+                                                                {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
+                                                            </p>
+                                                        @endif
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
 
-                                </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
