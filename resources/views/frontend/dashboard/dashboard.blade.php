@@ -2,8 +2,8 @@
 
 @php
     if(Auth::user()) {
-        $id = Auth::user()->id;
-        $profileData = App\Models\User::find($id);
+        $user_id = Auth::user()->id;
+        $profileData = App\Models\User::find($user_id);
     }
 @endphp
 
