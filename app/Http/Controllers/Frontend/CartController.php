@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Coupon;
 use App\Models\Product;
@@ -16,7 +17,6 @@ class CartController extends Controller
         if(Session::has('coupon')) {
             Session::forget('coupon');
         }
-
 
         $product = Product::findOrFail($product_id);
         $cart = session()->get('cart', []);
@@ -98,20 +98,6 @@ class CartController extends Controller
         return response()->json(['success' => 'Coupon removed successfully']);
     }
 
-    public function UpdateCartQuantity(Request $request) {
-        $cart = session()->get('cart', []);
-
-        if(isset($cart[$request->product_id])) {
-            $cart[$request->product_id]['quantity'] = $request->quantity;
-            session()->put('cart', $cart);
-        }
-
-        return response()->json([
-            'message' => 'Quantity updated',
-            'alert-type' => 'success'
-        ]);
-    }
-
     public function RemoveFromCart(Request $request) {
         $cart = session()->get('cart', []);
 
@@ -122,6 +108,50 @@ class CartController extends Controller
 
         return response()->json([
             'message' => 'Product removed from your cart',
+            'alert-type' => 'success'
+        ]);
+    }
+
+    public function ShopCheckout() {
+        //check if user is logged...
+        if(!Auth::check()) {
+            //... user is not logged, open login page
+            $notification = array(
+                "message" => "Please login to checkout your order", 
+                "alert-type" => "success"
+            );
+            return redirect()->route("login")->with($notification);
+        }
+
+        //... user is logged
+        $cart = session()->get('cart', []);
+        $totalAmount = 0;
+
+        foreach($cart as $product) {
+            $totalAmount += $product['price'];
+        }
+
+        if($totalAmount == 0) {
+            $notification = array(
+                "message" => "Please order at leat one product", 
+                "alert-type" => "error"
+            );
+            return redirect()->to("/")->with($notification);
+        }
+
+        return view('frontend.checkout.view_checkout', compact('cart'));
+    }
+
+    public function UpdateCartQuantity(Request $request) {
+        $cart = session()->get('cart', []);
+
+        if(isset($cart[$request->product_id])) {
+            $cart[$request->product_id]['quantity'] = $request->quantity;
+            session()->put('cart', $cart);
+        }
+
+        return response()->json([
+            'message' => 'Quantity updated',
             'alert-type' => 'success'
         ]);
     }
