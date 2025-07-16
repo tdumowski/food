@@ -4,10 +4,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 @php
+    use Carbon\Carbon;
+
     $menuNames = $menus->pluck('name')->implode(' • ');
 
     $coupon = \App\Models\Coupon::where('client_id', $client->id)
         ->where('status', 1)
+        ->whereDate('validity', '>=', Carbon::today()->format('Y-m-d'))
         ->first();
 
     $popularProducts = \App\Models\Product::where('client_id', $client->id)
@@ -419,14 +422,19 @@
         </div>
         <div class="col-md-4">
             <div class="pb-2">
-            <div class="bg-white rounded shadow-sm text-white mb-4 p-4 clearfix restaurant-detailed-earn-pts card-icon-overlap">
-                <img class="img-fluid float-left mr-3" src="img/earn-score-icon.png">
-                <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
-                <p class="mb-0">60% off on orders above $99 | Use coupon <span class="text-danger font-weight-bold">OSAHAN50</span></p>
-                <div class="icon-overlap">
-                <i class="icofont-sale-discount"></i>
+                <div class="bg-white rounded shadow-sm text-white mb-4 p-4 clearfix restaurant-detailed-earn-pts card-icon-overlap">
+                    <img class="img-fluid float-left mr-3" src="{{ asset('frontend/img/earn-score-icon.png') }}">
+                    <h6 class="pt-0 text-primary mb-1 font-weight-bold">OFFER</h6>
+
+                    @if($coupon)
+                        <p class="mb-0">{{ $coupon->discount }}% off {{ $coupon->description }} | Use coupon: <span class="text-danger font-weight-bold">{{ $coupon->name }}</span></p>
+                    @else
+                        <p class="mb-0"><i>No coupon available at this moment</i></p>
+                    @endif
+                    <div class="icon-overlap">
+                        <i class="icofont-sale-discount"></i>
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
                 <h5 class="mb-1 text-white">Your Order</h5>

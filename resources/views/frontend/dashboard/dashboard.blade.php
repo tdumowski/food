@@ -1,8 +1,10 @@
 <!doctype html>
 
 @php
-    $id = Auth::user()->id;
-    $profileData = App\Models\User::find($id);
+    if(Auth::user()) {
+        $id = Auth::user()->id;
+        $profileData = App\Models\User::find($id);
+    }
 @endphp
 
 <html lang="en">
