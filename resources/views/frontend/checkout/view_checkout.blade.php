@@ -258,14 +258,6 @@
                     <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY $1329
                     <i class="icofont-long-arrow-right"></i></a>
                 </div>
-                <div class="pt-2"></div>
-                <div class="alert alert-success" role="alert">
-                    You have saved <strong>$1,884</strong> on the bill
-                </div>
-                <div class="pt-2"></div>
-                <div class="text-center pt-2">
-                <img class="img-fluid" src="https://dummyimage.com/352x504/ccc/ffffff.png&text=Google+ads">
-                </div>
             </div>
         </div>
         </div>
