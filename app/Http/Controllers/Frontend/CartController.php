@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Coupon;
 use App\Models\Product;
@@ -13,6 +12,12 @@ use Carbon\Carbon;
 class CartController extends Controller
 {
     public function AddToCart($product_id) {
+
+        if(Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+
+
         $product = Product::findOrFail($product_id);
         $cart = session()->get('cart', []);
 
@@ -84,8 +89,13 @@ class CartController extends Controller
             }
         }
         else {
-            return response()->json(['error' => 'Invalid coupon: ' . Carbon::today()->format('Y-m-d')]);
+            return response()->json(['error' => 'Invalid coupon']);
         }
+    }
+
+    public function RemoveCoupon() {
+        Session::forget('coupon');
+        return response()->json(['success' => 'Coupon removed successfully']);
     }
 
     public function UpdateCartQuantity(Request $request) {

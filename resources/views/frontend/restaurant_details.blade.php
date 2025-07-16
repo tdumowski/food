@@ -368,7 +368,7 @@
                             <h5 class="mb-1">All Ratings and Reviews</h5>
                             <div class="reviews-members pt-4 pb-4">
                                 <div class="media">
-                                <a href="#"><img alt="Generic placeholder image" src="img/user/1.png" class="mr-3 rounded-pill"></a>
+                                <a href="#"><img alt="Generic placeholder image" src="{{ asset('frontend/img/user/1.png') }}" class="mr-3 rounded-pill"></a>
                                 <div class="media-body">
                                     <div class="reviews-members-header">
                                         <span class="star-rating float-right">
@@ -476,7 +476,9 @@
                         <div class="mb-2 bg-white rounded p-2 clearfix">
                             <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
                             <p class="mb-1">Coupon name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} 
-                                ({{ (session()->get('coupon')['discount']) }} %)</span></p>
+                                ({{ (session()->get('coupon')['discount']) }} %)</span>
+                                <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color:red"></i></a>
+                            </p>
                             <p class="mb-1 text-success">Total Discount 
                                 <span class="float-right text-success">
                                     ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
@@ -510,7 +512,6 @@
                         <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
                         <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">${{ $subTotal }}</span></h6>
                         <p class="seven-color mb-1 text-right">Extra charges may apply</p>
-                        <p class="text-black mb-0 text-right">You have saved ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }} on the bill</p>
                     </div>
                     <a href="checkout.html" class="btn btn-success btn-block btn-lg">Checkout <i class="icofont-long-arrow-right"></i></a>
                 </div>

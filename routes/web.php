@@ -170,4 +170,5 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/cart/update_quantity', 'UpdateCartQuantity')->name('cart.updateQuantity');
     Route::post('/cart/remove', 'RemoveFromCart')->name('cart.remove');
     Route::post('/apply-coupon', 'ApplyCoupon');
+    Route::get('/remove-coupon', 'RemoveCoupon');
 });
