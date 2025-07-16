@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Sesssion;
+use App\Models\Coupon;
 use App\Models\Product;
+use Carbon\Carbon;
 
 class CartController extends Controller
 {
@@ -39,8 +41,51 @@ class CartController extends Controller
         return redirect()->back()->with($notification);
     }
 
-    public function ApplyCoupon() {
-        
+    public function ApplyCoupon(Request $request) {
+        $coupon = Coupon::where('name', $request->coupon_name)
+            ->whereDate('validity', "=>", Carbon::today()->format('Y-m-d'))
+            ->first();
+        $cart = session()->get('cart', []);
+        $totalAmount = 0;
+        $clientIds = [];
+
+        foreach($cart as $cartProduct) {
+            $totalAmount += ($cartProduct['price'] * $cartProduct['quantity']);
+            $product = Product::find($cartProduct['id']);
+            $client_id = $product->client->id;
+            $clientIds[] = $client_id;
+        }
+
+        if($coupon) {
+            if(count(array_unique($clientIds)) == 1) {
+                $clientId = $coupon->client_id;
+                
+                if($clientId == $clientIds[0]) {
+                    session()->put('coupon', [
+                        'coupon_name' => $coupon->name,
+                        'discount' => $coupon->discount,
+                        'discount_amount' => $totalAmount - ($totalAmount * $coupon->discount/100),
+                    ]);
+
+                    $couponData = Session()->get('coupon');
+
+                    return response()->json(array(
+                        'validity' => true,
+                        'success' => 'Coupon appplieed successfully',
+                        'couponData' => $couponData
+                    ));
+                }
+                else {
+                    return response()->json(['error' => 'This coupon is not valid for this restaurant']);
+                }
+            }
+            else {
+                return response()->json(['error' => '???']);
+            }
+        }
+        else {
+            return response()->json(['error' => 'Invalid coupon']);
+        }
     }
 
     public function UpdateCartQuantity(Request $request) {
