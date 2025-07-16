@@ -116,7 +116,6 @@
                                 icon: 'success', 
                                 title: data.success, 
                             })
-
                         }else{
                             Toast.fire({
                                 type: 'error',

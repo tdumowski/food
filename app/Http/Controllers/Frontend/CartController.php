@@ -39,6 +39,10 @@ class CartController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function ApplyCoupon() {
+        
+    }
+
     public function UpdateCartQuantity(Request $request) {
         $cart = session()->get('cart', []);
 
