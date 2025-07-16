@@ -471,25 +471,46 @@
                         @endif
 
                     </div>
-                    <div class="mb-2 bg-white rounded p-2 clearfix">
-                        <div class="input-group input-group-sm mb-2">
-                            <input type="text" class="form-control" placeholder="Enter promo code" id="coupon_name">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit" id="button-addon2" onliick="ApplyCoupon()"><i class="icofont-sale-discount"></i> APPLY</button>
+
+                    @if (Session::has('coupon'))
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            <p class="mb-1">Coupon name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} 
+                                ({{ (session()->get('coupon')['discount']) }} %)</span></p>
+                            <p class="mb-1 text-success">Total Discount 
+                                <span class="float-right text-success">
+                                    ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
+                                </span>
+                            </p>
+                            <hr />
+                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">${{ Session()->get('coupon')['discount_amount'] }}</span></h6>
+                        </div>
+                    @else
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <div class="input-group input-group-sm mb-2">
+                                <input type="text" class="form-control" placeholder="Enter promo code" id="coupon_name">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit" id="button-addon2" onclick="ApplyCoupon()"><i class="icofont-sale-discount"></i> APPLY</button>
+                                </div>
+                            </div>
+                            <div class="input-group mb-0">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="icofont-comment"></i></span>
+                                </div>
+                                <textarea class="form-control" placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"></textarea>
                             </div>
                         </div>
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="icofont-comment"></i></span>
-                            </div>
-                            <textarea class="form-control" placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"></textarea>
-                        </div>
-                    </div>
+                    @endif
+
+                    @php
+                        $subTotal = (Session::has('coupon')) ? Session()->get('coupon')['discount_amount'] : $orderTotal;
+                    @endphp
+
                     <div class="mb-2 bg-white rounded p-2 clearfix">
                         <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
-                        <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">${{ $orderTotal }}</span></h6>
+                        <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">${{ $subTotal }}</span></h6>
                         <p class="seven-color mb-1 text-right">Extra charges may apply</p>
-                        <p class="text-black mb-0 text-right">You have saved $955 on the bill</p>
+                        <p class="text-black mb-0 text-right">You have saved ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }} on the bill</p>
                     </div>
                     <a href="checkout.html" class="btn btn-success btn-block btn-lg">Checkout <i class="icofont-long-arrow-right"></i></a>
                 </div>

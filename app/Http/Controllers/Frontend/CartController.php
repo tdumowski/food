@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Sesssion;
+use Illuminate\Support\Facades\Session;
 use App\Models\Coupon;
 use App\Models\Product;
 use Carbon\Carbon;
@@ -43,7 +43,7 @@ class CartController extends Controller
 
     public function ApplyCoupon(Request $request) {
         $coupon = Coupon::where('name', $request->coupon_name)
-            ->whereDate('validity', "=>", Carbon::today()->format('Y-m-d'))
+            ->whereDate('validity', ">=", Carbon::today()->format('Y-m-d'))
             ->first();
         $cart = session()->get('cart', []);
         $totalAmount = 0;
@@ -52,22 +52,22 @@ class CartController extends Controller
         foreach($cart as $cartProduct) {
             $totalAmount += ($cartProduct['price'] * $cartProduct['quantity']);
             $product = Product::find($cartProduct['id']);
-            $client_id = $product->client->id;
-            $clientIds[] = $client_id;
+            $clientIds[] = $product->client->id;
         }
 
         if($coupon) {
             if(count(array_unique($clientIds)) == 1) {
+                //order with product from only one restaurant
                 $clientId = $coupon->client_id;
                 
                 if($clientId == $clientIds[0]) {
-                    session()->put('coupon', [
+                    Session::put('coupon', [
                         'coupon_name' => $coupon->name,
                         'discount' => $coupon->discount,
                         'discount_amount' => $totalAmount - ($totalAmount * $coupon->discount/100),
                     ]);
 
-                    $couponData = Session()->get('coupon');
+                    $couponData = session()->get('coupon');
 
                     return response()->json(array(
                         'validity' => true,
@@ -84,7 +84,7 @@ class CartController extends Controller
             }
         }
         else {
-            return response()->json(['error' => 'Invalid coupon']);
+            return response()->json(['error' => 'Invalid coupon: ' . Carbon::today()->format('Y-m-d')]);
         }
     }
 
