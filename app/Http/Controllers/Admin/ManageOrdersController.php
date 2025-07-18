@@ -13,8 +13,23 @@ use Carbon\Carbon;
 
 class ManageOrdersController extends Controller
 {
+    public function ConfirmedOrders() {
+        $orders = Order::where('status', 'CONFIRM')->get();
+        return view('admin.backend.order.confirmed_order', compact('orders'));
+    }
+
+    public function DeliveredOrders() {
+        $orders = Order::where('status', 'DELIVERED')->get();
+        return view('admin.backend.order.delivered_order', compact('orders'));
+    }
+
     public function PendingOrders() {
         $orders = Order::where('status', 'PENDING')->get();
         return view('admin.backend.order.pending_order', compact('orders'));
+    }
+
+    public function ProcessingOrders() {
+        $orders = Order::where('status', 'PROCESSING')->get();
+        return view('admin.backend.order.processing_order', compact('orders'));
     }
 }

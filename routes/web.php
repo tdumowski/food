@@ -119,7 +119,10 @@ Route::middleware('admin')->group(function () {
     });
 
     Route::controller(ManageOrdersController::class)->group(function () {
+        Route::get('/confirmed/orders', 'ConfirmedOrders')->name('confirmed.orders');
+        Route::get('/delivered/orders', 'DeliveredOrders')->name('delivered.orders');
         Route::get('/pending/orders', 'PendingOrders')->name('pending.orders');
+        Route::get('/processing/orders', 'ProcessingOrders')->name('processing.orders');
     });
 });
 
