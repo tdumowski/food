@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-use App\Models\Menu;
-use App\Models\Product;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Gallery;
+use App\Models\Menu;
+use App\Models\Product;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 

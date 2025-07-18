@@ -76,9 +76,9 @@
                                         <h6 class="mb-3 mt-0">Cash</h6>
                                         <p>Please keep exact change handy to help us serve you better</p>
                                         <hr>
-                                        <form action="{{ route('cash_order') }}" method="post>
+                                        <form action="{{ route('cash.order') }}" method="post">
                                             @csrf
-                                            
+
                                             <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                                             <input type="hidden" name="email" value="{{ Auth::user()->email }}">
                                             <input type="hidden" name="phone" value="{{ Auth::user()->phone }}">
@@ -142,99 +142,44 @@
             <div class="col-md-4">
                 <div class="generator-bg rounded shadow-sm mb-4 p-4 osahan-cart-item">
                     <div class="d-flex mb-4 osahan-cart-item-profile">
-                    <img class="img-fluid mr-3 rounded-pill" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/' . $profileData->photo) : 
-                            url('upload/no_user.png') }}" width="30" height="30"></div>
-                    <div class="d-flex flex-column">
-                        <h6 class="mb-1 text-white">{{ $profileData->name }}
-                        </h6>
-                        <p class="mb-0 text-white"><i class="icofont-location-pin"></i> {{ $profileData->address }}</p>
-                    </div>
+                        <img class="img-fluid mr-3 rounded-pill" src="{{ (!empty($profileData->photo)) ? url('upload/user_images/' . $profileData->photo) : 
+                                url('upload/no_user.png') }}" width="30" height="30"></div>
+                        <div class="d-flex flex-column">
+                            <h6 class="mb-1 text-white">{{ $profileData->name }}
+                            </h6>
+                            <p class="mb-0 text-white"><i class="icofont-location-pin"></i> {{ $profileData->address }}</p>
+                        </div>
                     </div>
                     <div class="bg-white rounded shadow-sm mb-2">
-                    <div class="gold-members p-2 border-bottom">
-                        <p class="text-gray mb-0 float-right ml-2">$314</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-danger food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Chicken Tikka Sub</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gold-members p-2 border-bottom">
-                        <p class="text-gray mb-0 float-right ml-2">$260</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-success food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Cheese corn Roll</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gold-members p-2 border-bottom">
-                        <p class="text-gray mb-0 float-right ml-2">$260</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-success food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Cheese corn Roll</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gold-members p-2 border-bottom">
-                        <p class="text-gray mb-0 float-right ml-2">$056</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-success food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Coke [330 ml]</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gold-members p-2 border-bottom">
-                        <p class="text-gray mb-0 float-right ml-2">$652</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-danger food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Black Dal Makhani</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="gold-members p-2">
-                        <p class="text-gray mb-0 float-right ml-2">$122</p>
-                        <span class="count-number float-right">
-                        <button class="btn btn-outline-secondary  btn-sm left dec"> <i class="icofont-minus"></i> </button>
-                        <input class="count-number-input" type="text" value="1" readonly="">
-                        <button class="btn btn-outline-secondary btn-sm right inc"> <i class="icofont-plus"></i> </button>
-                        </span>
-                        <div class="media">
-                            <div class="mr-2"><i class="icofont-ui-press text-danger food-item"></i></div>
-                            <div class="media-body">
-                                <p class="mt-1 mb-0 text-black">Mixed Veg</p>
-                            </div>
-                        </div>
-                    </div>
+
+                        @php
+                            $orderTotal = 0;
+                        @endphp
+
+                        @if (session('cart'))
+                            @foreach (session('cart') as $product_id => $details)
+                                @php
+                                    $productTotal = $details['price'] * $details['quantity'];
+                                    $orderTotal += $productTotal;
+                                @endphp
+
+                                <div class="gold-members p-2 border-bottom">
+                                    <p class="text-gray mb-0 float-right ml-2">${{ $productTotal }}</p>
+                                    <span class="count-number float-right">
+                                    <button class="btn btn-outline-secondary btn-sm left dec" data-product_id="{{ $product_id }}"> <i class="icofont-minus"></i> </button>
+                                    <input class="count-number-input" type="text" value="{{ $details['quantity'] }}" readonly="">
+                                    <button class="btn btn-outline-secondary btn-sm right inc" data-product_id="{{ $product_id }}"> <i class="icofont-plus"></i> </button>
+                                    <button class="btn btn-outline-danger btn-sm right remove" data-product_id="{{ $product_id }}"> <i class="icofont-trash"></i> </button>
+                                    </span>
+                                    <div class="media">
+                                        <div class="mr-2"><img src="{{ asset($details['image']) }}" alt="" width="25px"></div>
+                                        <div class="media-body">
+                                            <p class="mt-1 mb-0 text-black">{{ $details['name'] }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="mb-2 bg-white rounded p-2 clearfix">
                     <div class="input-group input-group-sm mb-2">
@@ -252,21 +197,34 @@
                     </div>
 
                     
-                    <div class="mb-2 bg-white rounded p-2 clearfix">
-                    <p class="mb-1">Item Total <span class="float-right text-dark">$3140</span></p>
-                    <p class="mb-1">Restaurant Charges <span class="float-right text-dark">$62.8</span></p>
-                    <p class="mb-1">Delivery Fee <span class="text-info" data-toggle="tooltip" data-placement="top" title="Total discount breakup">
-                        <i class="icofont-info-circle"></i>
-                        </span> <span class="float-right text-dark">$10</span>
-                    </p>
-                    <p class="mb-1 text-success">Total Discount 
-                        <span class="float-right text-success">$1884</span>
-                    </p>
-                    <hr />
-                    <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">$1329</span></h6>
-                    </div>
-                    <a href="thanks.html" class="btn btn-success btn-block btn-lg">PAY $1329
-                    <i class="icofont-long-arrow-right"></i></a>
+                    @if (Session::has('coupon'))
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            <p class="mb-1">Coupon name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} 
+                                ({{ (session()->get('coupon')['discount']) }} %)</span>
+                                <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color:red"></i></a>
+                            </p>
+                            <p class="mb-1 text-success">Total Discount 
+                                <span class="float-right text-success">
+                                    ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
+                                </span>
+                            </p>
+                            <hr />
+                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">${{ Session()->get('coupon')['discount_amount'] }}</span></h6>
+                        </div>
+                    @else
+                        <div class="mb-2 bg-white rounded p-2 clearfix">
+                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            </p>
+                            <p class="mb-1 text-success">Total Discount 
+                                <span class="float-right text-success">
+                                    ${{ $orderTotal }}
+                                </span>
+                            </p>
+                            <hr />
+                            <h6 class="font-weight-bold mb-0">TO PAY ${{ $orderTotal }}</span></h6>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

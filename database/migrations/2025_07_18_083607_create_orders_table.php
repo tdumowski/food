@@ -25,7 +25,7 @@ return new class extends Migration
             $table->float('amount', 8, 2);
             $table->float('total_amount', 8, 2);
             $table->string('order_number')->nullable();
-            $table->string('invoice')->nullable();
+            $table->string('invoice_number')->nullable();
             $table->string('order_date')->nullable();
             $table->string('order_month')->nullable();
             $table->string('order_year')->nullable();

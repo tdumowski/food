@@ -11,6 +11,8 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+
 
 
 class OrderController extends Controller
@@ -48,7 +50,7 @@ class OrderController extends Controller
         $order->currency = "USD";
         $order->amount = $totalAmount;
         $order->total_amount = $tt;
-        $order->invoice_number = 'easyshop' . mt_rand(10000000,99999999);
+        // $order->order_number = IdGenerator::generate(['table' => 'orders', 'field' => 'order_number', 'length' => 8, 'prefix' => 'order']);
         $order->order_date = Carbon::now()->format('Y-m-d');
         $order->order_month = Carbon::now()->format('F');
         $order->order_year = Carbon::now()->format('Y');
@@ -56,9 +58,34 @@ class OrderController extends Controller
         $order->status = 'PENDING';
         
         if($order->save()) {
-            $order_id = $order->id;
+            $orderId = $order->id;
+
+            foreach($cart as $product) {
+                $orderItem = new OrderItem();
+                $orderItem->order_id = $orderId;
+                $orderItem->product_id = $product['id'];
+                $orderItem->client_id = $product['client_id'];
+                $orderItem->quantity = $product['quantity'];
+                $orderItem->price = $product['price'];
+
+                $orderItem->save();
+            }
+
+            if(Session::has('coupon')) {
+                Session::forget('coupon');
+            }
+            
+            if(Session::has('cart')) {
+                Session::forget('cart');
+            }
+
+            $notification = array(
+                "message" => "Order placed successfully", 
+                "alert-type" => "success"
+            );
+            return view('frontend.checkout.thanks')->with($notification);
+
         }
-        
 
     }
 }
