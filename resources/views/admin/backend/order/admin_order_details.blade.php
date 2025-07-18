@@ -99,7 +99,7 @@
                                     </tr>
                                     <tr>
                                         <th width="50%">Amount:</th>
-                                        <td>${{ $order->total_amount }}</td>
+                                        <td>$ {{ $order->total_amount }}</td>
                                     </tr>
                                     <tr>
                                         <th width="50%">Status:</th>
@@ -124,6 +124,82 @@
                 </div>
             </div> <!-- end col -->
         </div> <!-- end row --> 
+
+
+
+        <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-1">
+            <div class="col-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-1">
+                                        <label>Image</label>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label>Product</label>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label>Restaurant</label>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label>Product code</label>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label>Quantity</label>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label>Price</label>
+                                    </td>
+                                </tr>
+
+                                @foreach($orderItems as $item)
+                                    <tr>
+                                        <td class="col-md-1">
+                                            <img src="{{ asset($item->product->image) }}" alt="" style="width:50px; height:50px">
+                                        </td>
+                                        <td class="col-md-2">
+                                            {{ $item->product->name }}
+                                        </td>
+                                        <td class="col-md-2">
+                                            {{ $item->client->name }}
+                                        </td>
+                                        <td class="col-md-1">
+                                            {{ $item->product->code }}
+                                        </td>
+                                        <td class="col-md-1">
+                                            {{ $item->quantity }}
+                                        </td>
+                                        <td class="col-md-1">
+                                            $ {{ $item->price }} <br> Total: <strong>$ {{ $item->price * $item->quantity }}</strong>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div>
+                            <h4>Total price: $ {{ $totalPrice }}</h4>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div> <!-- container-fluid -->
 </div>
 
