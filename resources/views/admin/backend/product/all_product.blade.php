@@ -71,7 +71,8 @@
                                         @else
                                             <span class="text-danger"><b>Inactive</b></span>
                                             {{-- <span class="badge bg-danger">Inactive</span> --}}
-                                        @endif</td>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.edit.product', $product->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="{{ route('admin.delete.product', $product->id) }}" class="btn btn-danger waves-effect waves-light" id="delete"><i class="fas fa-trash"></i></a>

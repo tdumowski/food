@@ -495,12 +495,6 @@
                                     <button class="btn btn-primary" type="submit" id="button-addon2" onclick="ApplyCoupon()"><i class="icofont-sale-discount"></i> APPLY</button>
                                 </div>
                             </div>
-                            <div class="input-group mb-0">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="icofont-comment"></i></span>
-                                </div>
-                                <textarea class="form-control" placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"></textarea>
-                            </div>
                         </div>
                     @endif
 
