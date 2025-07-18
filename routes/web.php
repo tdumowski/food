@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Client\RestaurantController;
-use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Admin\ManageController;
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Client\CouponController;
+use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\OrderController;
+use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -172,4 +173,8 @@ Route::controller(CartController::class)->group(function () {
     Route::post('/apply-coupon', 'ApplyCoupon');
     Route::get('/remove-coupon', 'RemoveCoupon');
     Route::get('/checkout', 'ShopCheckout')->name('checkout');
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::post('/cash_order', 'CashOrder')->name('cash_order');
 });
