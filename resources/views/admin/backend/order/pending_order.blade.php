@@ -47,7 +47,7 @@
                                     <td>{{ $order->payment_type }}</td>
                                     <td><span class="badge bg-primary">{{ $order->status }}</span></td>
                                     <td>
-                                        <a href="{{ route('admin.edit.product', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

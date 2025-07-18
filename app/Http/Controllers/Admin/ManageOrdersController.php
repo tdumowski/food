@@ -13,6 +13,19 @@ use Carbon\Carbon;
 
 class ManageOrdersController extends Controller
 {
+    public function AdminOrderDetails($id) {
+        $order = Order::with('user')->where('id', $id)->first();
+        $orderItems = OrderItem::with('product')->where("order_id", $id)->orderBy('id')->get();
+
+        $totalPrice = 0;
+        
+        foreach($orderItems as $item) {
+            $totalPrice += $item->price * $item->quantity;
+        }
+
+        return view('admin.backend.order.admin_order_details', compact('order', 'orderItems', 'totalPrice'));
+    }
+
     public function ConfirmedOrders() {
         $orders = Order::where('status', 'CONFIRM')->get();
         return view('admin.backend.order.confirmed_order', compact('orders'));
