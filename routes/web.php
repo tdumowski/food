@@ -124,6 +124,9 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/order/details/{id}', 'AdminOrderDetails')->name('admin.order_details');
         Route::get('/pending/orders', 'PendingOrders')->name('pending.orders');
         Route::get('/processing/orders', 'ProcessingOrders')->name('processing.orders');
+        Route::get('/pending_to_confirm/{id}', 'PendingToConfirm')->name('pending_to_confirm');
+        Route::get('/confirm_to_processing/{id}', 'ConfirmToProcessing')->name('confirm_to_processing');
+        Route::get('/processing_to_delivered/{id}', 'ProcessingToDelivered')->name('processing_to_delivered');
     });
 });
 

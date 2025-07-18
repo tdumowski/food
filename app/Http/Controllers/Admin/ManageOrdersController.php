@@ -27,22 +27,112 @@ class ManageOrdersController extends Controller
     }
 
     public function ConfirmedOrders() {
-        $orders = Order::where('status', 'CONFIRM')->get();
-        return view('admin.backend.order.confirmed_order', compact('orders'));
+        $orders = Order::where('status', 'CONFIRMED')->get();
+        return view('admin.backend.order.confirmed_orders', compact('orders'));
     }
 
     public function DeliveredOrders() {
         $orders = Order::where('status', 'DELIVERED')->get();
-        return view('admin.backend.order.delivered_order', compact('orders'));
+        return view('admin.backend.order.delivered_orders', compact('orders'));
     }
 
     public function PendingOrders() {
         $orders = Order::where('status', 'PENDING')->get();
-        return view('admin.backend.order.pending_order', compact('orders'));
+        return view('admin.backend.order.pending_orders', compact('orders'));
+    }
+
+    public function PendingToConfirm($id) {
+        $order = Order::find($id);
+
+        if($order) {
+            $order->status = "CONFIRMED";
+            
+            if($order->save()) {
+                $notification = array(
+                    "message" => "Order confirmed successfully", 
+                    "alert-type" => "success"
+                );
+                return redirect()->route("confirmed.orders")->with($notification);
+            }
+            else {
+                $notification = array(
+                    "message" => "Order NOT confirmed, please try again", 
+                    "alert-type" => "error"
+                );
+                return redirect()->back()->with($notification);
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Order NOT FOUND", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function ConfirmToProcessing($id) {
+        $order = Order::find($id);
+
+        if($order) {
+            $order->status = "PROCESSING";
+            
+            if($order->save()) {
+                $notification = array(
+                    "message" => "Order processed successfully", 
+                    "alert-type" => "success"
+                );
+                return redirect()->route("processing.orders")->with($notification);
+            }
+            else {
+                $notification = array(
+                    "message" => "Order NOT processed, please try again", 
+                    "alert-type" => "error"
+                );
+                return redirect()->back()->with($notification);
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Order NOT FOUND", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
+    public function ProcessingToDelivered($id) {
+        $order = Order::find($id);
+
+        if($order) {
+            $order->status = "DELIVERED";
+            
+            if($order->save()) {
+                $notification = array(
+                    "message" => "Order delivered successfully", 
+                    "alert-type" => "success"
+                );
+                return redirect()->route("delivered.orders")->with($notification);
+            }
+            else {
+                $notification = array(
+                    "message" => "Order NOT delivered, please try again", 
+                    "alert-type" => "error"
+                );
+                return redirect()->back()->with($notification);
+            }
+        }
+        else {
+            $notification = array(
+                "message" => "Order NOT FOUND", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 
     public function ProcessingOrders() {
         $orders = Order::where('status', 'PROCESSING')->get();
-        return view('admin.backend.order.processing_order', compact('orders'));
+        return view('admin.backend.order.processing_orders', compact('orders'));
     }
 }

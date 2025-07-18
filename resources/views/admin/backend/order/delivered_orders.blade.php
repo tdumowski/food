@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                    <h4 class="mb-sm-0 font-size-18">Confirmed orders</h4>
+                    <h4 class="mb-sm-0 font-size-18">Delivered orders</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
@@ -47,7 +47,7 @@
                                     <td>{{ $order->payment_type }}</td>
                                     <td><span class="badge bg-primary">{{ $order->status }}</span></td>
                                     <td>
-                                        <a href="{{ route('admin.edit.product', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
