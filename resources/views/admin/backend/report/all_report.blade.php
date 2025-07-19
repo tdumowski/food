@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <form id="myForm" action="{{ route('store.category') }}" method="POST" enctype="multipart/form-data">
+                                    <form id="myForm" action="{{ route('admin.search.bymonth') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -91,7 +91,7 @@
                                 </div>
 
                                 <div class="col-sm-4">
-                                    <form id="myForm" action="{{ route('store.category') }}" method="POST" enctype="multipart/form-data">
+                                    <form id="myForm" action="{{ route('admin.search.byyear') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-12">

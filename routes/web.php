@@ -140,6 +140,8 @@ Route::middleware('admin')->group(function () {
     Route::controller(ReportController::class)->group(function () {
         Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
         Route::post('/admin/search/bydate', 'AdminSearchByDate')->name('admin.search.bydate');
+        Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
+        Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
 });
 

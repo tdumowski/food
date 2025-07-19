@@ -24,4 +24,19 @@ class ReportController extends Controller
 
         return view('admin.backend.report.search_by_date', compact('date', 'orders'));
     }
+
+    public function AdminSearchByMonth(Request $request) {
+        $month = $request->month_name;
+        $year = $request->year_name;
+        $orders = Order::where([['order_month', $month],['order_year', $year]])->latest()->get();
+
+        return view('admin.backend.report.search_by_month', compact('month', 'year', 'orders'));
+    }
+
+    public function AdminSearchByYear(Request $request) {
+        $year = $request->year;
+        $orders = Order::where('order_year', $year)->latest()->get();
+
+        return view('admin.backend.report.search_by_year', compact('year', 'orders'));
+    }
 }
