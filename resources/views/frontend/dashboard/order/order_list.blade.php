@@ -40,24 +40,20 @@
                                                     <td>{{ $key + 1 }}</td>
                                                     <td>{{ $order->order_date }}</td>
                                                     <td>{{ $order->invoice_number }}</td>
-                                                    <td>{{ $order->total_amount }}</td>
+                                                    <td>$ {{ $order->total_amount }}</td>
                                                     <td>{{ $order->payment_type }}</td>
                                                     @php
                                                         $statusColor = ($order->status == "DELIVERED") ? "success" : "primary";
                                                     @endphp
                                                     <td><span class="badge bg-{{ $statusColor }}">{{ $order->status }}</span></td>
-                                                    <td class="d-flex">
-                                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn-small d-block text-info mr-3"><i class="fas fa-eye mr-1"></i>View</a>
-                                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn-small d-block text-primary mr-3"><i class="fas fa-download mr-1"></i>Invoice</a>
+                                                    <td class="d-flex justify-content between">
+                                                        <a href="{{ route('user.order.details', $order->id) }}" class="btn-small d-block text-info mr-3"><i class="fas fa-eye mr-1"></i>View</a>
+                                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn-small d-block text-primary"><i class="fas fa-download mr-1"></i>Invoice</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-
-
-
-
                                 </div>
                             </div>
                         </div>
