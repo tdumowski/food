@@ -39,17 +39,17 @@
 
                             <tbody>
                                 @foreach($orders as $key => $order)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $order->order_date }}</td>
-                                    <td>{{ $order->invoice_number }}</td>
-                                    <td>{{ $order->total_amount }}</td>
-                                    <td>{{ $order->payment_type }}</td>
-                                    <td><span class="badge bg-primary">{{ $order->status }}</span></td>
-                                    <td>
-                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $order->order_date }}</td>
+                                        <td>{{ $order->invoice_number }}</td>
+                                        <td>{{ $order->total_amount }}</td>
+                                        <td>{{ $order->payment_type }}</td>
+                                        <td><span class="badge bg-primary">{{ $order->status }}</span></td>
+                                        <td>
+                                            <a href="{{ route('admin.order_details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

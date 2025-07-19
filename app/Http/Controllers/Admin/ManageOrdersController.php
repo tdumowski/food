@@ -159,4 +159,10 @@ class ManageOrdersController extends Controller
         $orders = Order::where('status', 'PROCESSING')->get();
         return view('admin.backend.order.processing_orders', compact('orders'));
     }
+
+    public function UserOrdersList() {
+        $userId = Auth::user()->id;
+        $orders = Order::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        return view('frontend.dashboard.order.order_list', compact('orders'));
+    }
 }

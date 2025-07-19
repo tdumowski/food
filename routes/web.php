@@ -35,6 +35,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/all/wishlist', [HomeController::class, 'AllWishlist'])->name('all.wishlist');
     Route::get('/remove/wishlist/{id}', [HomeController::class, 'RemoveWishlist'])->name('remove.wishlist');
+
+    Route::controller(ManageOrdersController::class)->group(function () {
+        Route::get('/user/orders/list', 'UserOrdersList')->name('user.order.list');
+    });
+
 });
 
 require __DIR__.'/auth.php';
@@ -168,7 +173,7 @@ Route::middleware(['client', 'status'])->group(function () {
     });
     
     Route::controller(ManageOrdersController::class)->group(function () {
-        Route::get('/all/client/orders}', 'AllClientOrders')->name('all.client.orders');
+        Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
         Route::get('/client/order/details}/{id}', 'ClientOrderDetails')->name('client.order.details');
     });
 });
