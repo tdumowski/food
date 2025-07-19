@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Admin\ManageOrdersController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Frontend\CartController;
@@ -134,6 +135,10 @@ Route::middleware('admin')->group(function () {
         Route::get('/set/status/confirm/{id}', 'SetStatusConfirm')->name('setStatusConfirm');
         Route::get('/set/status/processing/{id}', 'SetStatusProcessing')->name('setStatusProcessing');
         Route::get('/set/status/delivered/{id}', 'SetStatusDelivered')->name('setStatusDelivered');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/admin/all/reports', 'AdminAllReports')->name('admin.all.reports');
     });
 });
 
