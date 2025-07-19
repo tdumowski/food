@@ -166,6 +166,10 @@ Route::middleware(['client', 'status'])->group(function () {
         Route::post('/store/coupon', 'StoreCoupon')->name('coupon.store');
         Route::post('/update/coupon', 'UpdateCoupon')->name('coupon.update');
     });
+    
+    Route::controller(ManageOrdersController::class)->group(function () {
+        Route::get('/all/client/orders}', 'AllClientOrders')->name('all.client.orders');
+    });
 });
 
 //routes available for all users
