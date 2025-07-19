@@ -107,9 +107,9 @@
                                                 <h6>{{ $product->name }}</h6>
 
                                                 @if(is_null($product->discount_price))
-                                                    <small>${{ $product->price }}</small>
+                                                    <small>$ {{ $product->price }}</small>
                                                 @else
-                                                    <del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small>
+                                                    <del>{{ $product->price }}</del> <small>$ {{ $product->discount_price }}</small>
                                                 @endif
                                                 
                                                 <a class="btn btn-outline-secondary btn-sm float-right mr-2" href="{{ route('add_to_cart', $product->id) }}">ADD</a>
@@ -142,10 +142,10 @@
                                                 <p class="text-gray time mb-0">
                                                     
                                                     @if(is_null($product->discount_price))
-                                                        <a class="btn btn-link btn-sm text-black" href="#">${{ $product->price }} </a> <span class="float-right"> 
-                                                        {{-- <small>${{ $product->price }}</small> --}}
+                                                        <a class="btn btn-link btn-sm text-black" href="#">$ {{ $product->price }} </a> <span class="float-right"> 
+                                                        {{-- <small>$ {{ $product->price }}</small> --}}
                                                     @else
-                                                        <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>${{ $product->discount_price }}</small> </a> <span class="float-right"> 
+                                                        <a class="btn btn-link btn-sm text-black" href="#"><del>{{ $product->price }}</del> <small>$ {{ $product->discount_price }}</small> </a> <span class="float-right"> 
                                                     @endif
                                                     
                                                     <a class="btn btn-outline-secondary btn-sm" href="{{ route('add_to_cart', $product->id) }}">ADD</a>
@@ -174,11 +174,11 @@
                                                         <h6 class="mb-1">{{ $product->name }}</h6>
 
                                                         @if(is_null($product->discount_price))
-                                                            <p class="text-gray mb-0"><strong>${{ $product->price }}</strong> 
+                                                            <p class="text-gray mb-0"><strong>$ {{ $product->price }}</strong> 
                                                                 {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
                                                             </p>
                                                         @else
-                                                            <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>${{ $product->discount_price }}</strong> 
+                                                            <p class="text-gray mb-0"><del>{{ $product->price }}</del> <strong>$ {{ $product->discount_price }}</strong> 
                                                                 {{ is_null($product->size) ? '' : ' - ' . $product->size . 'cm' }}
                                                             </p>
                                                         @endif
@@ -453,7 +453,7 @@
                                 @endphp
 
                                 <div class="gold-members p-2 border-bottom">
-                                    <p class="text-gray mb-0 float-right ml-2">${{ $productTotal }}</p>
+                                    <p class="text-gray mb-0 float-right ml-2">$ {{ $productTotal }}</p>
                                     <span class="count-number float-right">
                                     <button class="btn btn-outline-secondary btn-sm left dec" data-product_id="{{ $product_id }}"> <i class="icofont-minus"></i> </button>
                                     <input class="count-number-input" type="text" value="{{ $details['quantity'] }}" readonly="">
@@ -474,18 +474,18 @@
 
                     @if (Session::has('coupon'))
                         <div class="mb-2 bg-white rounded p-2 clearfix">
-                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            <p class="mb-1">Items Total <span class="float-right text-dark">$ {{ $orderTotal }}</span></p>
                             <p class="mb-1">Coupon name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} 
                                 ({{ (session()->get('coupon')['discount']) }} %)</span>
                                 <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color:red"></i></a>
                             </p>
                             <p class="mb-1 text-success">Total Discount 
                                 <span class="float-right text-success">
-                                    ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
+                                    $ {{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
                                 </span>
                             </p>
                             <hr />
-                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">${{ Session()->get('coupon')['discount_amount'] }}</span></h6>
+                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">$ {{ Session()->get('coupon')['discount_amount'] }}</span></h6>
                         </div>
                     @else
                         <div class="mb-2 bg-white rounded p-2 clearfix">
@@ -504,7 +504,7 @@
 
                     <div class="mb-2 bg-white rounded p-2 clearfix">
                         <img class="img-fluid float-left" src="{{ asset('frontend/img/wallet-icon.png') }}">
-                        <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">${{ $subTotal }}</span></h6>
+                        <h6 class="font-weight-bold text-right mb-2">Subtotal : <span class="text-danger">$ {{ $subTotal }}</span></h6>
                         <p class="seven-color mb-1 text-right">Extra charges may apply</p>
                     </div>
                     <a href="{{ route('checkout') }}" class="btn btn-success btn-block btn-lg">Checkout <i class="icofont-long-arrow-right"></i></a>

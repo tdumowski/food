@@ -71,6 +71,7 @@ class ManageOrdersController extends Controller
 
         if($order) {
             $order->status = "CONFIRMED";
+            $order->confirmed_date = Carbon::today()->format('Y-m-d');
             
             if($order->save()) {
                 $notification = array(
@@ -101,6 +102,7 @@ class ManageOrdersController extends Controller
 
         if($order) {
             $order->status = "PROCESSING";
+            $order->processing_date = Carbon::today()->format('Y-m-d');
             
             if($order->save()) {
                 $notification = array(
@@ -131,6 +133,7 @@ class ManageOrdersController extends Controller
 
         if($order) {
             $order->status = "DELIVERED";
+            $order->delivered_date = Carbon::today()->format('Y-m-d');
             
             if($order->save()) {
                 $notification = array(
@@ -192,10 +195,12 @@ class ManageOrdersController extends Controller
             $totalPrice += $item->price * $item->quantity;
         }
 
-        $pdf = Pdf::loadView('frontend.dashboard.order.invoice_download', compact('order', 'orderItems', 'totalPrice'))->setpaper('A4')->setOption([
-            'tempDir' => public_path(),
-            'chroot' => public_path()
-        ]);
+        $pdf = Pdf::loadView('frontend.dashboard.order.invoice_download', compact('order', 'orderItems', 'totalPrice'))
+            ->setpaper('A4')
+            ->setOption([
+                'tempDir' => public_path(),
+                'chroot' => public_path()
+            ]);
 
         return $pdf->download('invoice.pdf');
     }

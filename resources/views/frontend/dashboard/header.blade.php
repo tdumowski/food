@@ -72,7 +72,7 @@
                               $orderTotal += $productTotal;
                            @endphp
       
-                        <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i> {{ $details['name'] }} x {{ $details['quantity'] }}  <span class="float-right text-secondary">${{ $productTotal }}</span></p>
+                        <p class="mb-2"><i class="icofont-ui-press text-danger food-item"></i> {{ $details['name'] }} x {{ $details['quantity'] }}  <span class="float-right text-secondary">$ {{ $productTotal }}</span></p>
                         
                         @endforeach
                      @endif
@@ -80,7 +80,7 @@
                   </div>
                   <div class="dropdown-cart-top-footer border-top p-4">
                      @php $subTotal = (Session::has('coupon')) ? Session()->get('coupon')['discount_amount'] : $orderTotal; @endphp
-                     <p class="mb-0 font-weight-bold text-secondary">Sub Total <span class="float-right text-dark">${{ $subTotal }}</span></p>
+                     <p class="mb-0 font-weight-bold text-secondary">Sub Total <span class="float-right text-dark">$ {{ $subTotal }}</span></p>
                   </div>
                   <div class="dropdown-cart-top-footer border-top p-2">
                      <a class="btn btn-success btn-block btn-lg" href="{{ route('checkout') }}"> Checkout</a>

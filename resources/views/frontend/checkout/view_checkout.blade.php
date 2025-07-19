@@ -164,7 +164,7 @@
                                 @endphp
 
                                 <div class="gold-members p-2 border-bottom">
-                                    <p class="text-gray mb-0 float-right ml-2">${{ $productTotal }}</p>
+                                    <p class="text-gray mb-0 float-right ml-2">$ {{ $productTotal }}</p>
                                     <span class="count-number float-right">
                                     <button class="btn btn-outline-secondary btn-sm left dec" data-product_id="{{ $product_id }}"> <i class="icofont-minus"></i> </button>
                                     <input class="count-number-input" type="text" value="{{ $details['quantity'] }}" readonly="">
@@ -199,30 +199,30 @@
                     
                     @if (Session::has('coupon'))
                         <div class="mb-2 bg-white rounded p-2 clearfix">
-                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            <p class="mb-1">Items Total <span class="float-right text-dark">$ {{ $orderTotal }}</span></p>
                             <p class="mb-1">Coupon name <span class="float-right text-dark">{{ (session()->get('coupon')['coupon_name']) }} 
                                 ({{ (session()->get('coupon')['discount']) }} %)</span>
                                 <a type="submit" onclick="couponRemove()"><i class="icofont-ui-delete float-right" style="color:red"></i></a>
                             </p>
                             <p class="mb-1 text-success">Total Discount 
                                 <span class="float-right text-success">
-                                    ${{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
+                                    $ {{ $orderTotal - Session()->get('coupon')['discount_amount'] }}
                                 </span>
                             </p>
                             <hr />
-                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">${{ Session()->get('coupon')['discount_amount'] }}</span></h6>
+                            <h6 class="font-weight-bold mb-0">TO PAY  <span class="float-right">$ {{ Session()->get('coupon')['discount_amount'] }}</span></h6>
                         </div>
                     @else
                         <div class="mb-2 bg-white rounded p-2 clearfix">
-                            <p class="mb-1">Items Total <span class="float-right text-dark">${{ $orderTotal }}</span></p>
+                            <p class="mb-1">Items Total <span class="float-right text-dark">$ {{ $orderTotal }}</span></p>
                             </p>
                             <p class="mb-1 text-success">Total Discount 
                                 <span class="float-right text-success">
-                                    ${{ $orderTotal }}
+                                    $ {{ $orderTotal }}
                                 </span>
                             </p>
                             <hr />
-                            <h6 class="font-weight-bold mb-0">TO PAY ${{ $orderTotal }}</span></h6>
+                            <h6 class="font-weight-bold mb-0">TO PAY $ {{ $orderTotal }}</span></h6>
                         </div>
                     @endif
                 </div>
