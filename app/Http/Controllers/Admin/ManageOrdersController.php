@@ -37,6 +37,19 @@ class ManageOrdersController extends Controller
         return view('client.backend.order.all_orders', compact('orderItemGroupData'));
     }
 
+    public function ClientOrderDetails($orderId) {
+        $order = Order::with('user')->where('id', $orderId)->first();
+        $orderItems = OrderItem::with('product')->where("order_id", $orderId)->orderBy('id')->get();
+
+        $totalPrice = 0;
+        
+        foreach($orderItems as $item) {
+            $totalPrice += $item->price * $item->quantity;
+        }
+
+        return view('client.backend.order.client_order_details', compact('order', 'orderItems', 'totalPrice'));
+    }
+
     public function ConfirmedOrders() {
         $orders = Order::where('status', 'CONFIRMED')->get();
         return view('admin.backend.order.confirmed_orders', compact('orders'));

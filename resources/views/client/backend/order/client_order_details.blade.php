@@ -1,5 +1,5 @@
-@extends('admin.admin_dashboard')
-@section('admin')
+@extends('client.client_dashboard')
+@section('client')
 
 <div class="page-content">
     <div class="container-fluid">
@@ -104,18 +104,6 @@
                                     <tr>
                                         <th width="50%">Status:</th>
                                         <td><span class="badge bg-primary">{{ $order->status }}</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th width="50%"></th>
-                                        <td>
-                                            @if($order->status == "PENDING")
-                                                <a href="{{ route('pending_to_confirm', $order->id) }}" class="btn btn-block btn-success" id="confirmOrder">Confirm order</a>
-                                            @elseif($order->status == "CONFIRMED")
-                                                <a href="{{ route('confirm_to_processing', $order->id) }}" class="btn btn-block btn-success" id="processingOrder">Processing order</a>
-                                            @elseif($order->status == "PROCESSING")
-                                                <a href="{{ route('processing_to_delivered', $order->id) }}" class="btn btn-block btn-success" id="deliveringOrder">Delivered order</a>
-                                            @endif
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

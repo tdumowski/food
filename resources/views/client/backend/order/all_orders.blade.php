@@ -54,7 +54,7 @@
                                     @endphp
                                     <td><span class="badge bg-{{ $statusColor }}">{{ $order->status }}</span></td>
                                     <td>
-                                        <a href="{{ route('admin.order_details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
+                                        <a href="{{ route('client.order.details', $order->id) }}" class="btn btn-info waves-effect waves-light"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
