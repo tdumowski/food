@@ -5,12 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
-
 
 class ManageOrdersController extends Controller
 {
@@ -39,8 +37,9 @@ class ManageOrdersController extends Controller
     }
 
     public function ClientOrderDetails($orderId) {
+        $clientId = Auth::guard('client')->id();
         $order = Order::with('user')->where('id', $orderId)->first();
-        $orderItems = OrderItem::with('product')->where("order_id", $orderId)->orderBy('id')->get();
+        $orderItems = OrderItem::with('product')->where([["order_id", $orderId], ["client_id", $clientId]])->orderBy('id')->get();
 
         $totalPrice = 0;
         
@@ -66,7 +65,12 @@ class ManageOrdersController extends Controller
         return view('admin.backend.order.pending_orders', compact('orders'));
     }
 
-    public function PendingToConfirm($id) {
+    public function ProcessingOrders() {
+        $orders = Order::where('status', 'PROCESSING')->get();
+        return view('admin.backend.order.processing_orders', compact('orders'));
+    }
+
+    public function SetStatusConfirm($id) {
         $order = Order::find($id);
 
         if($order) {
@@ -97,38 +101,7 @@ class ManageOrdersController extends Controller
         }
     }
 
-    public function ConfirmToProcessing($id) {
-        $order = Order::find($id);
-
-        if($order) {
-            $order->status = "PROCESSING";
-            $order->processing_date = Carbon::today()->format('Y-m-d');
-            
-            if($order->save()) {
-                $notification = array(
-                    "message" => "Order processed successfully", 
-                    "alert-type" => "success"
-                );
-                return redirect()->route("processing.orders")->with($notification);
-            }
-            else {
-                $notification = array(
-                    "message" => "Order NOT processed, please try again", 
-                    "alert-type" => "error"
-                );
-                return redirect()->back()->with($notification);
-            }
-        }
-        else {
-            $notification = array(
-                "message" => "Order NOT FOUND", 
-                "alert-type" => "error"
-            );
-            return redirect()->back()->with($notification);
-        }
-    }
-
-    public function ProcessingToDelivered($id) {
+    public function SetStatusDelivered($id) {
         $order = Order::find($id);
 
         if($order) {
@@ -159,29 +132,35 @@ class ManageOrdersController extends Controller
         }
     }
 
-    public function ProcessingOrders() {
-        $orders = Order::where('status', 'PROCESSING')->get();
-        return view('admin.backend.order.processing_orders', compact('orders'));
-    }
+    public function SetStatusProcessing($id) {
+        $order = Order::find($id);
 
-    public function UserOrdersList() {
-        $userId = Auth::user()->id;
-        $orders = Order::where('user_id', $userId)->orderBy('id', 'desc')->get();
-        return view('frontend.dashboard.order.order_list', compact('orders'));
-    }
-
-    public function UserOrderDetails($id) {
-        $userId = Auth::user()->id;
-        $order = Order::where([['id', $id],['user_id', $userId]])->first();
-        $orderItems = OrderItem::with('product')->where("order_id", $id)->orderBy('id')->get();
-
-        $totalPrice = 0;
-        
-        foreach($orderItems as $item) {
-            $totalPrice += $item->price * $item->quantity;
+        if($order) {
+            $order->status = "PROCESSING";
+            $order->processing_date = Carbon::today()->format('Y-m-d');
+            
+            if($order->save()) {
+                $notification = array(
+                    "message" => "Order processed successfully", 
+                    "alert-type" => "success"
+                );
+                return redirect()->route("processing.orders")->with($notification);
+            }
+            else {
+                $notification = array(
+                    "message" => "Order NOT processed, please try again", 
+                    "alert-type" => "error"
+                );
+                return redirect()->back()->with($notification);
+            }
         }
-
-        return view('frontend.dashboard.order.order_details', compact('order', 'orderItems', 'totalPrice'));
+        else {
+            $notification = array(
+                "message" => "Order NOT FOUND", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 
     public function UserInvoiceDownload($id) {
@@ -203,5 +182,25 @@ class ManageOrdersController extends Controller
             ]);
 
         return $pdf->download('invoice.pdf');
+    }
+
+    public function UserOrderDetails($id) {
+        $userId = Auth::user()->id;
+        $order = Order::where([['id', $id],['user_id', $userId]])->first();
+        $orderItems = OrderItem::with('product')->where("order_id", $id)->orderBy('id')->get();
+
+        $totalPrice = 0;
+        
+        foreach($orderItems as $item) {
+            $totalPrice += $item->price * $item->quantity;
+        }
+
+        return view('frontend.dashboard.order.order_details', compact('order', 'orderItems', 'totalPrice'));
+    }
+
+    public function UserOrdersList() {
+        $userId = Auth::user()->id;
+        $orders = Order::where('user_id', $userId)->orderBy('id', 'desc')->get();
+        return view('frontend.dashboard.order.order_list', compact('orders'));
     }
 }

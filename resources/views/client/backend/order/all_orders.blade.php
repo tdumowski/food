@@ -44,7 +44,7 @@
                                     $order = $firstItem->order;
                                 @endphp
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $order->id }}</td>
                                     <td>{{ $order->order_date }}</td>
                                     <td>{{ $order->invoice_number }}</td>
                                     <td>{{ $order->total_amount }}</td>
