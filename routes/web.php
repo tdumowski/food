@@ -39,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(ManageOrdersController::class)->group(function () {
         Route::get('/user/orders/list', 'UserOrdersList')->name('user.order.list');
         Route::get('/user/order/details/{id}', 'UserOrderDetails')->name('user.order.details');
+        Route::get('/user/invoice/download/{id}', 'UserInvoiceDownload')->name('user.invoice.download');
     });
 
 });

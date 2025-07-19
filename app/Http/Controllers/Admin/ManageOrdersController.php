@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class ManageOrdersController extends Controller
@@ -178,5 +179,24 @@ class ManageOrdersController extends Controller
         }
 
         return view('frontend.dashboard.order.order_details', compact('order', 'orderItems', 'totalPrice'));
+    }
+
+    public function UserInvoiceDownload($id) {
+        $userId = Auth::user()->id;
+        $order = Order::where([['id', $id],['user_id', $userId]])->first();
+        $orderItems = OrderItem::with('product')->where("order_id", $id)->orderBy('id')->get();
+
+        $totalPrice = 0;
+        
+        foreach($orderItems as $item) {
+            $totalPrice += $item->price * $item->quantity;
+        }
+
+        $pdf = Pdf::loadView('frontend.dashboard.order.invoice_download', compact('order', 'orderItems', 'totalPrice'))->setpaper('A4')->setOption([
+            'tempDir' => public_path(),
+            'chroot' => public_path()
+        ]);
+
+        return $pdf->download('invoice.pdf');
     }
 }
