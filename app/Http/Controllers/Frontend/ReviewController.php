@@ -9,6 +9,18 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
+    public function AdminApprovedReviews() {
+        $reviews = Review::where('status', 1)->orderBy('id', 'desc')->get();
+
+        return view('admin.backend.review.view_approved_reviews', compact('reviews'));
+    }
+
+    public function AdminPendingReviews() {
+        $reviews = Review::where('status', 0)->orderBy('id', 'desc')->get();
+
+        return view('admin.backend.review.view_pending_reviews', compact('reviews'));
+    }
+
     public function StoreReview(Request $request) {
         $clientId = $request->client_id;
         $request->validate([
@@ -32,6 +44,5 @@ class ReviewController extends Controller
         $redirectUrl = $previousUrl ? $previousUrl . '#pills-reviews' : route('restaurant.details', ['id' => $clientId]) . '#pills-reviews';
 
         return redirect($redirectUrl)->with($notification);
-
     }
 }

@@ -68,7 +68,8 @@ class HomeController extends Controller
         });
         
         $galleries = Gallery::where('client_id', $client->id)->get();
-        $reviews = Review::where('client_id', $client->id)->get();
+
+        $reviews = Review::where('client_id', $client->id)->where("status", 1)->get();
         $totalReviews = $reviews->count();
         $ratingSum = $reviews->sum('rating');
         $ratingAvg = ($totalReviews) > 0 ? round($ratingSum / $totalReviews, 1) : 0;

@@ -144,6 +144,11 @@ Route::middleware('admin')->group(function () {
         Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
         Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
     });
+    
+    Route::controller(ReviewController::class)->group(function () {
+        Route::get('/admin/pending/reviews', 'AdminPendingReviews')->name('admin.pending.reviews');
+        Route::get('/admin/approved/reviews', 'AdminApprovedReviews')->name('admin.approved.reviews');
+    });
 });
 
 Route::middleware(['client', 'status'])->group(function () {

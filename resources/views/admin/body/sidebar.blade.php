@@ -129,8 +129,6 @@
                     </ul>
                 </li>
 
-                <li class="menu-title mt-2" data-key="t-components">Elements</li>
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
@@ -138,6 +136,17 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('admin.all.reports') }}" data-key="t-alerts">All reports</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="briefcase"></i>
+                        <span data-key="t-components">Manage reviews</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('admin.pending.reviews') }}" data-key="t-alerts">Pending reviews</a></li>
+                        <li><a href="{{ route('admin.approved.reviews') }}" data-key="t-alerts">Approved reviews</a></li>
                     </ul>
                 </li>
 
