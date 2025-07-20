@@ -17,16 +17,31 @@ class ReportController extends Controller
         return view('admin.backend.report.all_report');
     }
 
-    public function ClientAllReports() {
-        return view('client.backend.report.all_report');
-    }
-
     public function AdminSearchByDate(Request $request) {
         $date = new DateTime($request->date);
         $date = $date->format('Y-m-d');
         $orders = Order::where('order_date', $date)->latest()->get();
 
         return view('admin.backend.report.search_by_date', compact('date', 'orders'));
+    }
+
+    public function AdminSearchByMonth(Request $request) {
+        $month = $request->month_name;
+        $year = $request->year_name;
+        $orders = Order::where([['order_month', $month],['order_year', $year]])->latest()->get();
+
+        return view('admin.backend.report.search_by_month', compact('month', 'year', 'orders'));
+    }
+
+    public function AdminSearchByYear(Request $request) {
+        $year = $request->year;
+        $orders = Order::where('order_year', $year)->latest()->get();
+
+        return view('admin.backend.report.search_by_year', compact('year', 'orders'));
+    }
+
+    public function ClientAllReports() {
+        return view('client.backend.report.all_report');
     }
 
     public function ClientSearchByDate(Request $request) {
@@ -47,14 +62,6 @@ class ReportController extends Controller
         return view('client.backend.report.search_by_date', compact('orderItemGroupData', 'date'));
     }
 
-    public function AdminSearchByMonth(Request $request) {
-        $month = $request->month_name;
-        $year = $request->year_name;
-        $orders = Order::where([['order_month', $month],['order_year', $year]])->latest()->get();
-
-        return view('admin.backend.report.search_by_month', compact('month', 'year', 'orders'));
-    }
-
     public function ClientSearchByMonth(Request $request) {
         $month = $request->month_name;
         $year = $request->year_name;
@@ -71,13 +78,6 @@ class ReportController extends Controller
             ->groupBy('order_id');
 
         return view('client.backend.report.search_by_month', compact('orderItemGroupData', 'month', 'year'));
-    }
-
-    public function AdminSearchByYear(Request $request) {
-        $year = $request->year;
-        $orders = Order::where('order_year', $year)->latest()->get();
-
-        return view('admin.backend.report.search_by_year', compact('year', 'orders'));
     }
 
     public function ClientSearchByYear(Request $request) {
