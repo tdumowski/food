@@ -292,6 +292,11 @@
                                 </span>
                                 <h5 class="mb-0 pt-1">Rate this Place</h5>
                             </div>
+
+
+
+
+
                             <div class="bg-white rounded shadow-sm p-4 mb-4 clearfix graph-star-rating">
                                 <h5 class="mb-4">Ratings and Reviews</h5>
                                 <div class="graph-star-rating-header">
@@ -422,12 +427,6 @@
                                 <hr>
                                 <a class="text-center w-100 d-block mt-4 font-weight-bold" href="#">See All Reviews</a>
                             </div>
-
-
-
-
-
-
 
                             <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page">
                                 @guest
