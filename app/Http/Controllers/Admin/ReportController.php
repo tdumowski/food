@@ -29,6 +29,24 @@ class ReportController extends Controller
         return view('admin.backend.report.search_by_date', compact('date', 'orders'));
     }
 
+    public function ClientSearchByDate(Request $request) {
+        $date = new DateTime($request->date);
+        $date = $date->format('Y-m-d');
+        $clientId = Auth::guard('client')->id();
+        $orders = Order::where('order_date', $date)->whereHas('OrderItem', function($query) use ($clientId) {
+            $query->where('client_id', $clientId);
+        })->latest()->get();
+
+        $orderItemGroupData = OrderItem::with(['order','product'])
+            ->whereIn('order_id', $orders->pluck('id'))
+            ->where('client_id', $clientId)
+            ->orderBy('order_id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.report.search_by_date', compact('orderItemGroupData', 'date'));
+    }
+
     public function AdminSearchByMonth(Request $request) {
         $month = $request->month_name;
         $year = $request->year_name;

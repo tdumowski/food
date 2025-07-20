@@ -27,7 +27,7 @@
                         <div class="bg-light-subtle p-3">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <form id="myForm" action="{{ route('admin.search.bydate') }}" method="POST" enctype="multipart/form-data">
+                                    <form id="myForm" action="{{ route('client.search.bydate') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             <div class="col-lg-12">
