@@ -37,7 +37,6 @@
                                     <th>Comment</th>
                                     <th>Rating</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -59,9 +58,9 @@
                                             <span class="text-danger"><b>Pending</b></span>
                                         @endif
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <input type="checkbox" data-id="{{ $review->id }}" class="toggle-class" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $review->status ? 'checked' : '' }}>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -72,54 +71,5 @@
         </div> <!-- end row --> 
     </div> <!-- container-fluid -->
 </div>
-
-<script type="text/javascript">
-
-    $(document).ready(function() {
-        $('#datatable').DataTable({
-            drawCallback: function() {
-                $('input[type="checkbox"][data-toggle="toggle"]').bootstrapToggle();
-            }
-        });
-    });
-
-    $(function() {
-        $('.toggle-class').change(function() {
-            var status = $(this).prop('checked') == true ? 1 : 0; 
-            var client_id = $(this).data('id'); 
-            
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: '/clientChangeStatus',
-                data: {'status': status, 'client_id': client_id},
-                success: function(data){
-                // console.log(data.success)
-
-                    // Start Message 
-
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'bottom-end',
-                    icon: 'success', 
-                    showConfirmButton: false,
-                    timer: 3000 
-                })
-                if ($.isEmptyObject(data.error)) {
-                    Toast.fire({
-                        type: 'success',
-                        title: data.success, 
-                    })
-                }else{
-                Toast.fire({
-                        type: 'error',
-                        title: data.error, 
-                        })
-                    }
-                }
-            });
-        })
-    })
-</script>
 
 @endsection

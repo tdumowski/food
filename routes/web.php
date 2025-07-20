@@ -148,6 +148,7 @@ Route::middleware('admin')->group(function () {
     Route::controller(ReviewController::class)->group(function () {
         Route::get('/admin/pending/reviews', 'AdminPendingReviews')->name('admin.pending.reviews');
         Route::get('/admin/approved/reviews', 'AdminApprovedReviews')->name('admin.approved.reviews');
+        Route::get('/reviewChangeStatus', 'ReviewChangeStatus');
     });
 });
 

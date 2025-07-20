@@ -60,7 +60,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <input type="checkbox" data-id="{{ $review->id }}" class="toggle-class" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $review->status ? 'checked' : '' }}>
+                                        <input type="checkbox" data-id="{{ $review->id }}" class="toggle-class" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Approved" data-off="pending" {{ $review->status ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -86,13 +86,13 @@
     $(function() {
         $('.toggle-class').change(function() {
             var status = $(this).prop('checked') == true ? 1 : 0; 
-            var client_id = $(this).data('id'); 
+            var review_id = $(this).data('id'); 
             
             $.ajax({
                 type: "GET",
                 dataType: "json",
-                url: '/clientChangeStatus',
-                data: {'status': status, 'client_id': client_id},
+                url: '/reviewChangeStatus',
+                data: {'status': status, 'review_id': review_id},
                 success: function(data){
                 // console.log(data.success)
 

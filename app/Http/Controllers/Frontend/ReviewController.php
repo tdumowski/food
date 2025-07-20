@@ -20,6 +20,18 @@ class ReviewController extends Controller
 
         return view('admin.backend.review.view_pending_reviews', compact('reviews'));
     }
+    
+    public function ReviewChangeStatus(Request $request)
+    {
+        $review = Review::findOrFail($request->review_id);
+        $review->status = $request->status;
+        
+        if ($review->save()) {
+            return response()->json(['success' => 'Status changed successfully']);
+        } else {
+            return response()->json(['error' => 'Failed to change status']);
+        }
+    }
 
     public function StoreReview(Request $request) {
         $clientId = $request->client_id;
