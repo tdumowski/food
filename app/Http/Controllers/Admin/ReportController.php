@@ -55,10 +55,45 @@ class ReportController extends Controller
         return view('admin.backend.report.search_by_month', compact('month', 'year', 'orders'));
     }
 
+    public function ClientSearchByMonth(Request $request) {
+        $month = $request->month_name;
+        $year = $request->year_name;
+        $clientId = Auth::guard('client')->id();
+        $orders = Order::where([['order_month', $month],['order_year', $year]])->whereHas('OrderItem', function($query) use ($clientId) {
+            $query->where('client_id', $clientId);
+        })->latest()->get();
+
+        $orderItemGroupData = OrderItem::with(['order','product'])
+            ->whereIn('order_id', $orders->pluck('id'))
+            ->where('client_id', $clientId)
+            ->orderBy('order_id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.report.search_by_month', compact('orderItemGroupData', 'month', 'year'));
+    }
+
     public function AdminSearchByYear(Request $request) {
         $year = $request->year;
         $orders = Order::where('order_year', $year)->latest()->get();
 
         return view('admin.backend.report.search_by_year', compact('year', 'orders'));
+    }
+
+    public function ClientSearchByYear(Request $request) {
+        $year = $request->year;
+        $clientId = Auth::guard('client')->id();
+        $orders = Order::where('order_year', $year)->whereHas('OrderItem', function($query) use ($clientId) {
+            $query->where('client_id', $clientId);
+        })->latest()->get();
+
+        $orderItemGroupData = OrderItem::with(['order','product'])
+            ->whereIn('order_id', $orders->pluck('id'))
+            ->where('client_id', $clientId)
+            ->orderBy('order_id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+
+        return view('client.backend.report.search_by_year', compact('orderItemGroupData', 'year'));
     }
 }
