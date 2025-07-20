@@ -20,6 +20,13 @@ class ReviewController extends Controller
 
         return view('admin.backend.review.view_pending_reviews', compact('reviews'));
     }
+
+    public function ClientAllReviews() {
+        $clientId = Auth::guard('client')->id();
+        $reviews = Review::where('status', 1)->where('client_id', $clientId)->orderBy('id', 'desc')->get();
+
+        return view('client.backend.review.view_all_reviews', compact('reviews'));
+    }
     
     public function ReviewChangeStatus(Request $request)
     {

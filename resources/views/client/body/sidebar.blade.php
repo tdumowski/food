@@ -125,6 +125,16 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow">
+                            <i data-feather="briefcase"></i>
+                            <span data-key="t-components">Manage reviews</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a href="{{ route('client.all.reviews') }}" data-key="t-alerts">All reviews</a></li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
 
