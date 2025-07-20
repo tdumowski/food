@@ -414,9 +414,10 @@
 
                                     <h5 class="mb-4">Leave Comment</h5>
                                     <p class="mb-2">Rate the Place</p>
-                                    <form method="" action="">
+                                    <form method="post" action="{{ route('store.review') }}">
                                         @csrf
 
+                                        <input type="hidden" name="client_id" value="{{ $client->id }}">
                                         <div class="mb-4">
                                             <span class="star-rating">
                                                 <label for="rating-1">
@@ -436,7 +437,7 @@
                                             <textarea class="form-control" name="comment" id="comment"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary btn-sm" type="button"> Submit Comment </button>
+                                            <button class="btn btn-primary btn-sm" type="submit"> Submit Comment </button>
                                         </div>
                                     </form>
                                 @endguest
