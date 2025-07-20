@@ -186,6 +186,13 @@ Route::middleware(['client', 'status'])->group(function () {
         Route::get('/all/client/orders', 'AllClientOrders')->name('all.client.orders');
         Route::get('/client/order/details}/{id}', 'ClientOrderDetails')->name('client.order.details');
     });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/client/all/reports', 'ClientAllReports')->name('client.all.reports');
+        // Route::post('/admin/search/bydate', 'AdminSearchByDate')->name('admin.search.bydate');
+        // Route::post('/admin/search/bymonth', 'AdminSearchByMonth')->name('admin.search.bymonth');
+        // Route::post('/admin/search/byyear', 'AdminSearchByYear')->name('admin.search.byyear');
+    });
 });
 
 //routes available for all users

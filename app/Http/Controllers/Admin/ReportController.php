@@ -17,6 +17,10 @@ class ReportController extends Controller
         return view('admin.backend.report.all_report');
     }
 
+    public function ClientAllReports() {
+        return view('client.backend.report.all_report');
+    }
+
     public function AdminSearchByDate(Request $request) {
         $date = new DateTime($request->date);
         $date = $date->format('Y-m-d');
