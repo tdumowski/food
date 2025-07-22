@@ -115,7 +115,7 @@
                                             <i class="icofont-visa-alt"></i> <i class="icofont-mastercard-alt"></i> <i class="icofont-american-express-alt"></i> <i class="icofont-payoneer-alt"></i> <i class="icofont-apple-pay-alt"></i> <i class="icofont-bank-transfer-alt"></i> <i class="icofont-discover-alt"></i> <i class="icofont-jcb-alt"></i>
                                             </span>
                                         </p>
-                                        <form action="{{ route('cash.order') }}" method="post" id="payment-form">
+                                        <form action="{{ route('stripe.order') }}" method="post" id="payment-form">
                                             @csrf
 
                                             <label for="card-element"></label>
@@ -126,7 +126,6 @@
 
                                             <div id="card-element"></div>
                                             <div id="card-error" role="alert"></div>
-
 
                                             <button type="submit" class="btn btn-success btn-block btn-lg mt-3">PAY
                                                 <i class="icofont-long-arrow-right"></i>
@@ -271,7 +270,7 @@
 
 <script type="text/javascript">
     // Create a Stripe client.
-    var stripe = Stripe('pk_test_51MY6UkIwF5xdRTzhCIotZ9vdF7JhAPl8cBKbNeFe6wQsvb28BHmAPfiOS50ddALGIkDjixi1wWY8sEhjmVfYeOQM00BstARv39');
+    var stripe = Stripe('pk_test_51RncVGPJr6sFH5YYTvz42CKKRMsRWro4QatrUPhS2AsEgRUbKprt0uaYXG6zRcUHzYil8mFGS6vw87MLzbjcCtoq004wwiXv6h');
     // Create an instance of Elements.
     var elements = stripe.elements();
     // Custom styling can be passed to options when creating an Element.
