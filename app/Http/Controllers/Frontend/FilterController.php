@@ -14,4 +14,8 @@ class FilterController extends Controller
         $products = Product::all();
         return view('frontend.list_restaurants', compact('products'));
     }
+
+    public function FilterProducts(Request $request) {
+        
+    }
 }

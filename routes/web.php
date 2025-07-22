@@ -236,4 +236,5 @@ Route::controller(ReviewController::class)->group(function () {
 
 Route::controller(FilterController::class)->group(function () {
     Route::get('/list/restaurants', 'ListRestaurants')->name('list.restaurants');
+    Route::get('/filter/products', 'FilterProducts')->name('filter.products');
 });

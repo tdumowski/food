@@ -170,8 +170,32 @@
 
 <script>
     $(document).ready(function() {
+        
         $('.filter-checkbox').on('change', function() {
+            var filters = {
+                categories: [],
+                cities: [],
+                menus: []
+            };
+            // console.log(filters);
+            $('.filter-checkbox:checked').each(function() {
+                var type = $(this).data('type');
+                var id = $(this).data('id');
+                
+                if(!filters[type]) {
+                    $filters[type] = [];
+                }
+                filters[type].push(id);
+            })
 
+            $.ajax({
+                url: '{{ route('filter.products') }}',
+                method: "get",
+                data: filters,
+                success: function(reponse) {
+                    $('#product-list').html(response)
+                }
+            })
         })
     })
 </script>
