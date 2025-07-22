@@ -162,6 +162,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
         Route::get('/import/permission', 'ImportPermission')->name('import.permission');
         Route::get('/export/permission', 'ExportPermission')->name('export.permission');
+        Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
     });
 });
 

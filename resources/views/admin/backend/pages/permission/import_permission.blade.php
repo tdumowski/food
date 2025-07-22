@@ -12,9 +12,7 @@
                     <h4 class="mb-sm-0 font-size-18">Import permission</h4>
 
                     <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <a href="{{ route('export.permission') }}" class="btn btn-danger waves-effect waves-light">Export</a>
-                        </ol>
+                        <a href="{{ route('export.excel.permission') }}" class="btn btn-danger waves-effect waves-light">Export</a>
                     </div>
 
                 </div>
