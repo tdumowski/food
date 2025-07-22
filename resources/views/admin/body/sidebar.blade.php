@@ -156,7 +156,7 @@
                         <span data-key="t-components">Roles & permissions</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('admin.all.permssions') }}" data-key="t-alerts">All permissions</a></li>
+                        <li><a href="{{ route('all.permissions') }}" data-key="t-alerts">All permissions</a></li>
                         <li><a href="{{ route('admin.approved.reviews') }}" data-key="t-alerts">Approved reviews</a></li>
                     </ul>
                 </li>

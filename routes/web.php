@@ -154,7 +154,9 @@ Route::middleware('admin')->group(function () {
     });
     
     Route::controller(RoleController::class)->group(function () {
-        Route::get('/admin/all/permissions', 'AdminAllPermssions')->name('admin.all.permssions');
+        Route::get('/all/permissions', 'AllPermssions')->name('all.permissions');
+        Route::get('/add/permission', 'AddPermssion')->name('add.permission');
+        Route::post('/store/permission', 'StorePermssion')->name('store.permission');
     });
 });
 

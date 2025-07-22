@@ -12,7 +12,7 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.category') }}" class="btn btn-primary waves-effect waves-light">Add permission</a>
+                            <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light">Add permission</a>
                         </ol>
                     </div>
 
@@ -40,12 +40,12 @@
                                 @foreach($permissions as $key => $permission)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-                                    <td>{{ $permissions->name }}</td>
-                                    <td>{{ $permissions->group_name }}</td>
-                                    <td>{{ $permissions->guardname }}</td>
+                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $permission->group_name }}</td>
+                                    <td>{{ $permission->guard_name }}</td>
                                     <td>
-                                        <a href="{{ route('edit.category', $category->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.category', $category->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        {{-- <a href="{{ route('edit.category', $category->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        <a href="{{ route('delete.category', $category->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a> --}}
                                     </td>
                                 </tr>
                                 @endforeach
