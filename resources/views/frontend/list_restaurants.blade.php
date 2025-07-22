@@ -177,13 +177,13 @@
                 cities: [],
                 menus: []
             };
-            // console.log(filters);
+
             $('.filter-checkbox:checked').each(function() {
                 var type = $(this).data('type');
                 var id = $(this).data('id');
                 
                 if(!filters[type]) {
-                    $filters[type] = [];
+                    filters[type] = [];
                 }
                 filters[type].push(id);
             })
@@ -192,7 +192,7 @@
                 url: '{{ route('filter.products') }}',
                 method: "get",
                 data: filters,
-                success: function(reponse) {
+                success: function(response) {
                     $('#product-list').html(response)
                 }
             })
