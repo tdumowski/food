@@ -163,6 +163,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/import/permission', 'ImportPermission')->name('import.permission');
         Route::get('/export/permission', 'ExportPermission')->name('export.permission');
         Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
+        Route::post('/import/excel/permission', 'ImportExcelPermission')->name('import.excel.permission');
     });
 });
 

@@ -24,7 +24,7 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card">
                     <div class="card-body p-4">
-                        <form id="myForm" action="{{ route('store.permission') }}" method="POST" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('import.excel.permission') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">

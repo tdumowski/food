@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Exports\PermissionExport;
+use App\Imports\PermissionImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class RoleController extends Controller
@@ -83,5 +84,15 @@ class RoleController extends Controller
 
     public function ExportExcelPermission() {
         return Excel::download(new PermissionExport, 'permissions.xlsx');
+    }
+
+    public function ImportExcelPermission(Request $request) {
+        Excel::import(new PermissionImport, $request->file('import_file'));
+        
+        $notification = array(
+                "message" => "Permission imported successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->back()->with($notification);
     }
 }
