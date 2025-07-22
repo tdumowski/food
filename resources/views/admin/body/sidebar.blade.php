@@ -152,12 +152,12 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
-                        <i data-feather="gift"></i>
-                        <span data-key="t-ui-elements">Extended</span>
+                        <i data-feather="briefcase"></i>
+                        <span data-key="t-components">Roles & permissions</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="extended-lightbox.html" data-key="t-lightbox">Lightbox</a></li>
-                        <li><a href="extended-rangeslider.html" data-key="t-range-slider">Range Slider</a></li>
+                        <li><a href="{{ route('admin.all.permssions') }}" data-key="t-alerts">All permissions</a></li>
+                        <li><a href="{{ route('admin.approved.reviews') }}" data-key="t-alerts">Approved reviews</a></li>
                     </ul>
                 </li>
             </ul>

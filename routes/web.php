@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ManageController;
 use App\Http\Controllers\Admin\ManageOrdersController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Client\CouponController;
 use App\Http\Controllers\Client\RestaurantController;
 use App\Http\Controllers\Frontend\CartController;
@@ -150,6 +151,10 @@ Route::middleware('admin')->group(function () {
         Route::get('/admin/pending/reviews', 'AdminPendingReviews')->name('admin.pending.reviews');
         Route::get('/admin/approved/reviews', 'AdminApprovedReviews')->name('admin.approved.reviews');
         Route::get('/reviewChangeStatus', 'ReviewChangeStatus');
+    });
+    
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('/admin/all/permissions', 'AdminAllPermssions')->name('admin.all.permssions');
     });
 });
 
