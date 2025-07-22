@@ -32,42 +32,94 @@
                     <div class="filters-header border-bottom pl-4 pr-4 pt-3 pb-3">
                         <h5 class="m-0">Filter By</h5>
                     </div>
+
+                    @php
+                        $categories = App\Models\Category::orderBy('name')->limit(10)->get();
+                        $cities = App\Models\City::orderBy('name')->limit(10)->get();
+                        $menus = App\Models\Menu::orderBy('name')->limit(10)->get();
+                    @endphp
+
                     <div class="filters-body">
                         <div id="accordion">
                             <div class="filters-card border-bottom p-4">
-                                <div class="filters-card-header" id="headingOne">
+                                <div class="filters-card-header" id="headingCategory">
                                     <h6 class="mb-0">
-                                        <a href="#" class="btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Location <i class="icofont-arrow-down float-right"></i>
+                                        <a href="#" class="btn-link" data-toggle="collapse" data-target="#collapseCategory" aria-expanded="true" aria-controls="collapseCategory">
+                                        Category <i class="icofont-arrow-down float-right"></i>
                                         </a>
                                     </h6>
                                 </div>
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div id="collapseCategory" class="collapse show" aria-labelledby="headingCategory" data-parent="#accordion">
                                     <div class="filters-card-body card-shop-filters">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="cb1">
-                                            <label class="custom-control-label" for="cb1">Ludhiana Junction <small class="text-black-50">230</small>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="cb2">
-                                            <label class="custom-control-label" for="cb2">Model Town <small class="text-black-50">95</small>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="cb3">
-                                            <label class="custom-control-label" for="cb3">Civil Lines <small class="text-black-50">35</small>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="cb4">
-                                            <label class="custom-control-label" for="cb4">Dugri <small class="text-black-50">46</small>
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="cb5">
-                                            <label class="custom-control-label" for="cb5">PAU <small class="text-black-50">20</small></label>
-                                        </div>
+
+                                        @foreach ($categories as $category)
+                                            @php
+                                                $categoryProductsCount = $products->where('category_id', $category->id)->count();
+                                            @endphp
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="cat-{{ $category->id }}">
+                                                <label class="custom-control-label" for="cb1">{{ $category->name }} <small class="text-black-50">({{ $categoryProductsCount }})</small>
+                                                </label>
+                                            </div>
+                                        @endforeach
+
+                                        <div class="mt-2"><a href="#" class="link">See all</a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filters-card border-bottom p-4">
+                                <div class="filters-card-header" id="headingCity">
+                                    <h6 class="mb-0">
+                                        <a href="#" class="btn-link" data-toggle="collapse" data-target="#collapseCity" aria-expanded="true" aria-controls="collapseCity">
+                                        Cities <i class="icofont-arrow-down float-right"></i>
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div id="collapseCity" class="collapse" aria-labelledby="headingCity" data-parent="#accordion">
+                                    <div class="filters-card-body card-shop-filters">
+
+                                        @foreach ($cities as $city)
+                                            @php
+                                                $cityProductsCount = $products->where('city_id', $city->id)->count();
+                                            @endphp
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="cit-{{ $city->id }}">
+                                                <label class="custom-control-label" for="cb1">{{ $city->name }} <small class="text-black-50">({{ $cityProductsCount }})</small>
+                                                </label>
+                                            </div>
+                                        @endforeach
+
+                                        <div class="mt-2"><a href="#" class="link">See all</a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filters-card border-bottom p-4">
+                                <div class="filters-card-header" id="headingMenu">
+                                    <h6 class="mb-0">
+                                        <a href="#" class="btn-link" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
+                                        Menus <i class="icofont-arrow-down float-right"></i>
+                                        </a>
+                                    </h6>
+                                </div>
+                                <div id="collapseMenu" class="collapse" aria-labelledby="headingMenu" data-parent="#accordion">
+                                    <div class="filters-card-body card-shop-filters">
+
+                                        @foreach ($menus as $menu)
+                                            @php
+                                                $menuProductsCount = $products->where('menu_id', $menu->id)->count();
+                                            @endphp
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="men-{{ $menu->id }}">
+                                                <label class="custom-control-label" for="cb1">{{ $menu->name }} <small class="text-black-50">({{ $menuProductsCount }})</small>
+                                                </label>
+                                            </div>
+                                        @endforeach
+
                                         <div class="mt-2"><a href="#" class="link">See all</a></div>
                                     </div>
                                 </div>
@@ -99,12 +151,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12 text-center load-more">
-                        <button class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Loading...
-                        </button>  
                     </div>
                 </div>
             </div>
