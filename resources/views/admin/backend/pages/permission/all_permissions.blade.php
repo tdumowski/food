@@ -11,9 +11,9 @@
                     <h4 class="mb-sm-0 font-size-18">All permissions</h4>
 
                     <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light">Add permission</a>
-                        </ol>
+                        <a href="{{ route('add.permission') }}" class="btn btn-primary waves-effect waves-light mr-2">Add permission</a>
+                        <a href="{{ route('import.permission') }}" class="btn btn-warning waves-effect waves-light mr-2">Import</a>
+                        <a href="{{ route('export.permission') }}" class="btn btn-danger waves-effect waves-light">Export</a>
                     </div>
 
                 </div>

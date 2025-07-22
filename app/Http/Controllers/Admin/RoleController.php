@@ -75,4 +75,7 @@ class RoleController extends Controller
         return view('admin.backend.pages.permission.edit_permission', compact('permission'));
     }
 
+    public function ImportPermission() {
+        return view('admin.backend.pages.permission.import_permission');
+    }
 }
