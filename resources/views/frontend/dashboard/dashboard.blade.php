@@ -33,6 +33,8 @@
         <link rel="stylesheet" href="{{ asset('frontend/vendor/owl-carousel/owl.theme.css') }}">
         <!-- Toastr -->
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
+        {{-- Stripe  --}}
+        <script src="https://js.stripe.com/v3/"></script> 
     </head>
     <body>
 
