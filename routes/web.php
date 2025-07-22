@@ -157,6 +157,10 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/permissions', 'AllPermssions')->name('all.permissions');
         Route::get('/add/permission', 'AddPermssion')->name('add.permission');
         Route::post('/store/permission', 'StorePermssion')->name('store.permission');
+        Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
+        Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+        Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
+
     });
 });
 

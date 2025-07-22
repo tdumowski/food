@@ -72,7 +72,7 @@ class CategoryController extends Controller
                 "message" => "City not found", 
                 "alert-type" => "error"
             );
-            return redirect()->route('all.city')->with($notification);
+            return redirect()->back()->with($notification);
         }
     }
 
