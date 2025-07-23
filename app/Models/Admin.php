@@ -58,11 +58,16 @@ class Admin extends Authenticatable
 
     public static function getPermissionGroups()
     {
-        $permissionsGroup = DB::table('permissions')
+        return DB::table('permissions')
             ->select('group_name')
             ->distinct()
             ->get();
+    }
 
-        return $permissionsGroup;
+    public static function getPermissionsByGroup($groupName)
+    {
+        return DB::table('permissions')
+            ->where('group_name', $groupName)
+            ->get();
     }
 }
