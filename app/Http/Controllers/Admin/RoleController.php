@@ -206,4 +206,26 @@ class RoleController extends Controller
 
         return redirect()->route('all.roles')->with($notification);
     }
+
+    public function UpdateRolePermission(Request $request, $id) {
+        $role = Role::findOrFail($id);
+        $permissions = $request->permission;
+
+        if(!empty($permissions)) {
+            $permissionNames = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
+            $role->syncPermissions($permissionNames);
+        }
+        else {
+            // If no permissions are selected, we can either detach all permissions or handle it as per your requirement
+            // Here we will detach all permissions if none are selected
+            $role->permissions()->detach();
+        }
+
+        $notification = array(
+            "message" => "Role permissions updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.role.permission')->with($notification);
+    }
 }

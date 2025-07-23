@@ -174,6 +174,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/store/role', 'StoreRole')->name('store.role');
         Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
         Route::post('/update/role', 'UpdateRole')->name('update.role');
+        Route::post('/update/role/permission/{id}', 'UpdateRolePermission')->name('update.permission.role');
     });
 });
 

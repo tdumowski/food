@@ -33,7 +33,7 @@
             <div class="col-xl-9 col-lg-8">
                 <div class="card">
                     <div class="card-body p-4">
-                        <form id="myForm" action="{{ route('store.permission.role') }}" method="POST" enctype="multipart/form-data">
+                        <form id="myForm" action="{{ route('update.permission.role', $role->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
