@@ -2,6 +2,12 @@
 @section('admin')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+<style>
+    .form-check-label {
+        text-transform: capitalize;
+    }
+</style>
+
 <div class="page-content">
     <div class="container-fluid">
 
@@ -47,8 +53,8 @@
                                         </div>
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" id="formCheck2" checked="">
-                                            <label class="form-check-label" for="formCheck2">
+                                            <input class="form-check-input" type="checkbox" id="chkPermissionsAll">
+                                            <label class="form-check-label" for="chkPermissionsAll">
                                                 Permission All
                                             </label>
                                         </div>
@@ -102,5 +108,15 @@
         
     </div> <!-- container-fluid -->
 </div>
+
+<script>
+    $('#chkPermissionsAll').click(function() {
+        if ($(this).is(':checked')) {
+            $('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+</script>
 
 @endsection
