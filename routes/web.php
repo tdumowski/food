@@ -168,6 +168,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/import/permission', 'ImportPermission')->name('import.permission');
         Route::post('/import/excel/permission', 'ImportExcelPermission')->name('import.excel.permission');
         Route::post('/store/permission', 'StorePermssion')->name('store.permission');
+        Route::post('/store/permission/role', 'StorePermissionRole')->name('store.permission.role');
         Route::post('/store/role', 'StoreRole')->name('store.role');
         Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
         Route::post('/update/role', 'UpdateRole')->name('update.role');

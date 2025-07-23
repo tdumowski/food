@@ -7,6 +7,7 @@ use App\Exports\PermissionExport;
 use App\Imports\PermissionImport;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -126,6 +127,26 @@ class RoleController extends Controller
         );
 
         return redirect()->route('all.permissions')->with($notification);
+    }
+
+    public function StorePermissionRole(Request $request) {
+        $data = array();
+        $permissions = $request->permission;
+
+        foreach($permissions as $key => $permission) {
+            $data[] = [
+                'role_id' => $request->role_id,
+                'permission_id' => $permission
+            ];
+        }
+
+        DB::table('role_has_permissions')->insert($data);
+
+        $notification = array(
+            "message" => "Permissions assigned to role successfully", 
+            "alert-type" => "success"
+        );
+        return redirect()->route('all.roles')->with($notification);
     }
 
     public function StoreRole(Request $request) {
