@@ -154,16 +154,19 @@ Route::middleware('admin')->group(function () {
     });
     
     Route::controller(RoleController::class)->group(function () {
-        Route::get('/all/permissions', 'AllPermssions')->name('all.permissions');
         Route::get('/add/permission', 'AddPermssion')->name('add.permission');
-        Route::post('/store/permission', 'StorePermssion')->name('store.permission');
+        Route::get('/add/role', 'AddRole')->name('add.role');
+        Route::get('/all/permissions', 'AllPermssions')->name('all.permissions');
+        Route::get('/all/roles', 'AllRoles')->name('all.roles');
         Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
         Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
-        Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
-        Route::get('/import/permission', 'ImportPermission')->name('import.permission');
-        Route::get('/export/permission', 'ExportPermission')->name('export.permission');
         Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
+        Route::get('/export/permission', 'ExportPermission')->name('export.permission');
+        Route::get('/import/permission', 'ImportPermission')->name('import.permission');
         Route::post('/import/excel/permission', 'ImportExcelPermission')->name('import.excel.permission');
+        Route::post('/store/permission', 'StorePermssion')->name('store.permission');
+        Route::post('/store/role', 'StoreRole')->name('store.role');
+        Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
     });
 });
 

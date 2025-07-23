@@ -12,42 +12,22 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class RoleController extends Controller
 {
+    public function AddPermssion() {
+        return view('admin.backend.pages.permission.add_permission');
+    }
+
+    public function AddRole() {
+        return view('admin.backend.pages.role.add_role');
+    }
+
     public function AllPermssions() {
         $permissions = Permission::all();
         return view('admin.backend.pages.permission.all_permissions', compact('permissions'));
     }
 
-    public function AddPermssion() {
-        return view('admin.backend.pages.permission.add_permission');
-    }
-
-    public function StorePermssion(Request $request) {
-        $permission = new Permission();
-        $permission->name = $request->name;
-        $permission->group_name = $request->group_name;
-        $permission->guard_name = 'admin';
-        $permission->save();
-
-        $notification = array(
-            "message" => "Permission created successfully", 
-            "alert-type" => "success"
-        );
-
-        return redirect()->route('all.permissions')->with($notification);
-    }
-
-    public function UpdatePermission(Request $request) {
-        $permission = Permission::findOrFail($request->id);
-        $permission->name = $request->name;
-        $permission->group_name = $request->group_name;
-        $permission->save();
-
-        $notification = array(
-            "message" => "Permission updated successfully", 
-            "alert-type" => "success"
-        );
-
-        return redirect()->route('all.permissions')->with($notification);
+    public function AllRoles() {
+        $roles = Role::all();
+        return view('admin.backend.pages.role.all_roles', compact('roles'));
     }
     
     public function DeletePermission($id)
@@ -78,10 +58,6 @@ class RoleController extends Controller
         return view('admin.backend.pages.permission.edit_permission', compact('permission'));
     }
 
-    public function ImportPermission() {
-        return view('admin.backend.pages.permission.import_permission');
-    }
-
     public function ExportExcelPermission() {
         return Excel::download(new PermissionExport, 'permissions.xlsx');
     }
@@ -94,5 +70,52 @@ class RoleController extends Controller
                 "alert-type" => "success"
             );
             return redirect()->back()->with($notification);
+    }
+
+    public function ImportPermission() {
+        return view('admin.backend.pages.permission.import_permission');
+    }
+
+    public function StorePermssion(Request $request) {
+        $permission = new Permission();
+        $permission->name = $request->name;
+        $permission->group_name = $request->group_name;
+        $permission->guard_name = 'admin';
+        $permission->save();
+
+        $notification = array(
+            "message" => "Permission created successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.permissions')->with($notification);
+    }
+
+    public function StoreRole(Request $request) {
+        $role = new Role();
+        $role->name = $request->name;
+        $role->guard_name = 'admin';
+        $role->save();
+
+        $notification = array(
+            "message" => "Role created successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.roles')->with($notification);
+    }
+
+    public function UpdatePermission(Request $request) {
+        $permission = Permission::findOrFail($request->id);
+        $permission->name = $request->name;
+        $permission->group_name = $request->group_name;
+        $permission->save();
+
+        $notification = array(
+            "message" => "Permission updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.permissions')->with($notification);
     }
 }
