@@ -162,6 +162,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/role/permission', 'AllRolePermission')->name('all.role.permission');
         Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
         Route::get('/delete/role/{id}', 'DeleteRole')->name('delete.role');
+        Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('delete.role.permission');
         Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
         Route::get('/edit/role/{id}', 'EditRole')->name('edit.role');
         Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('edit.role.permission');
