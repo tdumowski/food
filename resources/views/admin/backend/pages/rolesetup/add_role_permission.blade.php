@@ -53,6 +53,23 @@
                                             </label>
                                         </div>
 
+                                        <hr>
+
+                                        @foreach ($permissionGroups as $permissionGroup)
+                                            <div class="row mb-3">
+                                                <div class="col-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="flexCheckDefault-{{ $permissionGroup->group_name }}">
+                                                        <label class="form-check-label" for="flexCheckDefault-{{ $permissionGroup->group_name }}">
+                                                            {{ $permissionGroup->group_name }}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-9">
+                                                    {{-- <h5>{{ $permissionGroup }}</h5> --}}
+                                                </div>
+                                            </div>
+                                        @endforeach
 
                                     </div>
                                     <div class="mt-4">
