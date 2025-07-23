@@ -159,7 +159,9 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/permissions', 'AllPermssions')->name('all.permissions');
         Route::get('/all/roles', 'AllRoles')->name('all.roles');
         Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
+        Route::get('/delete/role/{id}', 'DeleteRole')->name('delete.role');
         Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
+        Route::get('/edit/role/{id}', 'EditRole')->name('edit.role');
         Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
         Route::get('/export/permission', 'ExportPermission')->name('export.permission');
         Route::get('/import/permission', 'ImportPermission')->name('import.permission');
@@ -167,6 +169,7 @@ Route::middleware('admin')->group(function () {
         Route::post('/store/permission', 'StorePermssion')->name('store.permission');
         Route::post('/store/role', 'StoreRole')->name('store.role');
         Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
+        Route::post('/update/role', 'UpdateRole')->name('update.role');
     });
 });
 

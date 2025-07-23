@@ -51,11 +51,39 @@ class RoleController extends Controller
             return redirect()->back()->with($notification);
         }
     }
+    
+    public function DeleteRole($id)
+    {
+        $role = Role::findOrFail($id);
+        
+        if ($role) {
+            $role->delete();
+            
+            $notification = array(
+                "message" => "Role deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.roles')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Role not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
 
     public function EditPermission($id)
     {
         $permission = Permission::findOrFail($id);
         return view('admin.backend.pages.permission.edit_permission', compact('permission'));
+    }
+
+    public function EditRole($id)
+    {
+        $role = Role::findOrFail($id);
+        return view('admin.backend.pages.role.edit_role', compact('role'));
     }
 
     public function ExportExcelPermission() {
@@ -117,5 +145,18 @@ class RoleController extends Controller
         );
 
         return redirect()->route('all.permissions')->with($notification);
+    }
+
+    public function UpdateRole(Request $request) {
+        $role = Role::findOrFail($request->id);
+        $role->name = $request->name;
+        $role->save();
+
+        $notification = array(
+            "message" => "Role updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.roles')->with($notification);
     }
 }

@@ -40,8 +40,8 @@
                                     <td>{{ $role->name }}</td>
                                     <td>{{ $role->guard_name }}</td>
                                     <td>
-                                        <a href="{{ route('edit.permission', $role->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.permission', $role->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
+                                        <a href="{{ route('edit.role', $role->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        <a href="{{ route('delete.role', $role->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
