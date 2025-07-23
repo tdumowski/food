@@ -44,8 +44,8 @@
                                         @endforeach
                                     </td>
                                     <td>
-                                        {{-- <a href="{{ route('edit.permission', $permission->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        <a href="{{ route('delete.permission', $permission->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a> --}}
+                                        <a href="{{ route('edit.role.permission', $role->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
+                                        {{-- <a href="{{ route('delete.permission', $permission->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a> --}}
                                     </td>
                                 </tr>
                                 @endforeach

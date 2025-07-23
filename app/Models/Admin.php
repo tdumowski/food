@@ -70,4 +70,17 @@ class Admin extends Authenticatable
             ->where('group_name', $groupName)
             ->get();
     }
+
+    public static function roleHasPermissions($role, $permissions)
+    {
+        $hasPermission = true;
+        foreach($permissions as $key => $permission) {
+            if (!$role->hasPermissionTo($permission->name)) {
+                $hasPermission = false;
+                break;
+            }
+        }
+
+        return $hasPermission;
+    }
 }

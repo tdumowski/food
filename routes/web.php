@@ -164,6 +164,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/delete/role/{id}', 'DeleteRole')->name('delete.role');
         Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
         Route::get('/edit/role/{id}', 'EditRole')->name('edit.role');
+        Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('edit.role.permission');
         Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
         Route::get('/export/permission', 'ExportPermission')->name('export.permission');
         Route::get('/import/permission', 'ImportPermission')->name('import.permission');

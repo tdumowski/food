@@ -104,6 +104,15 @@ class RoleController extends Controller
         return view('admin.backend.pages.role.edit_role', compact('role'));
     }
 
+    public function EditRolePermission($id)
+    {
+        $role = Role::findOrFail($id);
+        $permissions = Permission::all();
+        $permissionGroups = Admin::getPermissionGroups();
+
+        return view('admin.backend.pages.rolesetup.edit_role_permission', compact('role', 'permissions', 'permissionGroups'));
+    }
+
     public function ExportExcelPermission() {
         return Excel::download(new PermissionExport, 'permissions.xlsx');
     }
