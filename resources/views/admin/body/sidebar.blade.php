@@ -158,6 +158,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.permissions') }}" data-key="t-alerts">All permissions</a></li>
                         <li><a href="{{ route('all.roles') }}" data-key="t-alerts">All roles</a></li>
+                        <li><a href="{{ route('add.role.permission') }}" data-key="t-alerts">Role in permission</a></li>
                     </ul>
                 </li>
             </ul>
