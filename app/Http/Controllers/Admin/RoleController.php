@@ -40,6 +40,14 @@ class RoleController extends Controller
         return view('admin.backend.pages.role.all_roles', compact('roles'));
     }
     
+    public function AllRolePermission() {
+        $roles = Role::all();
+        $permissions = Permission::all();
+        $permissionGroups = Admin::getPermissionGroups();
+
+        return view('admin.backend.pages.rolesetup.all_role_permission', compact('roles', 'permissions', 'permissionGroups'));
+    }
+
     public function DeletePermission($id)
     {
         $permission = Permission::findOrFail($id);
@@ -146,7 +154,7 @@ class RoleController extends Controller
             "message" => "Permissions assigned to role successfully", 
             "alert-type" => "success"
         );
-        return redirect()->route('all.roles')->with($notification);
+        return redirect()->route('all.role.permission')->with($notification);
     }
 
     public function StoreRole(Request $request) {
