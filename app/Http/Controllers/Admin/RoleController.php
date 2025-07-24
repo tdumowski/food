@@ -125,6 +125,13 @@ class RoleController extends Controller
         }
     }
 
+    public function EditAdmin($id)
+    {
+        $admin = Admin::findOrFail($id);
+        $roles = Role::all();
+        return view('admin.backend.pages.admin.edit_admin', compact('admin', "roles"));
+    }
+
     public function EditPermission($id)
     {
         $permission = Permission::findOrFail($id);
@@ -254,6 +261,36 @@ class RoleController extends Controller
         );
 
         return redirect()->route('all.permissions')->with($notification);
+    }
+
+    public function UpdateAdmin(Request $request) {
+        $admin = Admin::findOrFail($request->id);
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->phone = $request->phone;
+        $admin->address = $request->address;
+        $admin->role = "admin";
+        $admin->status = "1";
+        $admin->save();
+
+        $admin->roles()->detach();
+
+        if($request->roles) {
+            $role = Role::where('id', $request->roles)->where('guard_name', 'admin')->first();
+
+            if($role) {
+                $admin->assignRole($role->name);
+            } else {
+                return redirect()->back()->with('error', 'Role not found');
+            }
+        }
+
+        $notification = array(
+            "message" => "Admin updated successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.admins')->with($notification);
     }
 
     public function UpdateRole(Request $request) {

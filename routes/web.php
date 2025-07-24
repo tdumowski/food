@@ -189,7 +189,7 @@ Route::middleware('admin')->group(function () {
         // Route::get('/delete/role/{id}', 'DeleteRole')->name('delete.role');
         // Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('delete.role.permission');
         // Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');
-        // Route::get('/edit/role/{id}', 'EditRole')->name('edit.role');
+        Route::get('/edit/admin/{id}', 'EditAdmin')->name('edit.admin');
         // Route::get('/edit/role/permission/{id}', 'EditRolePermission')->name('edit.role.permission');
         // Route::get('/export/excel/permission', 'ExportExcelPermission')->name('export.excel.permission');
         // Route::get('/export/permission', 'ExportPermission')->name('export.permission');
@@ -199,7 +199,7 @@ Route::middleware('admin')->group(function () {
         // Route::post('/store/permission/role', 'StorePermissionRole')->name('store.permission.role');
         // Route::post('/store/role', 'StoreRole')->name('store.role');
         // Route::post('/update/permission', 'UpdatePermission')->name('update.permission');
-        // Route::post('/update/role', 'UpdateRole')->name('update.role');
+        Route::post('/update/admin', 'UpdateAdmin')->name('update.admin');
         // Route::post('/update/role/permission/{id}', 'UpdateRolePermission')->name('update.permission.role');
     });
 });
