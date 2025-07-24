@@ -81,7 +81,7 @@ class OrderController extends Controller
                 Session::forget('cart');
             }
 
-            Notification::send($admin, new OrderComplete($admin->name));
+            Notification::send($admin, new OrderComplete($request->name));
 
             $notification = array(
                 "message" => "Order placed successfully", 

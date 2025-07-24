@@ -56,7 +56,8 @@ class OrderComplete extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => "New order added"
+            'message' => "New order added",
+            'customer' => $this->name
         ];
     }
 }
