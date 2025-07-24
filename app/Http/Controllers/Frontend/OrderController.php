@@ -88,9 +88,18 @@ class OrderController extends Controller
                 "alert-type" => "success"
             );
             return view('frontend.checkout.thanks')->with($notification);
+        }
+    }
 
+    public function MarkAsRead(Request $request, $id) {
+        $notification = Auth::guard('admin')->user()->notifications()->find($id);
+        
+        if ($notification) {
+            $notification->markAsRead();
+            return response()->json(['success' => true]);
         }
 
+        return response()->json(['success' => false, 'message' => 'Notification not found'], 404);
     }
 
     public function StripeOrder(Request $request) {

@@ -1,3 +1,12 @@
+<style>
+    .notification-read {
+        background-color: bisque !important;
+    }
+    .notification-unread {
+        background-color: #e9e9e9 !important;
+    }
+</style>
+
 <header id="page-topbar">
     <div class="navbar-header">
         <div class="d-flex">
@@ -96,9 +105,9 @@
                         
                         @foreach ($notifications as $notification)
                             <a href="{{ route('pending.orders') }}" class="text-reset notification-item">
-                                <div class="d-flex">
+                                <div class="d-flex {{ $notification->read_at ? 'notification-read' : 'notification-read' }} p-3" onclick="markRead('{{ $notification->id }}')">
                                     <div class="flex-shrink-0 me-3">
-                                        <span class="avatar-title bg-primary rounded-circle font-size-16"><i class="bx bx-cart"></i></span>
+                                        {{-- <span class="avatar-title bg-primary rounded-circle font-size-16"><i class="bx bx-cart"></i></span> --}}
                                     </div>
                                     <div class="flex-grow-1">
                                         <h6 class="mb-1">{{ $notification->data['customer'] }}</h6>
@@ -161,3 +170,28 @@
         </div>
     </div>
 </header>
+
+<script>
+    function markNotificationRead(notificationId){
+        fetch('/mark-notification-as-read/'+notificationId,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('notification-count').textContent = data.count;
+            const notificationElement = document.querySelector(`[onclick="markNotificationRead('${notificationId}')"]`);
+            if (notificationElement) {
+                notificationElement.classList.remove('notification-unread');
+                notificationElement.classList.add('notification-read');
+            }
+        })
+        .catch(error => {
+            console.log('Error', error);
+        });
+    }
+</script>
