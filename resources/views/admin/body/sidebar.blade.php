@@ -153,13 +153,11 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
-                        <span data-key="t-components">Roles & permissions</span>
+                        <span data-key="t-components">Manage admins</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('all.permissions') }}" data-key="t-alerts">All permissions</a></li>
-                        <li><a href="{{ route('all.roles') }}" data-key="t-alerts">All roles</a></li>
-                        <li><a href="{{ route('add.role.permission') }}" data-key="t-alerts">Role in permission</a></li>
-                        <li><a href="{{ route('all.role.permission') }}" data-key="t-alerts">All roles in permissions</a></li>
+                        <li><a href="{{ route('all.admins') }}" data-key="t-alerts">All admins</a></li>
+                        <li><a href="{{ route('all.roles') }}" data-key="t-alerts">Add admin</a></li>
                     </ul>
                 </li>
             </ul>

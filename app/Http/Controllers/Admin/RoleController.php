@@ -30,6 +30,11 @@ class RoleController extends Controller
         return view('admin.backend.pages.rolesetup.add_role_permission', compact('roles', 'permissions', 'permissionGroups'));
     }
 
+    public function AllAdmins() {
+        $admins = Admin::all();
+        return view('admin.backend.pages.admin.all_admins', compact('admins'));
+    }
+
     public function AllPermssions() {
         $permissions = Permission::all();
         return view('admin.backend.pages.permission.all_permissions', compact('permissions'));
