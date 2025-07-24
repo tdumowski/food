@@ -59,6 +59,28 @@ class RoleController extends Controller
         return view('admin.backend.pages.rolesetup.all_role_permission', compact('roles', 'permissions', 'permissionGroups'));
     }
 
+    public function DeleteAdmin($id)
+    {
+        $admin = Admin::findOrFail($id);
+        
+        if ($admin) {
+            $admin->delete();
+            
+            $notification = array(
+                "message" => "Admin deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->back()->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Admin not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
     public function DeletePermission($id)
     {
         $permission = Permission::findOrFail($id);

@@ -185,7 +185,7 @@ Route::middleware('admin')->group(function () {
         Route::get('/all/admins', 'AllAdmins')->name('all.admins');
         // Route::get('/all/roles', 'AllRoles')->name('all.roles');
         // Route::get('/all/role/permission', 'AllRolePermission')->name('all.role.permission');
-        // Route::get('/delete/permission/{id}', 'DeletePermission')->name('delete.permission');
+        Route::get('/delete/admin/{id}', 'DeleteAdmin')->name('delete.admin');
         // Route::get('/delete/role/{id}', 'DeleteRole')->name('delete.role');
         // Route::get('/delete/role/permission/{id}', 'DeleteRolePermission')->name('delete.role.permission');
         // Route::get('/edit/permission/{id}', 'EditPermission')->name('edit.permission');

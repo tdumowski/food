@@ -54,7 +54,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('edit.admin', $admin->id) }}" class="btn btn-info waves-effect waves-light">Edit</a>
-                                        {{-- <a href="{{ route('delete.category', $category->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a> --}}
+                                        <a href="{{ route('delete.admin', $admin->id) }}" class="btn btn-danger waves-effect waves-light" id="delete">Delete</a>
                                     </td>
                                 </tr>
                                 @endforeach
