@@ -157,7 +157,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('all.admins') }}" data-key="t-alerts">All admins</a></li>
-                        <li><a href="{{ route('all.roles') }}" data-key="t-alerts">Add admin</a></li>
+                        <li><a href="{{ route('add.admin') }}" data-key="t-alerts">Add admin</a></li>
                     </ul>
                 </li>
             </ul>

@@ -180,7 +180,7 @@ Route::middleware('admin')->group(function () {
     
     Route::controller(RoleController::class)->group(function () {
         // Route::get('/add/permission', 'AddPermssion')->name('add.permission');
-        // Route::get('/add/role', 'AddRole')->name('add.role');
+        Route::get('/add/admin', 'AddAdmin')->name('add.admin');
         // Route::get('/add/role/permission', 'AddRolePermission')->name('add.role.permission');
         Route::get('/all/admins', 'AllAdmins')->name('all.admins');
         // Route::get('/all/roles', 'AllRoles')->name('all.roles');
@@ -195,7 +195,7 @@ Route::middleware('admin')->group(function () {
         // Route::get('/export/permission', 'ExportPermission')->name('export.permission');
         // Route::get('/import/permission', 'ImportPermission')->name('import.permission');
         // Route::post('/import/excel/permission', 'ImportExcelPermission')->name('import.excel.permission');
-        // Route::post('/store/permission', 'StorePermssion')->name('store.permission');
+        Route::post('/store/admin', 'StoreAdmin')->name('store.admin');
         // Route::post('/store/permission/role', 'StorePermissionRole')->name('store.permission.role');
         // Route::post('/store/role', 'StoreRole')->name('store.role');
         // Route::post('/update/permission', 'UpdatePermission')->name('update.permission');

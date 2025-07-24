@@ -8,12 +8,18 @@ use App\Imports\PermissionImport;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function AddAdmin() {
+        $roles = Role::all();
+        return view('admin.backend.pages.admin.add_admin', compact('roles'));
+    }
+
     public function AddPermssion() {
         return view('admin.backend.pages.permission.add_permission');
     }
@@ -97,6 +103,28 @@ class RoleController extends Controller
         }
     }
 
+    public function DeleteRolePermission($id)
+    {
+        $role = Role::findOrFail($id);
+        
+        if ($role) {
+            $role->delete();
+            
+            $notification = array(
+                "message" => "Role and its permissions deleted successfully", 
+                "alert-type" => "success"
+            );
+            return redirect()->route('all.role.permission')->with($notification);
+        }
+        else {
+            $notification = array(
+                "message" => "Role not found", 
+                "alert-type" => "error"
+            );
+            return redirect()->back()->with($notification);
+        }
+    }
+
     public function EditPermission($id)
     {
         $permission = Permission::findOrFail($id);
@@ -134,6 +162,35 @@ class RoleController extends Controller
 
     public function ImportPermission() {
         return view('admin.backend.pages.permission.import_permission');
+    }
+
+    public function StoreAdmin(Request $request) {
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->phone = $request->phone;
+        $admin->address = $request->address;
+        $admin->password = Hash::make($request->password);
+        $admin->role = "admin";
+        $admin->status = "1";
+        $admin->save();
+
+        if($request->roles) {
+            $role = Role::where('id', $request->roles)->where('guard_name', 'admin')->first();
+
+            if($role) {
+                $admin->assignRole($role->name);
+            } else {
+                return redirect()->back()->with('error', 'Role not found');
+            }
+        }
+
+        $notification = array(
+            "message" => "Admin created successfully", 
+            "alert-type" => "success"
+        );
+
+        return redirect()->route('all.admins')->with($notification);
     }
 
     public function StorePermssion(Request $request) {
@@ -232,27 +289,5 @@ class RoleController extends Controller
         );
 
         return redirect()->route('all.role.permission')->with($notification);
-    }
-
-    public function DeleteRolePermission($id)
-    {
-        $role = Role::findOrFail($id);
-        
-        if ($role) {
-            $role->delete();
-            
-            $notification = array(
-                "message" => "Role and its permissions deleted successfully", 
-                "alert-type" => "success"
-            );
-            return redirect()->route('all.role.permission')->with($notification);
-        }
-        else {
-            $notification = array(
-                "message" => "Role not found", 
-                "alert-type" => "error"
-            );
-            return redirect()->back()->with($notification);
-        }
     }
 }
